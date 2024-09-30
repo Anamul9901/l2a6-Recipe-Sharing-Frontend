@@ -3,19 +3,29 @@ import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import Loading from "@/src/components/UI/loading";
 import { useRegisterMutation } from "@/src/redux/features/auth/authApi";
+import { setUser } from "@/src/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/src/redux/hooks";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Register = () => {
+  const dispatch = useAppDispatch();
 
   const [resigter, { isLoading }] = useRegisterMutation();
 
-  const onSubmit: SubmitHandler<FieldValues> =async  (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
-    const res = await resigter(data)
-    console.log('res-', res);
+    const res = await resigter(data);
+    if (res.data) {
+      console.log(res.data.data);
+      const { email, name, _id, profileImg } = res?.data?.data;
+      const finalUserData = { email, name, _id, profileImg };
+      dispatch(setUser({ user: finalUserData }));
+    }
+
+    console.log("res-", res);
   };
   return (
     <div>
