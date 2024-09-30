@@ -1,27 +1,53 @@
-import { baseApi } from '../../api/baseApi';
+import { baseApi } from "../../api/baseApi";
 
 const userInfoApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllUser: builder.query({
       query: (email) => {
         return {
-          url: '/user',
-          method: 'GET',
+          url: "/user",
+          method: "GET",
           params: { email },
         };
       },
     }),
 
-    getSingleUser: builder.query({
+    getMyData: builder.query({
       query: (data) => {
         return {
-          url: '/user',
-          method: 'GET',
+          url: "/user/me",
+          method: "GET",
           body: data,
         };
       },
     }),
+
+    getSingleUser: builder.query({
+      query: (id) => {
+        return {
+          url: `/user/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ['user'],
+    }),
+
+    updateUser: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/user/${data.id}`,
+          method: "PUT",
+          body: data.data,
+        };
+      },
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
-export const { useGetAllUserQuery, useGetSingleUserQuery } = userInfoApi;
+export const {
+  useGetAllUserQuery,
+  useGetMyDataQuery,
+  useGetSingleUserQuery,
+  useUpdateUserMutation,
+} = userInfoApi;
