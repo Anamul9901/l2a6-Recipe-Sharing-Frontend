@@ -12,6 +12,7 @@ const FXInput = ({
   type = "text",
   label,
   name,
+  defaultValue
 }: IProps) => {
   const {
     register,
@@ -24,6 +25,7 @@ const FXInput = ({
       variant={variant}
       size={size}
       required={required}
+      defaultValue={defaultValue}
       type={type}
       label={label}
       isInvalid={!!errors[name]}

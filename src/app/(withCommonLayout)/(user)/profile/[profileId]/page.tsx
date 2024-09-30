@@ -1,4 +1,5 @@
 "use client";
+import UpdateProfileModal from "@/src/components/modals/UpdateProfileModal";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import {
   useAddFollowerMutation,
@@ -6,7 +7,6 @@ import {
   useGetAllFollowerQuery,
 } from "@/src/redux/features/follower/followerApi";
 import {
-  useGetMyDataQuery,
   useGetSingleUserQuery,
   useUpdateUserMutation,
 } from "@/src/redux/features/user/userApi";
@@ -14,13 +14,16 @@ import { useAppSelector } from "@/src/redux/hooks";
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const ProfilePage = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const params = useParams();
-  const id = params.profileId;
+  const id = params?.profileId;
   const myData = useAppSelector(selectCurrentUser);
-  // console.log(myData?.user?.email);
+  console.log(myData?.user?._id);
+  const myUserId = myData?.user?._id;
+  const myUserEmail = myData?.user?.email;
   const { data: singleUser } = useGetSingleUserQuery(id);
   const user = singleUser?.data;
   const [updateUser, {}] = useUpdateUserMutation();
@@ -29,8 +32,7 @@ const ProfilePage = () => {
   const [deleteFollow, {}] = useDeleteFollowerMutation();
 
   const findFollowe = allFollower?.data?.find(
-    (item: any) =>
-      item?.userId == id && item?.followerEmail == myData?.user?.email
+    (item: any) => item?.userId == id && item?.followerEmail == myUserEmail
   );
 
   // console.log("findFo", findFollowe?._id);
@@ -38,30 +40,54 @@ const ProfilePage = () => {
   // console.log(allFollower);
 
   const handleUpdateFollow = async () => {
-    const currentFollower = user.follower;
-    const updateFollower = currentFollower + 1;
-    const data = { id, data: { follower: updateFollower } };
-    const updateUserFollower = updateUser;
-    const res = await updateUserFollower(data);
-    // console.log("res-", res);
-    const followerData = { userId: id, followerEmail: myData?.user?.email };
+    const followerData = { userId: id, followerEmail: myUserEmail };
+    const res = await addFollower(followerData);
+
     if (res?.data) {
-      const res = await addFollower(followerData);
-      // console.log('foo--', res);
+      const currentFollower = user?.follower;
+      const updateFollower = currentFollower + 1;
+      const followerData = { id, data: { follower: updateFollower } };
+      const updateUserFollower = updateUser;
+      const res = await updateUserFollower(followerData);
+
+      const currentFollowing = user?.following;
+      const updateFollowong = currentFollowing + 1;
+      const folloingData = {
+        id: myUserId,
+        data: { following: updateFollowong },
+      };
+      const updateUserFollowing = updateUser;
+      await updateUserFollowing(folloingData);
     }
   };
 
   const handleUpdateUnfollow = async () => {
     const res = await deleteFollow(findFollowe?._id);
-    // console.log("resde--", res);
     if (res?.data) {
-      const currentFollower = user.follower;
+      const currentFollower = user?.follower;
       const updateFollower = currentFollower - 1;
       const data = { id, data: { follower: updateFollower } };
       const updateUserFollower = updateUser;
       const res = await updateUserFollower(data);
+
+      const currentFollowing = user?.following;
+      const updateFollowong = currentFollowing - 1;
+      const folloingData = {
+        id: myUserId,
+        data: { following: updateFollowong },
+      };
+      const updateUserFollowing = updateUser;
+      await updateUserFollowing(folloingData);
     }
   };
+
+  // for hybration error handle
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="bg-default-100 min-h-screen">
@@ -71,29 +97,42 @@ const ProfilePage = () => {
           {/* Profile Picture */}
           <Image
             className="w-28 h-28 rounded-full border-4 border-white"
-            // src={user.profileImg}
+            // src={user?.profileImg}
             src="https://i.ibb.co.com/z89cgQr/profile.webp"
             alt="Profile Picture"
             height={500}
             width={500}
           />
           <div className="text-white w-full">
-            <h2 className="text-2xl font-bold">{user?.email}</h2>
+            <h2 className="text-2xl font-bold">{user?.name}</h2>
             <div className="flex justify-between items-center">
               <p className="text-sm">
                 {user?.follower} followers | {user?.following} following
               </p>
               <div className="flex pr-6 md:pr-20 gap-2">
-                {!findFollowe ? (
-                  <Button onClick={handleUpdateFollow} className="btn btn-sm">
-                    Follow
-                  </Button>
+                {id != myUserId ? (
+                  <div>
+                    {findFollowe ? (
+                      <Button
+                        onClick={handleUpdateUnfollow}
+                        className="btn btn-sm"
+                      >
+                        Unfollow
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={handleUpdateFollow}
+                        className="btn btn-sm"
+                      >
+                        Follow
+                      </Button>
+                    )}
+                  </div>
                 ) : (
-                  <Button onClick={handleUpdateUnfollow} className="btn btn-sm">
-                    Unfollow
-                  </Button>
+                  <div>
+                    <UpdateProfileModal />
+                  </div>
                 )}
-                <Button className="btn btn-sm">Edit</Button>
               </div>
             </div>
           </div>
