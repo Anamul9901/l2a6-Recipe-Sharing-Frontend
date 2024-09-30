@@ -44,8 +44,10 @@ const NavberDropdown = () => {
           Profile
         </DropdownItem>
 
-        <DropdownItem onClick={() => handleNavigation("/settings")}>
-          Settings
+        <DropdownItem
+          onClick={() => handleNavigation("/dashboard?key=dashboard")}
+        >
+          Dashboard
         </DropdownItem>
         <DropdownItem onClick={() => handleNavigation("/profile/create-post")}>
           Create Post

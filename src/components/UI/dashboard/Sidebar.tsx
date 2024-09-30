@@ -1,7 +1,11 @@
 "use client"
 import Link from "next/link";
+import { useParams, useSearchParams } from "next/navigation";
 
 const Sidebar = () => {
+  const searchParams  = useSearchParams();
+  const queryValue = searchParams.get('key');
+  console.log('para--', queryValue);
   return (
     <div>
       <div className="flex max-w-[1300px] mx-auto w-full">
@@ -22,19 +26,13 @@ const Sidebar = () => {
             <hr className="my-4 mx-2" />
 
             <li>
-              <a
+              <Link
                 href="/dashboard/home"
-                  // className={({ isActive , isPending }) =>
-                  //   isPending
-                  //     ? "pending"
-                  //     : isActive
-                  //     ? "text-[#050506] underline font-black"
-                  //     : "lg:text-white "
-                  // }
+               className={queryValue === "dashboard" ? "text-[#ff4a4afd] underline font-black": ""}
               >
                 {/* <RxDashboard /> */}----
                 <span className="hidden md:inline-block">Dashboard</span>
-              </a>
+              </Link>
             </li>
 
             {/* //  user sidebar */}
