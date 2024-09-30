@@ -19,10 +19,19 @@ import { Logo } from "@/src/assets/icons";
 import NavberDropdown from "./navberDropdown";
 import { useAppSelector } from "@/src/redux/hooks";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
-import { Button } from "@nextui-org/button";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const user = useAppSelector(selectCurrentUser);
+
+  // for hybration error handle
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) {
+    return null;
+  }
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -58,14 +67,14 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem>
-          {user?.user ? <NavberDropdown /> : <Link href='/login'>Login</Link>}
+          {user?.user ? <NavberDropdown /> : <Link href="/login">Login</Link>}
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarItem>
-        {user?.user ? <NavberDropdown /> : <Link href='/login'>Login</Link>}
+          {user?.user ? <NavberDropdown /> : <Link href="/login">Login</Link>}
         </NavbarItem>
         <NavbarMenuToggle />
       </NavbarContent>

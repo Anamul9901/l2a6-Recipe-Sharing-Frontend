@@ -1,4 +1,5 @@
 "use client";
+import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
 import UpdateProfileModal from "@/src/components/modals/UpdateProfileModal";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import {
@@ -163,8 +164,13 @@ const ProfilePage = () => {
                     )}
                   </div>
                 ) : (
-                  <div>
-                    <UpdateProfileModal />
+                  <div className="md:flex gap-2 text-center">
+                   <div className="pb-1">
+                   <UpdateProfileModal />
+                   </div>
+                    <div className="pb-1">
+                    <ChangePasswordModal />
+                    </div>
                   </div>
                 )}
               </div>
