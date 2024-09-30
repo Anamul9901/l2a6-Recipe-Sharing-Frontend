@@ -4,8 +4,6 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-
-
 export interface IInput {
   variant?: "flat" | "bordered" | "faded" | "underlined";
   size?: "sm" | "md" | "lg";

@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from '@nextui-org/spinner';
 
 const Loading = () => {
   return (

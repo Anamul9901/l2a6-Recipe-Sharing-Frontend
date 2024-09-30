@@ -1,12 +1,12 @@
-import { baseApi } from "../../api/baseApi";
+import { baseApi } from '../../api/baseApi';
 
 const userInfoApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllUser: builder.query({
       query: (email) => {
         return {
-          url: "/user",
-          method: "GET",
+          url: '/user',
+          method: 'GET',
           params: { email },
         };
       },
@@ -15,8 +15,8 @@ const userInfoApi = baseApi.injectEndpoints({
     getSingleUser: builder.query({
       query: (data) => {
         return {
-          url: "/user",
-          method: "GET",
+          url: '/user',
+          method: 'GET',
           body: data,
         };
       },

@@ -1,10 +1,5 @@
-
 const page = () => {
-    return (
-        <div>
-            this is about
-        </div>
-    );
+  return <div>this is about</div>;
 };
 
 export default page;
