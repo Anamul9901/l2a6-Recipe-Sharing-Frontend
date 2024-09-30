@@ -7,20 +7,23 @@ import { setUser } from '@/src/redux/features/auth/authSlice';
 import { useAppDispatch } from '@/src/redux/hooks';
 import { Button } from '@nextui-org/button';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [loginUser, { isLoading }] = useLoginMutation();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
     const res = await loginUser(data).unwrap();
-    console.log('res-', res);
     if (res?.data) {
       const { email, name, _id, profileImg } = res?.data?.data;
       const finalUserData = { email, name, _id, profileImg };
       dispatch(setUser({ user: finalUserData, token: res?.data?.token }));
+      router?.push('/')
     }
   };
   return (
@@ -55,8 +58,11 @@ const Login = () => {
             </Button>
           </FXForm>
 
-          <div className="text-center">
-            Don&lsquo;t have account ? <Link href={'/register'}>Register</Link>
+          <div className="">
+            Don&lsquo;t have account ? <Link href={'/register'} className='text-blue-600'>Register</Link>
+          </div>
+          <div className="text-sm text-blue-600">
+             <Link href={'/forget-password'}>Forget password</Link>
           </div>
         </div>
       </div>

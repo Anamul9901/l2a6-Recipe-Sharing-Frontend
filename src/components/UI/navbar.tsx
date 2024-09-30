@@ -1,3 +1,4 @@
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -6,21 +7,22 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from '@nextui-org/navbar';
-import { Button } from '@nextui-org/button';
-import { Kbd } from '@nextui-org/kbd';
-import { Link } from '@nextui-org/link';
-import { Input } from '@nextui-org/input';
-import { link as linkStyles } from '@nextui-org/theme';
-import NextLink from 'next/link';
-import clsx from 'clsx';
+} from "@nextui-org/navbar";
+import { Link } from "@nextui-org/link";
+import { link as linkStyles } from "@nextui-org/theme";
+import NextLink from "next/link";
+import clsx from "clsx";
 
-import { siteConfig } from '@/src/config/site';
-import { ThemeSwitch } from '@/src/components/theme-switch';
-import { SearchIcon, Logo } from '@/src/assets/icons';
-import NavberDropdown from './navberDropdown';
+import { siteConfig } from "@/src/config/site";
+import { ThemeSwitch } from "@/src/components/theme-switch";
+import { Logo } from "@/src/assets/icons";
+import NavberDropdown from "./navberDropdown";
+import { useAppSelector } from "@/src/redux/hooks";
+import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
+import { Button } from "@nextui-org/button";
 
 export const Navbar = () => {
+  const user = useAppSelector(selectCurrentUser);
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -35,8 +37,8 @@ export const Navbar = () => {
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
-                  linkStyles({ color: 'foreground' }),
-                  'data-[active=true]:text-primary data-[active=true]:font-medium'
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -56,14 +58,14 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem>
-          <NavberDropdown />
+          {user?.user ? <NavberDropdown /> : <Link href='/login'>Login</Link>}
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarItem>
-          <NavberDropdown />
+        {user?.user ? <NavberDropdown /> : <Link href='/login'>Login</Link>}
         </NavbarItem>
         <NavbarMenuToggle />
       </NavbarContent>
@@ -75,10 +77,10 @@ export const Navbar = () => {
               <Link
                 color={
                   index === 2
-                    ? 'primary'
+                    ? "primary"
                     : index === siteConfig.navMenuItems.length - 1
-                      ? 'danger'
-                      : 'foreground'
+                      ? "danger"
+                      : "foreground"
                 }
                 href="#"
                 size="lg"

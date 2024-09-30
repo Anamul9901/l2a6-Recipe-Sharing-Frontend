@@ -9,11 +9,12 @@ import {
   DropdownTrigger,
 } from "@nextui-org/dropdown";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const NavberDropdown = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   const user = useAppSelector(selectCurrentUser);
-  console.log("user", user);
   const dispatch = useAppDispatch();
 
   const handleLogOut = () => {
@@ -23,6 +24,14 @@ const NavberDropdown = () => {
   const handleNavigation = (pathname: string) => {
     router.push(pathname);
   };
+
+  // for hybration error handle
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) {
+    return null;
+  }
   return (
     <Dropdown>
       <DropdownTrigger>

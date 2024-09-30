@@ -59,8 +59,11 @@ const Register = () => {
             </Button>
           </FXForm>
 
-          <div className="text-center">
-            Already have an account ? <Link href={'/login'}>Login</Link>
+          <div className="">
+            Already have an account ? <Link href={'/login'} className='text-blue-600'>Login</Link>
+          </div>
+          <div className="text-sm text-blue-600">
+             <Link href={'/forget-password'}>Forget password</Link>
           </div>
         </div>
       </div>
