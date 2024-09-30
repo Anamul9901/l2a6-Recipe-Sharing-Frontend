@@ -1,6 +1,6 @@
 "use client";
-import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
-import { useAppSelector } from "@/src/redux/hooks";
+import { logout, selectCurrentUser } from "@/src/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { Avatar } from "@nextui-org/avatar";
 import {
   Dropdown,
@@ -13,10 +13,11 @@ import { useRouter } from "next/navigation";
 const NavberDropdown = () => {
   const router = useRouter();
   const user = useAppSelector(selectCurrentUser);
-  // console.log(user.user);
+  console.log("user", user);
+  const dispatch = useAppDispatch();
 
   const handleLogOut = () => {
-    console.log("logout");
+    dispatch(logout());
   };
 
   const handleNavigation = (pathname: string) => {
