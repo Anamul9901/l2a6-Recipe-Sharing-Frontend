@@ -7,6 +7,7 @@ import {
   useGetAllFollowerQuery,
 } from "@/src/redux/features/follower/followerApi";
 import {
+  useGetMyDataQuery,
   useGetSingleUserQuery,
   useUpdateUserMutation,
 } from "@/src/redux/features/user/userApi";
@@ -21,7 +22,6 @@ const ProfilePage = () => {
   const params = useParams();
   const id = params?.profileId;
   const myData = useAppSelector(selectCurrentUser);
-  console.log(myData?.user?._id);
   const myUserId = myData?.user?._id;
   const myUserEmail = myData?.user?.email;
   const { data: singleUser } = useGetSingleUserQuery(id);
@@ -30,6 +30,8 @@ const ProfilePage = () => {
   const { data: allFollower } = useGetAllFollowerQuery(undefined);
   const [addFollower, {}] = useAddFollowerMutation();
   const [deleteFollow, {}] = useDeleteFollowerMutation();
+  const { data: currentUserData } = useGetMyDataQuery(undefined);
+  const currentUserFollowing = currentUserData?.data[0]?.following;
 
   const findFollowe = allFollower?.data?.find(
     (item: any) => item?.userId == id && item?.followerEmail == myUserEmail
@@ -39,45 +41,77 @@ const ProfilePage = () => {
 
   // console.log(allFollower);
 
+  // const handleUpdateFollow = async () => {
+  //   const followerData = { userId: id, followerEmail: myUserEmail };
+  //   const res = await addFollower(followerData);
+
+  //   if (res?.data) {
+  //     const currentFollower = user?.follower;
+  //     const updateFollower = currentFollower + 1;
+  //     const followerData = { id, data: { follower: updateFollower } };
+  //     const updateUserFollower = updateUser;
+  //     const res = await updateUserFollower(followerData);
+
+  //     const updateFollowong = currentUserFollowing + 1;
+  //     const folloingData = {
+  //       id: myUserId,
+  //       data: { following: updateFollowong },
+  //     };
+  //     const updateUserFollowing = updateUser;
+  //     await updateUserFollowing(folloingData);
+  //   }
+  // };
+  // const handleUpdateUnfollow = async () => {
+  //   const res = await deleteFollow(findFollowe?._id);
+  //   if (res?.data) {
+  //     const currentFollower = user?.follower;
+  //     const updateFollower = currentFollower - 1;
+  //     const data = { id, data: { follower: updateFollower } };
+  //     const updateUserUnfollower = updateUser;
+  //     const res = await updateUserUnfollower(data);
+
+  //     const updateFollowong = currentUserFollowing - 1;
+  //     const folloingData = {
+  //       id: myUserId,
+  //       data: { following: updateFollowong },
+  //     };
+  //     const updateUserUnfollowing = updateUser;
+  //     await updateUserUnfollowing(folloingData);
+  //   }
+  // };
+
   const handleUpdateFollow = async () => {
     const followerData = { userId: id, followerEmail: myUserEmail };
     const res = await addFollower(followerData);
 
     if (res?.data) {
-      const currentFollower = user?.follower;
-      const updateFollower = currentFollower + 1;
-      const followerData = { id, data: { follower: updateFollower } };
-      const updateUserFollower = updateUser;
-      const res = await updateUserFollower(followerData);
+      // Update the profile user's follower count
+      const updatedFollowerCount = (await (user?.follower || 0)) + 1;
+      await updateUser({ id, data: { follower: updatedFollowerCount } });
 
-      const currentFollowing = user?.following;
-      const updateFollowong = currentFollowing + 1;
-      const folloingData = {
+      // Update the current user's following count
+      const updatedFollowingCount = (await (currentUserFollowing || 0)) + 1;
+      await updateUser({
         id: myUserId,
-        data: { following: updateFollowong },
-      };
-      const updateUserFollowing = updateUser;
-      await updateUserFollowing(folloingData);
+        data: { following: updatedFollowingCount },
+      });
     }
   };
 
   const handleUpdateUnfollow = async () => {
     const res = await deleteFollow(findFollowe?._id);
-    if (res?.data) {
-      const currentFollower = user?.follower;
-      const updateFollower = currentFollower - 1;
-      const data = { id, data: { follower: updateFollower } };
-      const updateUserFollower = updateUser;
-      const res = await updateUserFollower(data);
 
-      const currentFollowing = user?.following;
-      const updateFollowong = currentFollowing - 1;
-      const folloingData = {
+    if (res?.data) {
+      // Update the profile user's follower count
+      const updatedFollowerCount = (await (user?.follower || 0)) - 1;
+      await updateUser({ id, data: { follower: updatedFollowerCount || 0 } });
+
+      // Update the current user's following count
+      const updatedFollowingCount = (await (currentUserFollowing || 0)) - 1;
+      await updateUser({
         id: myUserId,
-        data: { following: updateFollowong },
-      };
-      const updateUserFollowing = updateUser;
-      await updateUserFollowing(folloingData);
+        data: { following: updatedFollowingCount },
+      });
     }
   };
 
