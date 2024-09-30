@@ -2,30 +2,33 @@
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import Loading from "@/src/components/UI/loading";
+import { useRegisterMutation } from "@/src/redux/features/auth/authApi";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Register = () => {
-  const isPending = false;
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const [resigter, { isLoading }] = useRegisterMutation();
+
+  const onSubmit: SubmitHandler<FieldValues> =async  (data) => {
     console.log(data);
+    const res = await resigter(data)
+    console.log('res-', res);
   };
   return (
     <div>
-      {isPending && <Loading />}
+      {isLoading && <Loading />}
       <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
         <h3 className="my-2 text-xl font-bold">Register with --</h3>
         <p className="mb-4">Welcome to --</p>
         <div className="w-[35%]">
           <FXForm
             defaultValues={{
-              name: "Anamul Haque",
-              email: "anamul@gmail.com",
-              mobileNumber: "01800000000",
-              password: "123456",
+              name: "User",
+              email: "user@gmail.com",
+              password: "user",
             }}
             onSubmit={onSubmit}
           >
@@ -34,9 +37,6 @@ const Register = () => {
             </div>
             <div className="py-3">
               <FXInput name="email" label="Email" size="sm" />
-            </div>
-            <div className="py-3">
-              <FXInput name="mobileNumber" label="Mobile Number" size="sm" />
             </div>
             <div className="py-3">
               <FXInput name="password" label="Password" size="sm" />
