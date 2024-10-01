@@ -14,6 +14,7 @@ const recipeApi = baseApi.injectEndpoints({
 
     addRecipe: builder.mutation({
       query: (data) => {
+        console.log('data', data);
         return {
           url: '/recipe',
           method: 'POST',

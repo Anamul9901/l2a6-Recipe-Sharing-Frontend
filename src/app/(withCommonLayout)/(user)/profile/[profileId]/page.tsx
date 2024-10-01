@@ -1,5 +1,6 @@
 "use client";
 import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
+import CreateRecipeModal from "@/src/components/modals/CreateRecipeModal";
 import UpdateProfileModal from "@/src/components/modals/UpdateProfileModal";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import {
@@ -165,11 +166,11 @@ const ProfilePage = () => {
                   </div>
                 ) : (
                   <div className="md:flex gap-2 text-center">
-                   <div className="pb-1">
-                   <UpdateProfileModal />
-                   </div>
                     <div className="pb-1">
-                    <ChangePasswordModal />
+                      <UpdateProfileModal />
+                    </div>
+                    <div className="pb-1">
+                      <ChangePasswordModal />
                     </div>
                   </div>
                 )}
@@ -218,18 +219,16 @@ const ProfilePage = () => {
           </div>
 
           {/* Main Content (Posts) */}
-          <div className="w-full md:w-9/12">
+          <div className="w-full md:w-10/12">
             <div className="bg-default-50 p-4 rounded-lg shadow-md">
-              <h3 className="font-semibold text-lg mb-4">
+              <h3 className="font-semibold text-lg mb-2">
                 Whats on your mind?
               </h3>
-              <textarea
-                className="w-full p-3 rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Write something..."
-              ></textarea>
-              <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Post
-              </button>
+              <div className="flex justify-end">
+                <button className="mt-2 px-4 py-2  text-white rounded-lg ">
+                  <CreateRecipeModal />
+                </button>
+              </div>
             </div>
 
             <div className="bg-default-50 p-4 rounded-lg shadow-md mt-4">

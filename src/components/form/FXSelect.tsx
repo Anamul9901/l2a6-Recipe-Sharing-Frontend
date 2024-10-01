@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 
 interface IProps extends IInput {
   options: {
-    key: string;
+    key: any;
     label: string;
   }[];
 }
