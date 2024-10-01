@@ -42,7 +42,7 @@ const HomePage = () => {
         {/* Sidebar (Static) */}
         <aside className="w-3/12  pr-4 hidden md:block">
           <div className="fixed lg:w-[230px]  md:w-[150px]">
-            <div className="bg-gradient-to-br h-[80vh] from-gray-800 to-gray-700 p-6 rounded-xl shadow-xl text-white static">
+            <div className="bg-gradient-to-br h-[80vh] from-default-50 to-default-300 p-6 rounded-xl shadow-xl text-default-800 static">
               <h3 className="font-semibold text-xl mb-6 tracking-wider">
                 Menu
               </h3>

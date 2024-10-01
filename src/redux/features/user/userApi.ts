@@ -3,13 +3,13 @@ import { baseApi } from "../../api/baseApi";
 const userInfoApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllUser: builder.query({
-      query: (email) => {
+      query: () => {
         return {
           url: "/user",
           method: "GET",
-          params: { email },
         };
       },
+      providesTags: ["user"],
     }),
 
     getMyData: builder.query({
@@ -20,6 +20,7 @@ const userInfoApi = baseApi.injectEndpoints({
           body: data,
         };
       },
+      providesTags: ["user"],
     }),
 
     getSingleUser: builder.query({
@@ -29,7 +30,7 @@ const userInfoApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ['user'],
+      providesTags: ["user"],
     }),
 
     updateUser: builder.mutation({

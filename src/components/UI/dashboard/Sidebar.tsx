@@ -5,14 +5,13 @@ import { useParams, useSearchParams } from "next/navigation";
 const Sidebar = () => {
   const searchParams  = useSearchParams();
   const queryValue = searchParams.get('key');
-  console.log('para--', queryValue);
   return (
     <div>
-      <div className="flex max-w-[1300px] mx-auto w-full">
+      <div className="flex">
         {/* dashboard side bar */}
         <div className="md:w-64 w-14 pt-6 min-h-screen bg-neutral-700">
           <ul className="menu">
-            <Link href="/dashboard/home">
+            <Link href="/dashboard?key=dashboard">
               <div className=" flex justify-center mb-2">
                 <img
                   className="md:w-[50%] rounded mb-5"
@@ -27,7 +26,7 @@ const Sidebar = () => {
 
             <li>
               <Link
-                href="/dashboard/home"
+                href="/dashboard?key=dashboard"
                className={queryValue === "dashboard" ? "text-[#ff4a4afd] underline font-black": ""}
               >
                 {/* <RxDashboard /> */}----
@@ -40,17 +39,11 @@ const Sidebar = () => {
             <div>
               <li>
                 <Link
-                  href="my-bookings"
-                  //   className={({ isActive, isPending }) =>
-                  //     isPending
-                  //       ? "pending"
-                  //       : isActive
-                  //       ? "text-[#050506] underline font-black"
-                  //       : "lg:text-white "
-                  //   }
+                  href="/dashboard/users?key=users"
+                  className={queryValue === "users" ? "text-[#ff4a4afd] underline font-black": ""}
                 >
                   {/* <FaRegBookmark /> */}---
-                  <span className="hidden md:inline-block">My Bookings</span>
+                  <span className="hidden md:inline-block">Users</span>
                 </Link>
               </li>
             </div>
@@ -87,8 +80,6 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-        {/* dashboard content */}
-        <div className="flex-1 p-8"></div>
       </div>
     </div>
   );
