@@ -1,85 +1,92 @@
 "use client"
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const Sidebar = () => {
-  const searchParams  = useSearchParams();
+  const searchParams = useSearchParams();
   const queryValue = searchParams.get('key');
+
   return (
-    <div>
-      <div className="flex">
-        {/* dashboard side bar */}
-        <div className="md:w-64 w-14 pt-6 min-h-screen bg-neutral-700">
-          <ul className="menu">
+    <div className="min-h-screen fixed h-full flex bg-gray-900">
+      {/* Dashboard Sidebar */}
+      <div className="md:w-64 w-20 bg-gradient-to-b from-purple-900 to-blue-900 pt-6 shadow-2xl relative">
+        <ul className="menu flex flex-col items-center md:items-start p-4">
+          {/* Logo */}
+          <Link href="/dashboard?key=dashboard">
+            <div className="flex justify-center mb-8 hover:scale-105 transition-all duration-300">
+              <img
+                className="md:w-2/3 w-12 rounded-full border border-purple-500 shadow-lg"
+                src="https://i.ibb.co/LxLzCSH/Picsart-24-08-29-12-34-16-998.png"
+                alt="Logo"
+              />
+            </div>
+          </Link>
+
+          <hr className="border-purple-500 w-full mb-4 opacity-40" />
+
+          {/* Dashboard */}
+          <li className="w-full mb-2">
             <Link href="/dashboard?key=dashboard">
-              <div className=" flex justify-center mb-2">
-                <img
-                  className="md:w-[50%] rounded mb-5"
-                  src={
-                    "https://i.ibb.co/LxLzCSH/Picsart-24-08-29-12-34-16-998.png"
-                  }
-                  alt=""
-                />
+              <div
+                className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
+                  queryValue === "dashboard"
+                    ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
+                    : ""
+                }`}
+              >
+                <span className="material-icons md:hidden">dashboard</span>
+                <span className="hidden md:inline-block ml-2">Dashboard</span>
               </div>
             </Link>
-            <hr className="my-4 mx-2" />
+          </li>
 
-            <li>
-              <Link
-                href="/dashboard?key=dashboard"
-               className={queryValue === "dashboard" ? "text-[#ff4a4afd] underline font-black": ""}
+          {/* Users */}
+          <li className="w-full mb-2">
+            <Link href="/dashboard/users?key=users">
+              <div
+                className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
+                  queryValue === "users"
+                    ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
+                    : ""
+                }`}
               >
-                {/* <RxDashboard /> */}----
-                <span className="hidden md:inline-block">Dashboard</span>
-              </Link>
-            </li>
+                <span className="material-icons md:hidden">people</span>
+                <span className="hidden md:inline-block ml-2">Users</span>
+              </div>
+            </Link>
+          </li>
 
-            {/* //  user sidebar */}
+          {/* Recipes */}
+          <li className="w-full mb-2">
+            <Link href="/dashboard/recipes?key=recipes">
+              <div
+                className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
+                  queryValue === "recipes"
+                    ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
+                    : ""
+                }`}
+              >
+                <span className="material-icons md:hidden">restaurant</span>
+                <span className="hidden md:inline-block ml-2">Recipes</span>
+              </div>
+            </Link>
+          </li>
 
-            <div>
-              <li>
-                <Link
-                  href="/dashboard/users?key=users"
-                  className={queryValue === "users" ? "text-[#ff4a4afd] underline font-black": ""}
-                >
-                  {/* <FaRegBookmark /> */}---
-                  <span className="hidden md:inline-block">Users</span>
-                </Link>
-              </li>
-            </div>
+          <hr className="border-purple-500 w-full mb-4 opacity-40" />
 
-            {/* admin sidebar*/}
-            {/* {user && (user as any)?.role == "admin" && ( */}
-            <div>
-              <li>
-                <Link
-                  href="facility-management"
-                  //   className={({ isActive, isPending }) =>
-                  //     isPending
-                  //       ? "pending"
-                  //       : isActive
-                  //       ? "text-[#050506] underline font-black"
-                  //       : "lg:text-white"
-                  //   }
-                >
-                  {/* <FaFlagCheckered /> */}---
-                  <span className="hidden md:inline-block">
-                    Facility Management
-                  </span>
-                </Link>
-              </li>
-            </div>
-            {/* )} */}
+          {/* Home */}
+          <li className="w-full mb-2">
+            <Link href="/">
+              <div className="block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl">
+                <span className="material-icons md:hidden">home</span>
+                <span className="hidden md:inline-block ml-2">Home</span>
+              </div>
+            </Link>
+          </li>
+        </ul>
 
-            <hr className="my-4 mx-2" />
-            <li>
-              <Link href="/">
-                {/* <FaHouseMedicalFlag /> */}---
-                <span className="hidden md:inline-block">Home</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
+        {/* Bottom Glow Effect */}
+        <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-purple-500 to-blue-500 opacity-75 blur-lg"></div>
       </div>
     </div>
   );
