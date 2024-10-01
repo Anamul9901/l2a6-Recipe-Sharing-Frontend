@@ -18,7 +18,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   const [addUpvote] = useAddRatingOrUpvoteMutation();
   const { data: getAllRatingAndUpvote } =
     useGetAllRatingAndUpvoteQuery(undefined);
-    const [deleteUpvote] = useDeleteRatingOrUpvoteMutation();
+  const [deleteUpvote] = useDeleteRatingOrUpvoteMutation();
 
   const handleUpvote = async (id: string) => {
     const findRecipe = getAllRecipe?.data?.find(
@@ -35,6 +35,18 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         item?.userEmail == loggedUserEmail
     );
 
+    // if findUpvote is true  then delete it and descrease -1 upvote
+    if (findUpvote) {
+      const currentUpvote = findRecipe?.upvote;
+      const updateUpvote = currentUpvote - 1;
+      const finalData = { id, data: { upvote: updateUpvote } };
+      const res = await updateRecipe(finalData).unwrap();
+      if (res.success) {
+        const res = await deleteUpvote(findUpvote?._id).unwrap();
+      }
+    }
+
+    // if !findUpvote then
     if (!findUpvote) {
       const res = await updateRecipe(finalData).unwrap();
       if (res.success) {
@@ -55,9 +67,9 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
             const currentDownVote = findRecipe?.downvote;
             const updateDownvote = currentDownVote - 1;
             const finalData = { id, data: { downvote: updateDownvote } };
-             await updateRecipe(finalData).unwrap();
-             
-             const res = await deleteUpvote(findDownvote?._id).unwrap()
+            await updateRecipe(finalData).unwrap();
+
+            const res = await deleteUpvote(findDownvote?._id).unwrap();
           }
         }
       }
@@ -78,6 +90,18 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         item?.userEmail == loggedUserEmail
     );
 
+     // if findUpvote is true  then delete it and descrease -1 upvote
+     if (findDownvote) {
+      const currentDownvote = findRecipe?.downvote;
+      const updateDownvote = currentDownvote - 1;
+      const finalData = { id, data: { downvote: updateDownvote } };
+      const res = await updateRecipe(finalData).unwrap();
+      if (res.success) {
+        const res = await deleteUpvote(findDownvote?._id).unwrap();
+      }
+    }
+
+
     if (!findDownvote) {
       const res = await updateRecipe(finalData).unwrap();
       if (res?.success) {
@@ -88,21 +112,21 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         };
         const res = await addUpvote(downVote).unwrap();
         if (res.success) {
-            const findUpvote = await getAllRatingAndUpvote?.data?.find(
-              (item: any) =>
-                item?.postId == id &&
-                item?.type == "upvote" &&
-                item?.userEmail == loggedUserEmail
-            );
-            if (findUpvote) {
-              const currentUpVote = findRecipe?.upvote;
-              const updatedUpvote = currentUpVote - 1;
-              const finalData = { id, data: { upvote: updatedUpvote } };
-               await updateRecipe(finalData).unwrap();
-               
-               const res = await deleteUpvote(findUpvote?._id).unwrap()
-            }
+          const findUpvote = await getAllRatingAndUpvote?.data?.find(
+            (item: any) =>
+              item?.postId == id &&
+              item?.type == "upvote" &&
+              item?.userEmail == loggedUserEmail
+          );
+          if (findUpvote) {
+            const currentUpVote = findRecipe?.upvote;
+            const updatedUpvote = currentUpVote - 1;
+            const finalData = { id, data: { upvote: updatedUpvote } };
+            await updateRecipe(finalData).unwrap();
+
+            const res = await deleteUpvote(findUpvote?._id).unwrap();
           }
+        }
       }
     }
   };

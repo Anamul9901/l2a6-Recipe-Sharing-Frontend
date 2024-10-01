@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 const page = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { data: allRecipe } = useGetAllRecipeQuery(undefined);
-  console.log(allRecipe?.data);
 
   // for hybration error handle
   useEffect(() => {
@@ -84,7 +83,7 @@ const page = () => {
            </div> */}
               <div className="pb-2">
                 {allRecipe &&
-                  allRecipe?.data?.map((recipe) => (
+                  allRecipe?.data?.map((recipe: any) => (
                     <RecipeCard recipe={recipe} />
                   ))}
               </div>

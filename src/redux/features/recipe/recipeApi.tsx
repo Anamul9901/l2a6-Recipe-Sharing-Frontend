@@ -26,7 +26,6 @@ const recipeApi = baseApi.injectEndpoints({
 
     updateRecipe: builder.mutation({
       query: (data) => {
-        console.log("data", data);
         return {
           url: `/recipe/${data?.id}`,
           method: "PUT",

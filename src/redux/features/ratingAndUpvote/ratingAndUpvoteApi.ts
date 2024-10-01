@@ -14,7 +14,6 @@ const ratingAndUpvoteApi = baseApi.injectEndpoints({
 
     addRatingOrUpvote: builder.mutation({
       query: (data) => {
-        console.log("data", data);
         return {
           url: "/rating",
           method: "POST",
