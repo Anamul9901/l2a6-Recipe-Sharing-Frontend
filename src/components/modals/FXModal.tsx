@@ -28,20 +28,18 @@ export default function FXModal({
   buttonText,
   children,
   title,
-  buttonVariant = "light",
   buttonClassName,
 }: IProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <div>
-      <Button
+      <button
         className={buttonClassName}
-        variant={buttonVariant}
-        onPress={onOpen}
+        onClick={onOpen}
       >
         {buttonText}
-      </Button>
+      </button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (

@@ -10,8 +10,11 @@ import {
   useUpdateRecipeMutation,
 } from "@/src/redux/features/recipe/recipeApi";
 import { useAppSelector } from "@/src/redux/hooks";
+import CommentModal from "../modals/CommentModal";
+import { useGetAllCommentQuery } from "@/src/redux/features/comment/commentApi";
 
 const RecipeCard = ({ recipe }: { recipe: any }) => {
+  const [recipeId, setRecipeId] = useState("");
   const user = useAppSelector(selectCurrentUser);
   const loggedUserEmail = user?.user?.email;
   const { data: getAllRecipe } = useGetAllRecipeQuery(undefined);
@@ -23,6 +26,10 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
 
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [isDownvoted, setIsDownvoted] = useState(false);
+  const { data: allComment } = useGetAllCommentQuery(undefined);
+  const filterComment = allComment?.data?.filter(
+    (comment: any) => comment?.postId == recipeId
+  );
 
   const handleUpvote = async (id: string) => {
     const findRecipe = getAllRecipe?.data?.find(
@@ -158,19 +165,6 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
           </span>
         </div>
 
-        {/* Comments */}
-        <div className="mt-4">
-          <h3 className="font-semibold text-lg mb-2">Comments</h3>
-          <ul>
-            {recipe?.comment?.map((cmt: any) => (
-              <li key={cmt?._id} className="mb-2">
-                <p className="text-sm font-medium">{cmt?.user}</p>
-                <p className="text-sm text-gray-700">{cmt?.message}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {/* Post and Premium Status */}
         <div className="mt-4 flex items-center justify-between">
           <span className="text-sm text-gray-500">
@@ -184,8 +178,8 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
             {recipe?.isPremium ? "Premium" : "Free"}
           </span>
         </div>
-        <div>
-          <span className="text-sm text-gray-500">
+        <div className="flex items-center">
+          <span className="text-sm text-gray-500 flex-1">
             <button
               onClick={() => handleUpvote(recipe?._id)}
               className={`${
@@ -204,6 +198,12 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
               Downvotes: {recipe?.downvote}
             </button>
           </span>
+          <div
+            onClick={() => setRecipeId(recipe?._id)}
+            className="text-gray-500"
+          >
+            <CommentModal id={recipeId} comments={filterComment} />
+          </div>
         </div>
       </div>
     </div>

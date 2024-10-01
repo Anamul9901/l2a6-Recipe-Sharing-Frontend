@@ -5,7 +5,7 @@ import CreateRecipeModal from "@/src/components/modals/CreateRecipeModal";
 import { useGetAllRecipeQuery } from "@/src/redux/features/recipe/recipeApi";
 import { useEffect, useState } from "react";
 
-const page = () => {
+const HomePage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { data: allRecipe } = useGetAllRecipeQuery(undefined);
 
@@ -69,7 +69,7 @@ const page = () => {
             </div>
 
             {/* Example of a Post */}
-            <div className="bg-white p-4 rounded-lg shadow-lg mt-4">
+            <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-4">
               {/* <div>
            <h4 className="font-semibold text-md mb-2">John Doe</h4>
             <p className="text-gray-700">
@@ -95,4 +95,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default HomePage;
