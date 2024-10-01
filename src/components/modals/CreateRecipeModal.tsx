@@ -11,13 +11,16 @@ import Loading from "../UI/loading";
 
 const CreateRecipeModal = () => {
   const user = useAppSelector(selectCurrentUser);
-  const verifyUser: any = verifyToken(user?.token as string);
-  const userEmail = verifyUser?.email;
+  let userEmail: string;
+  if (user?.token) {
+    const verifyUser: any = verifyToken(user?.token as string);
+    userEmail = verifyUser?.email;
+  }
   const [addRecipe, { isLoading }] = useAddRecipeMutation();
 
   const onSubmit = async (data: any) => {
     if (data?.isPremium == "true") {
-      data.isPremium  = true;
+      data.isPremium = true;
     } else {
       data.isPremium = false;
     }

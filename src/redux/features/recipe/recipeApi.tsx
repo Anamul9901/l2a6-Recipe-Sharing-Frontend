@@ -1,29 +1,45 @@
-import { baseApi } from '../../api/baseApi';
+import { baseApi } from "../../api/baseApi";
 
 const recipeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllRecipe: builder.query({
       query: () => {
         return {
-          url: '/recipe',
-          method: 'GET',
+          url: "/recipe",
+          method: "GET",
         };
       },
-      providesTags: ['recipe'],
+      providesTags: ["recipe"],
     }),
 
     addRecipe: builder.mutation({
       query: (data) => {
-        console.log('data', data);
+        console.log("data", data);
         return {
-          url: '/recipe',
-          method: 'POST',
+          url: "/recipe",
+          method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ['recipe'],
+      invalidatesTags: ["recipe"],
+    }),
+
+    updateRecipe: builder.mutation({
+      query: (data) => {
+        console.log("data", data);
+        return {
+          url: `/recipe/${data?.id}`,
+          method: "PUT",
+          body: data?.data,
+        };
+      },
+      invalidatesTags: ["recipe"],
     }),
   }),
 });
 
-export const { useGetAllRecipeQuery, useAddRecipeMutation } = recipeApi;
+export const {
+  useGetAllRecipeQuery,
+  useAddRecipeMutation,
+  useUpdateRecipeMutation,
+} = recipeApi;
