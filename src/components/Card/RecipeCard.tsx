@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import {
   useAddRatingOrUpvoteMutation,
@@ -20,6 +21,9 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
     useGetAllRatingAndUpvoteQuery(undefined);
   const [deleteUpvote] = useDeleteRatingOrUpvoteMutation();
 
+  const [isUpvoted, setIsUpvoted] = useState(false);
+  const [isDownvoted, setIsDownvoted] = useState(false);
+
   const handleUpvote = async (id: string) => {
     const findRecipe = getAllRecipe?.data?.find(
       (recipe: any) => recipe?._id == id
@@ -35,7 +39,6 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         item?.userEmail == loggedUserEmail
     );
 
-    // if findUpvote is true  then delete it and descrease -1 upvote
     if (findUpvote) {
       const currentUpvote = findRecipe?.upvote;
       const updateUpvote = currentUpvote - 1;
@@ -43,10 +46,10 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
       const res = await updateRecipe(finalData).unwrap();
       if (res.success) {
         const res = await deleteUpvote(findUpvote?._id).unwrap();
+        setIsUpvoted(false);
       }
     }
 
-    // if !findUpvote then
     if (!findUpvote) {
       const res = await updateRecipe(finalData).unwrap();
       if (res.success) {
@@ -70,11 +73,14 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
             await updateRecipe(finalData).unwrap();
 
             const res = await deleteUpvote(findDownvote?._id).unwrap();
+            setIsDownvoted(false);
           }
+          setIsUpvoted(true);
         }
       }
     }
   };
+
   const handleDownVote = async (id: string) => {
     const findRecipe = getAllRecipe?.data?.find(
       (recipe: any) => recipe?._id == id
@@ -90,17 +96,16 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         item?.userEmail == loggedUserEmail
     );
 
-     // if findUpvote is true  then delete it and descrease -1 upvote
-     if (findDownvote) {
+    if (findDownvote) {
       const currentDownvote = findRecipe?.downvote;
       const updateDownvote = currentDownvote - 1;
       const finalData = { id, data: { downvote: updateDownvote } };
       const res = await updateRecipe(finalData).unwrap();
       if (res.success) {
         const res = await deleteUpvote(findDownvote?._id).unwrap();
+        setIsDownvoted(false);
       }
     }
-
 
     if (!findDownvote) {
       const res = await updateRecipe(finalData).unwrap();
@@ -125,17 +130,19 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
             await updateRecipe(finalData).unwrap();
 
             const res = await deleteUpvote(findUpvote?._id).unwrap();
+            setIsUpvoted(false);
           }
+          setIsDownvoted(true);
         }
       }
     }
   };
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg mb-4">
       {/* Recipe Image */}
       <img
         className="w-full h-48 object-cover"
-        // src={recipe.image}
         src="https://i.ibb.co.com/pX5YXS6/tra-4.jpg"
         alt={recipe?.title}
       />
@@ -170,18 +177,30 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
             Posted by: {recipe?.publishUser}
           </span>
           <span
-            className={`text-sm ${recipe?.isPremium ? "text-yellow-500" : "text-gray-500"}`}
+            className={`text-sm ${
+              recipe?.isPremium ? "text-yellow-500" : "text-gray-500"
+            }`}
           >
             {recipe?.isPremium ? "Premium" : "Free"}
           </span>
         </div>
         <div>
           <span className="text-sm text-gray-500">
-            <button onClick={() => handleUpvote(recipe?._id)} className="">
+            <button
+              onClick={() => handleUpvote(recipe?._id)}
+              className={`${
+                isUpvoted ? "bg-blue-500 text-white" : "bg-gray-200"
+              } px-2 py-1 rounded`}
+            >
               Upvotes: {recipe?.upvote}
             </button>{" "}
             |{" "}
-            <button onClick={() => handleDownVote(recipe?._id)}>
+            <button
+              onClick={() => handleDownVote(recipe?._id)}
+              className={`${
+                isDownvoted ? "bg-blue-500 text-white" : "bg-gray-200"
+              } px-2 py-1 rounded`}
+            >
               Downvotes: {recipe?.downvote}
             </button>
           </span>
