@@ -17,7 +17,6 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   const [addUpvote] = useAddRatingOrUpvoteMutation();
   const { data: getAllRatingAndUpvote } =
     useGetAllRatingAndUpvoteQuery(undefined);
-  //   console.log("getAll--", getAllRatingAndUpvote?.data);
 
   const handleUpvote = async (id: string) => {
     const findRecipe = getAllRecipe?.data?.find(
@@ -34,7 +33,6 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         item?.userEmail == loggedUserEmail
     );
 
-    console.log("findUp", findUpvote);
     if (!findUpvote) {
       const res = await updateRecipe(finalData).unwrap();
       if (res.success) {
@@ -47,7 +45,33 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
       }
     }
   };
-  const handleDownVote = (id: string) => {};
+  const handleDownVote = async (id: string) => {
+    const findRecipe = getAllRecipe?.data?.find(
+      (recipe: any) => recipe?._id == id
+    );
+    const currentDownVote = findRecipe?.downvote;
+    const updateDownvote = currentDownVote + 1;
+    const finalData = { id, data: { downvote: updateDownvote } };
+
+    const findDownvote = await getAllRatingAndUpvote?.data?.find(
+      (item: any) =>
+        item?.postId == id &&
+        item?.type == "downvote" &&
+        item?.userEmail == loggedUserEmail
+    );
+
+    if (!findDownvote) {
+      const res = await updateRecipe(finalData).unwrap();
+      if (res?.success) {
+        const downVote = {
+          postId: id,
+          userEmail: loggedUserEmail,
+          type: "downvote",
+        };
+        const res = await addUpvote(downVote).unwrap();
+      }
+    }
+  };
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg mb-4">
       {/* Recipe Image */}
