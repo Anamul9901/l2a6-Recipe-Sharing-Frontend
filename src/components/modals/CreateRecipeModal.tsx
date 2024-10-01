@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@nextui-org/button";
 import FXForm from "../form/FXForm";
 import FXInput from "../form/FXInput";
@@ -36,7 +37,7 @@ const CreateRecipeModal = () => {
     <FXModal
       title="Create Recipe"
       buttonText="Post"
-      buttonClassName="flex-1 bg-blue-600"
+      buttonClassName="flex-1"
     >
       {isLoading && <Loading />}
       <FXForm onSubmit={onSubmit}>

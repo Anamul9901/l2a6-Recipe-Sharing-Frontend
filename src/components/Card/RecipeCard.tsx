@@ -146,61 +146,72 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg mb-4">
+    <div className="max-w-md mx-auto bg-default-100 rounded-xl overflow-hidden shadow-lg mb-6 transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
       {/* Recipe Image */}
       <img
-        className="w-full h-48 object-cover"
+        className="w-full h-56 object-cover filter brightness-90 hover:brightness-110 transition-all duration-500"
         src="https://i.ibb.co.com/pX5YXS6/tra-4.jpg"
         alt={recipe?.title}
       />
 
       {/* Recipe Details */}
-      <div className="p-4">
-        <h2 className="text-xl font-semibold mb-2">{recipe?.title}</h2>
-        <p className="text-gray-700 mb-4">{recipe?.description}</p>
+      <div className="p-6">
+        <h2 className="text-2xl font-bold text-default-900 mb-3 tracking-wider">
+          {recipe?.title}
+        </h2>
+        <p className="text-default-900 mb-4 leading-relaxed tracking-wide">
+          {recipe?.description}
+        </p>
 
-        <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-500">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-sm text-default-900 tracking-widest">
             Rating: {recipe?.rating}
           </span>
         </div>
 
         {/* Post and Premium Status */}
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-sm text-gray-500">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-sm text-default-900 tracking-wide">
             Posted by: {recipe?.publishUser}
           </span>
           <span
-            className={`text-sm ${
-              recipe?.isPremium ? "text-yellow-500" : "text-gray-500"
+            className={`text-sm font-bold tracking-wide ${
+              recipe?.isPremium ? "text-yellow-500 glow" : "text-gray-400"
             }`}
           >
             {recipe?.isPremium ? "Premium" : "Free"}
           </span>
         </div>
-        <div className="flex items-center">
-          <span className="text-sm text-gray-500 flex-1">
+
+        <div className="flex items-center justify-between">
+          {/* Upvote / Downvote Buttons */}
+          <div className="flex space-x-4">
             <button
               onClick={() => handleUpvote(recipe?._id)}
-              className={`${
-                isUpvoted ? "bg-blue-500 text-white" : "bg-gray-200"
-              } px-2 py-1 rounded`}
+              className={`px-4 py-2 rounded-lg transition-all duration-500 tracking-wider ${
+                isUpvoted
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+                  : "bg-gray-200 text-gray-800"
+              } hover:from-teal-400 hover:to-blue-600 focus:outline-none shadow-lg transform hover:scale-105`}
             >
-              Upvotes: {recipe?.upvote}
-            </button>{" "}
-            |{" "}
+              Up: {recipe?.upvote}
+            </button>
             <button
               onClick={() => handleDownVote(recipe?._id)}
-              className={`${
-                isDownvoted ? "bg-blue-500 text-white" : "bg-gray-200"
-              } px-2 py-1 rounded`}
+              className={`px-4 py-2 rounded-lg transition-all duration-500 tracking-wider ${
+                isDownvoted
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+                  : "bg-gray-200 text-gray-800"
+              } hover:from-teal-400 hover:to-blue-600 focus:outline-none shadow-lg transform hover:scale-105`}
             >
-              Downvotes: {recipe?.downvote}
+              Down: {recipe?.downvote}
             </button>
-          </span>
+          </div>
+
+          {/* Comment Modal */}
           <div
             onClick={() => setRecipeId(recipe?._id)}
-            className="text-gray-500"
+            className="text-gray-600 hover:text-teal-500 cursor-pointer transition-all duration-500 transform hover:scale-110"
           >
             <CommentModal id={recipeId} comments={filterComment} />
           </div>
