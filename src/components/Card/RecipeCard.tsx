@@ -1,6 +1,7 @@
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import {
   useAddRatingOrUpvoteMutation,
+  useDeleteRatingOrUpvoteMutation,
   useGetAllRatingAndUpvoteQuery,
 } from "@/src/redux/features/ratingAndUpvote/ratingAndUpvoteApi";
 import {
@@ -17,6 +18,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   const [addUpvote] = useAddRatingOrUpvoteMutation();
   const { data: getAllRatingAndUpvote } =
     useGetAllRatingAndUpvoteQuery(undefined);
+    const [deleteUpvote] = useDeleteRatingOrUpvoteMutation();
 
   const handleUpvote = async (id: string) => {
     const findRecipe = getAllRecipe?.data?.find(
@@ -42,6 +44,22 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
           type: "upvote",
         };
         const res = await addUpvote(upvoteData).unwrap();
+        if (res.success) {
+          const findDownvote = await getAllRatingAndUpvote?.data?.find(
+            (item: any) =>
+              item?.postId == id &&
+              item?.type == "downvote" &&
+              item?.userEmail == loggedUserEmail
+          );
+          if (findDownvote) {
+            const currentDownVote = findRecipe?.downvote;
+            const updateDownvote = currentDownVote - 1;
+            const finalData = { id, data: { downvote: updateDownvote } };
+             await updateRecipe(finalData).unwrap();
+             
+             const res = await deleteUpvote(findDownvote?._id).unwrap()
+          }
+        }
       }
     }
   };
@@ -69,6 +87,22 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
           type: "downvote",
         };
         const res = await addUpvote(downVote).unwrap();
+        if (res.success) {
+            const findUpvote = await getAllRatingAndUpvote?.data?.find(
+              (item: any) =>
+                item?.postId == id &&
+                item?.type == "upvote" &&
+                item?.userEmail == loggedUserEmail
+            );
+            if (findUpvote) {
+              const currentUpVote = findRecipe?.upvote;
+              const updatedUpvote = currentUpVote - 1;
+              const finalData = { id, data: { upvote: updatedUpvote } };
+               await updateRecipe(finalData).unwrap();
+               
+               const res = await deleteUpvote(findUpvote?._id).unwrap()
+            }
+          }
       }
     }
   };

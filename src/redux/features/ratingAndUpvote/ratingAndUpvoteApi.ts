@@ -24,7 +24,7 @@ const ratingAndUpvoteApi = baseApi.injectEndpoints({
       invalidatesTags: ["rating"],
     }),
 
-    updateRatingOrUpvote: builder.mutation({
+    deleteRatingOrUpvote: builder.mutation({
       query: (id) => {
         return {
           url: `/rating/${id}`,
@@ -39,5 +39,5 @@ const ratingAndUpvoteApi = baseApi.injectEndpoints({
 export const {
   useGetAllRatingAndUpvoteQuery,
   useAddRatingOrUpvoteMutation,
-  useUpdateRatingOrUpvoteMutation,
+  useDeleteRatingOrUpvoteMutation,
 } = ratingAndUpvoteApi;
