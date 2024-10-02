@@ -18,7 +18,7 @@ const CreateOrderModal = ({
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const { data: userData } = useGetMyDataQuery(undefined);
   const user = userData?.data[0];
-  //   console.log(user);
+    console.log(user);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const finalData = {
@@ -27,7 +27,6 @@ const CreateOrderModal = ({
     };
     console.log(finalData);
     const res = await createOrder(finalData).unwrap();
-    console.log("res---", res);
     if (res.success) {
       window.location.href = res.data.payment_url;
     }
@@ -38,8 +37,8 @@ const CreateOrderModal = ({
       {isLoading && <Loading />}
       <FXModal
         title="Update Your Profile"
-        buttonText="Edit"
-        buttonClassName="flex-1 bg-gray-700"
+        buttonText="Buy"
+        buttonClassName="flex"
       >
         <FXForm onSubmit={onSubmit}>
           <div className="py-1">
