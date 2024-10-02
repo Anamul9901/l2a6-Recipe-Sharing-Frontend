@@ -15,6 +15,7 @@ import { useGetAllCommentQuery } from "@/src/redux/features/comment/commentApi";
 import { FaStar } from "react-icons/fa";
 
 const RecipeCard = ({ recipe }: { recipe: any }) => {
+  const [upvoteAnimation, setUpvoteAnimatin] = useState();
   const [recipeId, setRecipeId] = useState("");
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -33,6 +34,22 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   const filterComment = allComment?.data?.filter(
     (comment: any) => comment?.postId == recipeId
   );
+
+  //* upvote downvote and rating show START
+  const filterUpvoteAnimation = getAllRatingAndUpvote?.data?.filter(
+    (item: any) => item?.type == "upvote" && item?.userEmail == loggedUserEmail
+  );
+  console.log("filterUpvoteAnimation", filterUpvoteAnimation);
+
+  const filterDownvoteAnimation = getAllRatingAndUpvote?.data?.filter(
+    (item: any) =>
+      item?.type == "downvote" && item?.userEmail == loggedUserEmail
+  );
+
+  // const ra = filterDownvoteAnimation?.map((item: any) => item?.postId == recipe?._id)
+  // console.log(ra);
+
+  //* upvote downvote and rating show END
 
   const handleUpvote = async (id: string) => {
     const findRecipe = getAllRecipe?.data?.find(
@@ -151,12 +168,13 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   // Handle rating submission
   const handleRating = async (ratingValue: number, id: string) => {
     setUserRating(ratingValue);
+    setHoverRating(ratingValue);
 
     //current post rating length
     const filterRating = getAllRatingAndUpvote?.data?.filter(
       (rating: any) => rating?.postId == id
     );
-    const currentNumberOfUser = filterRating?.length + 1;
+    const currentNumberOfUser = filterRating?.length;
 
     // Logic to save rating to the backend
     const ratingData = {
@@ -236,7 +254,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
                     }`}
                     onClick={() => handleRating(index + 1, recipe?._id)}
                     onMouseEnter={() => setUserRating(index + 1)}
-                    onMouseLeave={() => setHoverRating(0)}
+                    onMouseLeave={() => setUserRating(0)}
                   />
                 ))}
             </div>
@@ -255,22 +273,27 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
           <button
             onClick={() => handleUpvote(recipe?._id)}
             className={`px-5 py-2 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r ${
-              isUpvoted
+              filterUpvoteAnimation?.some(
+                (item: any) => item?.postId === recipe?._id
+              )
                 ? "from-teal-400 to-purple-500 text-white"
                 : "from-gray-700 to-gray-900 text-gray-400"
             } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
           >
             👍 {recipe?.upvote}
           </button>
+
           <button
             onClick={() => handleDownVote(recipe?._id)}
             className={`px-5 py-2 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r ${
-              isDownvoted
+              filterDownvoteAnimation?.some(
+                (item: any) => item?.postId === recipe?._id
+              )
                 ? "from-teal-400 to-purple-500 text-white"
                 : "from-gray-700 to-gray-900 text-gray-400"
             } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
           >
-            👎 {recipe?.downvote}
+            👍 {recipe?.downvote}
           </button>
 
           {/* Comment Modal */}
