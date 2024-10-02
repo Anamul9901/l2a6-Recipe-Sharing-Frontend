@@ -3,11 +3,29 @@
 import RecipeCard from "@/src/components/Card/RecipeCard";
 import CreateRecipeModal from "@/src/components/modals/CreateRecipeModal";
 import { useGetAllRecipeQuery } from "@/src/redux/features/recipe/recipeApi";
+import { useGetMyDataQuery } from "@/src/redux/features/user/userApi";
 import { useEffect, useState } from "react";
 
 const HomePage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { data: allRecipe } = useGetAllRecipeQuery(undefined);
+  const { data: user } = useGetMyDataQuery(undefined);
+  const currentUser = user?.data[0];
+  const currentUserIsPremium = currentUser?.premium;
+
+  // isPremium, isDeleted, idPublish
+  const filterForUnPremiumPerson = allRecipe?.data?.filter(
+    (recipe: any) => recipe?.isPremium == false && recipe?.idPublish == true
+  );
+
+  const filterPremiumPerson = allRecipe?.data?.filter(
+    (recipe: any) => recipe?.idPublish == true
+  );
+
+  let showRecipeDepentOnUser = filterForUnPremiumPerson;
+  if (currentUserIsPremium || currentUser?.role == "admin") {
+    showRecipeDepentOnUser = filterPremiumPerson;
+  }
 
   // for hybration error handle
   useEffect(() => {
@@ -84,8 +102,8 @@ const HomePage = () => {
           {/* Example of Posts */}
           <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
             <div className="grid grid-cols-1 gap-4">
-              {allRecipe &&
-                allRecipe?.data?.map((recipe: any) => (
+              {showRecipeDepentOnUser &&
+                showRecipeDepentOnUser?.map((recipe: any) => (
                   <RecipeCard recipe={recipe} />
                 ))}
             </div>
