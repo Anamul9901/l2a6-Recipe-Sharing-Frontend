@@ -72,7 +72,7 @@ const Sidebar = () => {
             </Link>
           </li>
 
-          {/* Recipes */}
+          {/* Membership */}
           <li className="w-full mb-2">
             <Link href="/dashboard/membership?key=membership">
               <div
@@ -84,6 +84,22 @@ const Sidebar = () => {
               >
                 <span className="material-icons md:hidden">restaurant</span>
                 <span className="hidden md:inline-block ml-2">Membership</span>
+              </div>
+            </Link>
+          </li>
+
+          {/* Create admin */}
+          <li className="w-full mb-2">
+            <Link href="/dashboard/create-admin?key=create-admin">
+              <div
+                className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
+                  queryValue === "create-admin"
+                    ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
+                    : ""
+                }`}
+              >
+                <span className="material-icons md:hidden">restaurant</span>
+                <span className="hidden md:inline-block ml-2">Create Admin</span>
               </div>
             </Link>
           </li>
