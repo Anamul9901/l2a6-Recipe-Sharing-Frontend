@@ -1,10 +1,16 @@
 "use client";
 
 import CreateOrderModal from "@/src/components/modals/CreateOrderModal";
+import { useGetMyDataQuery } from "@/src/redux/features/user/userApi";
 import { useEffect, useState } from "react";
+import dayjs from "dayjs"; // Assuming you're using dayjs for date formatting
 
 const Membership = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const { data: userData } = useGetMyDataQuery(undefined);
+  const user = userData?.data[0];
+
+  // Membership options
   const memberships = [
     { price: 300, totalMonth: 1, label: "1 Month" },
     { price: 1000, totalMonth: 6, label: "6 Months" },
@@ -20,11 +26,28 @@ const Membership = () => {
     return null;
   }
 
+  // Formatting the membership expiration date
+  const formattedPremiumLastDate = user?.premiumLastDate
+    ? dayjs(user.premiumLastDate).format("DD-MM-YYYY")
+    : "N/A";
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 p-8">
-      <h1 className="text-4xl font-bold text-teal-400 mb-10 animate-pulse">
+      <h1 className="text-4xl font-bold text-teal-400 mb-10">
         Memberships
       </h1>
+
+      {/* User's membership and payment information */}
+      <div className="mb-8 text-center text-white">
+        <h1 className="text-xl">
+          Your total payment: <span className="text-teal-400">{user?.payment ?? "0"} Tk</span>
+        </h1>
+        <h1 className="text-xl">
+          Your membership valid until: <span className="text-teal-400">{formattedPremiumLastDate}</span>
+        </h1>
+      </div>
+
+      {/* Membership Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {memberships.map((membership, index) => (
           <div

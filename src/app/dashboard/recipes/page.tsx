@@ -1,18 +1,50 @@
 "use client";
-import { useDeleteRecipeMutation, useGetAllRecipeQuery } from "@/src/redux/features/recipe/recipeApi";
+import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
+import {
+  useDeleteRecipeMutation,
+  useGetAllRecipeQuery,
+  useUpdateRecipeMutation,
+} from "@/src/redux/features/recipe/recipeApi";
+import { useAppSelector } from "@/src/redux/hooks";
+import { verifyToken } from "@/src/utils/verifyToken";
 
 const DashRecipes = () => {
   const { data: allRecipe } = useGetAllRecipeQuery(undefined);
   const [deletRecipe] = useDeleteRecipeMutation();
+  const [updateRecipe] = useUpdateRecipeMutation();
+  const user = useAppSelector(selectCurrentUser);
 
-  const handleDeleteRecipe = async(id: string)=>{
-    console.log(id);
-    const res = await deletRecipe(id);
+  let verifyUser: any;
+  if (user?.token) {
+    verifyUser = verifyToken(user?.token);
   }
+
+  const filterMyRecipe = allRecipe?.data?.filter(
+    (recipe: any) => recipe?.publishUserId == verifyUser?.userId
+  );
+
+  let showRecipeLogically = filterMyRecipe;
+  if (verifyUser?.role == "admin") {
+    showRecipeLogically = allRecipe?.data;
+  }
+
+  const handleDeleteRecipe = async (id: string) => {
+    const res = await deletRecipe(id);
+  };
+
+  const handleUnpublish = async (id: string) => {
+    const data = { id, data: { idPublish: false } };
+    const res = await updateRecipe(data).unwrap();
+  };
+
+  const handlePublish = async (id: string) => {
+    const data = { id, data: { idPublish: true } };
+    const res = await updateRecipe(data).unwrap();
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 pt-10 px-4">
-      {allRecipe?.data?.map((recipe: any) => (
+      {showRecipeLogically?.map((recipe: any) => (
         <div
           key={recipe?._id}
           className="bg-default-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -50,8 +82,26 @@ const DashRecipes = () => {
               Pulisher: {recipe?.publishUser}
             </p>
 
-            <div className="flex justify-end p-2">
-              <button onClick={()=>handleDeleteRecipe(recipe?._id)} className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-full text-sm transition duration-300">
+            <div className="flex justify-end p-2 gap-1">
+              {recipe?.idPublish ? (
+                <button
+                  onClick={() => handleUnpublish(recipe?._id)}
+                  className="px-3 py-1 bg-yellow-500 hover:bg-yellow-700 rounded-full text-sm transition duration-300"
+                >
+                  unpublish
+                </button>
+              ) : (
+                <button
+                  onClick={() => handlePublish(recipe?._id)}
+                  className="px-3 py-1 bg-green-500 hover:bg-green-700 rounded-full text-sm transition duration-300"
+                >
+                  publish
+                </button>
+              )}
+              <button
+                onClick={() => handleDeleteRecipe(recipe?._id)}
+                className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-full text-sm transition duration-300"
+              >
                 Delete
               </button>
             </div>

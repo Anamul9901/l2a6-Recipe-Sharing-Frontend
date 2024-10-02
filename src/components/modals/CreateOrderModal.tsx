@@ -18,7 +18,6 @@ const CreateOrderModal = ({
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const { data: userData } = useGetMyDataQuery(undefined);
   const user = userData?.data[0];
-    console.log(user);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const finalData = {
