@@ -7,8 +7,10 @@ import {
 } from "@/src/redux/features/recipe/recipeApi";
 import { useAppSelector } from "@/src/redux/hooks";
 import { verifyToken } from "@/src/utils/verifyToken";
+import { useEffect, useState } from "react";
 
 const DashRecipes = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const { data: allRecipe } = useGetAllRecipeQuery(undefined);
   const [deletRecipe] = useDeleteRecipeMutation();
   const [updateRecipe] = useUpdateRecipeMutation();
@@ -42,72 +44,90 @@ const DashRecipes = () => {
     const res = await updateRecipe(data).unwrap();
   };
 
+  // for hybration error handle
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) {
+    return null;
+  }
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 pt-10 px-4">
-      {showRecipeLogically?.map((recipe: any) => (
-        <div
-          key={recipe?._id}
-          className="bg-default-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-        >
-          {/* Recipe Image */}
-          <img
-            className="h-40 w-full object-cover rounded-t-lg"
-            src={
-              recipe?.image ||
-              "https://i.ibb.co.com/kBNtTmC/No-Image-Available.jpg"
-            }
-            alt={recipe?.title}
-          />
+    <div>
+      <div className="text-center py-10 text-2xl font-bold">
+        {verifyUser && verifyUser?.role == "admin" ? (
+          <h1>All Users Recipe</h1>
+        ) : (
+          <h1>Your Recipe</h1>
+        )}
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2   px-4">
+        {showRecipeLogically?.map((recipe: any) => (
+          <div
+            key={recipe?._id}
+            className="bg-default-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+          >
+            {/* Recipe Image */}
+            <img
+              className="h-40 w-full object-cover rounded-t-lg"
+              src={
+                recipe?.image ||
+                "https://i.ibb.co.com/kBNtTmC/No-Image-Available.jpg"
+              }
+              alt={recipe?.title}
+            />
 
-          <div className="px-2">
-            {/* Recipe Title */}
-            <h2 className="text-xl font-semibold text-default-900">
-              {recipe?.title}
-            </h2>
+            <div className="px-2">
+              {/* Recipe Title */}
+              <h2 className="text-xl font-semibold text-default-900">
+                {recipe?.title}
+              </h2>
 
-            {/* Recipe Info */}
-            <div className="flex justify-between items-center text-default-800">
-              <div className="flex items-center">
-                <span className="text-yellow-500">&#9733;</span>
-                <p className="ml-1 text-sm">{recipe?.rating.toFixed(1)}</p>
+              {/* Recipe Info */}
+              <div className="flex justify-between items-center text-default-800">
+                <div className="flex items-center">
+                  <span className="text-yellow-500">&#9733;</span>
+                  <p className="ml-1 text-sm">{recipe?.rating.toFixed(1)}</p>
+                </div>
+                <div className="text-sm">
+                  <span className="mr-2 text-green-600">
+                    👍 {recipe?.upvote}
+                  </span>
+                  <span className="text-red-600">👎 {recipe?.downvote}</span>
+                </div>
               </div>
-              <div className="text-sm">
-                <span className="mr-2 text-green-600">👍 {recipe?.upvote}</span>
-                <span className="text-red-600">👎 {recipe?.downvote}</span>
+
+              {/* Recipe Publisher */}
+              <p className="text-xs text-default-500 mt-2">
+                Pulisher: {recipe?.publishUser}
+              </p>
+
+              <div className="flex justify-end p-2 gap-1">
+                {recipe?.idPublish ? (
+                  <button
+                    onClick={() => handleUnpublish(recipe?._id)}
+                    className="px-3 py-1 bg-yellow-500 hover:bg-yellow-700 rounded-full text-sm transition duration-300"
+                  >
+                    unpublish
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handlePublish(recipe?._id)}
+                    className="px-3 py-1 bg-green-500 hover:bg-green-700 rounded-full text-sm transition duration-300"
+                  >
+                    publish
+                  </button>
+                )}
+                <button
+                  onClick={() => handleDeleteRecipe(recipe?._id)}
+                  className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-full text-sm transition duration-300"
+                >
+                  Delete
+                </button>
               </div>
-            </div>
-
-            {/* Recipe Publisher */}
-            <p className="text-xs text-default-500 mt-2">
-              Pulisher: {recipe?.publishUser}
-            </p>
-
-            <div className="flex justify-end p-2 gap-1">
-              {recipe?.idPublish ? (
-                <button
-                  onClick={() => handleUnpublish(recipe?._id)}
-                  className="px-3 py-1 bg-yellow-500 hover:bg-yellow-700 rounded-full text-sm transition duration-300"
-                >
-                  unpublish
-                </button>
-              ) : (
-                <button
-                  onClick={() => handlePublish(recipe?._id)}
-                  className="px-3 py-1 bg-green-500 hover:bg-green-700 rounded-full text-sm transition duration-300"
-                >
-                  publish
-                </button>
-              )}
-              <button
-                onClick={() => handleDeleteRecipe(recipe?._id)}
-                className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-full text-sm transition duration-300"
-              >
-                Delete
-              </button>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
