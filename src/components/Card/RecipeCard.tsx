@@ -15,7 +15,6 @@ import { useGetAllCommentQuery } from "@/src/redux/features/comment/commentApi";
 import { FaStar } from "react-icons/fa";
 
 const RecipeCard = ({ recipe }: { recipe: any }) => {
-  const [upvoteAnimation, setUpvoteAnimatin] = useState();
   const [recipeId, setRecipeId] = useState("");
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -49,7 +48,6 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
     (item: any) => item?.type == "rating" && item?.userEmail == loggedUserEmail
   );
 
-  console.log("ratin", filtreRatingAnimation);
 
   // const ra = filterDownvoteAnimation?.map((item: any) => item?.postId == recipe?._id)
   // console.log(ra);
@@ -242,31 +240,31 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
               Rating: {recipe?.rating}
             </span>
             {/* Rating Section */}
-<div className="flex items-center mb-4">
-  <span className="text-sm text-teal-400 tracking-widest mr-4">
-    Rate:
-  </span>
-  {Array(5)
-    .fill(0)
-    .map((_, index) => (
-      <FaStar
-        key={index}
-        size={24}
-        className={`cursor-pointer transition-all ${
-          // Apply yellow color if the star index is less than the user's rating
-          index < (filtreRatingAnimation?.find(
-            (item: any) => item?.postId === recipe?._id
-          )?.rating || userRating) 
-            ? "text-yellow-400"
-            : "text-gray-500"
-        }`}
-        onClick={() => handleRating(index + 1, recipe?._id)} // Set the rating on click
-        onMouseEnter={() => setUserRating(index + 1)} // Show rating on hover
-        onMouseLeave={() => setUserRating(0)} // Reset on hover leave
-      />
-    ))}
-</div>
-
+            <div className="flex items-center mb-4">
+              <span className="text-sm text-teal-400 tracking-widest mr-4">
+                Rate:
+              </span>
+              {Array(5)
+                .fill(0)
+                .map((_, index) => (
+                  <FaStar
+                    key={index}
+                    size={24}
+                    className={`cursor-pointer transition-all ${
+                      // Apply yellow color if the star index is less than the user's rating
+                      index <
+                      (filtreRatingAnimation?.find(
+                        (item: any) => item?.postId === recipe?._id
+                      )?.rating || userRating)
+                        ? "text-yellow-400"
+                        : "text-gray-500"
+                    }`}
+                    onClick={() => handleRating(index + 1, recipe?._id)} // Set the rating on click
+                    onMouseEnter={() => setUserRating(index + 1)} // Show rating on hover
+                    onMouseLeave={() => setUserRating(0)} // Reset on hover leave
+                  />
+                ))}
+            </div>
           </div>
           <span
             className={`text-sm font-bold tracking-wider ${

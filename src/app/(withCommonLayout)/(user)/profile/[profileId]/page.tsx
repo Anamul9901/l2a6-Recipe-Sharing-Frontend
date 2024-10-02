@@ -1,4 +1,5 @@
 "use client";
+import RecipeCard from "@/src/components/Card/RecipeCard";
 import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
 import CreateRecipeModal from "@/src/components/modals/CreateRecipeModal";
 import UpdateProfileModal from "@/src/components/modals/UpdateProfileModal";
@@ -8,6 +9,7 @@ import {
   useDeleteFollowerMutation,
   useGetAllFollowerQuery,
 } from "@/src/redux/features/follower/followerApi";
+import { useGetAllRecipeQuery } from "@/src/redux/features/recipe/recipeApi";
 import {
   useGetMyDataQuery,
   useGetSingleUserQuery,
@@ -34,12 +36,17 @@ const ProfilePage = () => {
   const [deleteFollow, {}] = useDeleteFollowerMutation();
   const { data: currentUserData } = useGetMyDataQuery(undefined);
   const currentUserFollowing = currentUserData?.data[0]?.following;
+  const { data: allRecipe } = useGetAllRecipeQuery(undefined);
+
+  const filterRecipe = allRecipe?.data?.filter(
+    (recipe: any) => recipe?.publishUserId == id
+  );
+  // console.log("all recipe", filterRecipe);
 
   const findFollowe = allFollower?.data?.find(
     (item: any) => item?.userId == id && item?.followerEmail == myUserEmail
   );
 
-  // console.log("findFo", findFollowe?._id);
 
   // console.log(allFollower);
 
@@ -220,54 +227,25 @@ const ProfilePage = () => {
 
           {/* Main Content (Posts) */}
           <div className="w-full md:w-10/12">
-            <div className="bg-default-50 p-4 rounded-lg shadow-md">
-              <h3 className="font-semibold text-lg mb-2">
-                Whats on your mind?
+            <div className="bg-gradient-to-r from-default-50 to-default-300 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center">
+              <h3 className="font-semibold text-xl text-default-800">
+                What's on your mind?
               </h3>
-              <div className="flex justify-end">
-                <button className="mt-2 px-4 py-2  text-white rounded-lg ">
-                  <CreateRecipeModal />
-                </button>
-              </div>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-indigo-500 transition-all duration-300">
+                <CreateRecipeModal />
+              </button>
             </div>
 
             <div className="bg-default-50 p-4 rounded-lg shadow-md mt-4">
               <h3 className="font-semibold text-lg mb-2">Recent Posts</h3>
 
-              {/* Example Post */}
-              <div className="bg-gray-50 p-3 rounded-lg mt-4">
-                <div className="flex items-start space-x-4">
-                  <img
-                    className="w-10 h-10 rounded-full"
-                    // src={user.profileImg}
-                    src="https://i.ibb.co.com/z89cgQr/profile.webp"
-                    alt="User"
-                  />
-                  <div>
-                    <h4 className="font-semibold">{user?.email}</h4>
-                    <p className="text-sm text-gray-500">1 hour ago</p>
-                    <p className="mt-2">
-                      This is an example of a recent post. Here goes the
-                      content.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Example Post */}
-              <div className="bg-gray-50 p-3 rounded-lg mt-4">
-                <div className="flex items-start space-x-4">
-                  <img
-                    className="w-10 h-10 rounded-full"
-                    // src={user.profileImg}
-                    src="https://i.ibb.co.com/z89cgQr/profile.webp"
-                    alt="User"
-                  />
-                  <div>
-                    <h4 className="font-semibold">{user?.email}</h4>
-                    <p className="text-sm text-gray-500">2 days ago</p>
-                    <p className="mt-2">Another post example for the feed.</p>
-                  </div>
+              {/* Example of Posts */}
+              <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
+                <div className="grid grid-cols-1 gap-4">
+                  {filterRecipe?.length ?
+                    filterRecipe?.map((recipe: any) => (
+                      <RecipeCard recipe={recipe} />
+                    )): <div className="text-center text-sm">No post available</div>}
                 </div>
               </div>
             </div>

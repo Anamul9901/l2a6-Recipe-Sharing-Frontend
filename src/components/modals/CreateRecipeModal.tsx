@@ -12,11 +12,12 @@ import Loading from "../UI/loading";
 
 const CreateRecipeModal = () => {
   const user = useAppSelector(selectCurrentUser);
-  let userEmail: string;
+  let verifyUser: any
   if (user?.token) {
-    const verifyUser: any = verifyToken(user?.token as string);
-    userEmail = verifyUser?.email;
-  }
+     verifyUser = verifyToken(user?.token as string);
+    }
+    const publishUser = verifyUser?.email;
+    const publishUserId = verifyUser?.userId;
   const [addRecipe, { isLoading }] = useAddRecipeMutation();
 
   const onSubmit = async (data: any) => {
@@ -25,8 +26,7 @@ const CreateRecipeModal = () => {
     } else {
       data.isPremium = false;
     }
-    const finalData = { ...data, publishUser: userEmail };
-    // console.log("final", finalData);
+    const finalData = { ...data, publishUser, publishUserId };
     const res = await addRecipe(finalData).unwrap();
   };
   const selectOpdiont = [
