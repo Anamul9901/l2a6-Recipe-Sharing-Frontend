@@ -15,7 +15,7 @@ import { useGetAllCommentQuery } from "@/src/redux/features/comment/commentApi";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 
-const RecipeCard = ({ recipe }: { recipe: any }) => {
+const RecipeDetailCard = ({ recipe }: { recipe: any }) => {
   const [recipeId, setRecipeId] = useState("");
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -212,113 +212,111 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500  hover:shadow-neon">
-      {/* Recipe Image */}
-      <div className="relative">
-        <img
-          className="w-full h-full object-cover"
-          src={
-            recipe?.image ||
-            "https://i.ibb.co.com/kBNtTmC/No-Image-Available.jpg"
-          }
-          alt={recipe?.title}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black opacity-50"></div>
+    <div className="max-w-full mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:shadow-neon">
+  {/* Recipe Image */}
+  <div className="relative h-72 md:h-96">
+    <img
+      className="w-full h-full object-cover"
+      src={recipe?.image || "https://i.ibb.co/kBNtTmC/No-Image-Available.jpg"}
+      alt={recipe?.title}
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black opacity-50"></div>
+  </div>
+
+  {/* Recipe Details */}
+  <div className="px-6 py-4 space-y-4">
+    {/* Title */}
+    <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
+      {recipe?.title}
+    </h2>
+
+    {/* Link to Full Recipe */}
+    <Link
+      href={`/recipe/${recipe?._id}`}
+      className="inline-block text-lg font-semibold text-teal-400 bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 hover:underline"
+    >
+      View Full Recipe
+    </Link>
+
+    {/* Rating and Premium Status */}
+    <div className="flex justify-between items-center">
+      <div>
+        <span className="text-lg text-teal-400 tracking-wide">
+          Avg. Rating: {recipe?.rating}
+        </span>
+        {/* Rating Section */}
+        <div className="flex items-center space-x-1">
+          {Array(5)
+            .fill(0)
+            .map((_, index) => (
+              <FaStar
+                key={index}
+                size={24}
+                className={`cursor-pointer transition-all ${
+                  index <
+                  (filtreRatingAnimation?.find(
+                    (item: any) => item?.postId === recipe?._id
+                  )?.rating || userRating)
+                    ? "text-yellow-400"
+                    : "text-gray-500"
+                }`}
+                onClick={() => handleRating(index + 1, recipe?._id)}
+                onMouseEnter={() => setUserRating(index + 1)}
+                onMouseLeave={() => setUserRating(0)}
+              />
+            ))}
+        </div>
       </div>
 
-      {/* Recipe Details */}
-      <div className="px-6 pt-2">
-        <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
-          {recipe?.title}
-        </h2>
-        <Link href={`/recipe/${recipe?._id}`} className=" font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
-          If you want to create this...
-        </Link>
+      <span
+        className={`text-lg font-bold ${
+          recipe?.isPremium ? "text-yellow-400" : "text-gray-500"
+        }`}
+      >
+        {recipe?.isPremium ? "Premium" : "Free"}
+      </span>
+    </div>
 
-        {/* Rating and Premium Status */}
-        <div className="flex items-center justify-between">
-          {/* Rating */}
-          <div className="">
-            <span className="text-sm text-teal-400 tracking-widest glow">
-              Avg. Rating: {recipe?.rating}
-            </span>
-            {/* Rating Section */}
-            <div className="flex items-center mb-1">
-              <span className="text-sm text-teal-400 tracking-widest mr-4">
-                My Rate:
-              </span>
-              {Array(5)
-                .fill(0)
-                .map((_, index) => (
-                  <FaStar
-                    key={index}
-                    size={24}
-                    className={`cursor-pointer transition-all ${
-                      // Apply yellow color if the star index is less than the user's rating
-                      index <
-                      (filtreRatingAnimation?.find(
-                        (item: any) => item?.postId === recipe?._id
-                      )?.rating || userRating)
-                        ? "text-yellow-400"
-                        : "text-gray-500"
-                    }`}
-                    onClick={() => handleRating(index + 1, recipe?._id)} // Set the rating on click
-                    onMouseEnter={() => setUserRating(index + 1)} // Show rating on hover
-                    onMouseLeave={() => setUserRating(0)} // Reset on hover leave
-                  />
-                ))}
-            </div>
-          </div>
-          <span
-            className={`text-sm font-bold tracking-wider ${
-              recipe?.isPremium ? "text-yellow-400 glow-neon" : "text-gray-500"
-            }`}
-          >
-            {recipe?.isPremium ? "Premium" : "Free"}
-          </span>
-        </div>
+    {/* Upvote / Downvote */}
+    <div className="flex items-center space-x-4">
+      <button
+        onClick={() => handleUpvote(recipe?._id)}
+        className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-500 tracking-wide bg-gradient-to-r ${
+          filterUpvoteAnimation?.some(
+            (item: any) => item?.postId === recipe?._id
+          )
+            ? "from-teal-400 to-purple-500 text-white"
+            : "from-gray-700 to-gray-900 text-gray-400"
+        } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
+      >
+        👍 <span>{recipe?.upvote}</span>
+      </button>
 
-        {/* Upvote / Downvote Buttons */}
-        <div className="flex items-center justify-between">
-          <div className="flex justify-center gap-2 items-center">
-            <button
-              onClick={() => handleUpvote(recipe?._id)}
-              className={`px-4 py-2 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r ${
-                filterUpvoteAnimation?.some(
-                  (item: any) => item?.postId === recipe?._id
-                )
-                  ? "from-teal-400 to-purple-500 text-white"
-                  : "from-gray-700 to-gray-900 text-gray-400"
-              } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
-            >
-              👍 {recipe?.upvote}
-            </button>
+      <button
+        onClick={() => handleDownVote(recipe?._id)}
+        className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-500 tracking-wide bg-gradient-to-r ${
+          filterDownvoteAnimation?.some(
+            (item: any) => item?.postId === recipe?._id
+          )
+            ? "from-teal-400 to-purple-500 text-white"
+            : "from-gray-700 to-gray-900 text-gray-400"
+        } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
+      >
+        👎 <span>{recipe?.downvote}</span>
+      </button>
 
-            <button
-              onClick={() => handleDownVote(recipe?._id)}
-              className={`px-4 py-2 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r ${
-                filterDownvoteAnimation?.some(
-                  (item: any) => item?.postId === recipe?._id
-                )
-                  ? "from-teal-400 to-purple-500 text-white"
-                  : "from-gray-700 to-gray-900 text-gray-400"
-              } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
-            >
-              👎 {recipe?.downvote}
-            </button>
-          </div>
-
-          {/* Comment Modal */}
-          <div
-            onClick={() => setRecipeId(recipe?._id)}
-            className="text-teal-400 hover:text-purple-500 cursor-pointer transition-all duration-500 transform hover:scale-110 glow-neon"
-          >
-            <CommentModal id={recipeId} comments={filterComment} />
-          </div>
-        </div>
+      {/* Comment Modal */}
+      <div
+        onClick={() => setRecipeId(recipe?._id)}
+        className="text-teal-400 hover:text-purple-500 cursor-pointer transition-all duration-500 transform hover:scale-110 glow-neon"
+      >
+        <CommentModal id={recipeId} comments={filterComment} />
       </div>
     </div>
+  </div>
+</div>
+
   );
 };
 
-export default RecipeCard;
+export default RecipeDetailCard;

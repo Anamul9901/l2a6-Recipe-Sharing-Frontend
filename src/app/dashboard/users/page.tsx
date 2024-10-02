@@ -3,15 +3,23 @@ import {
   useGetAllUserQuery,
   useUpdateUserMutation,
 } from "@/src/redux/features/user/userApi";
+import { MdDelete } from "react-icons/md";
+import { FiEdit3 } from "react-icons/fi";
+import UpdateUserModal from "@/src/components/modals/UpdateUserModal";
+import { useState } from "react";
 
 const Users = () => {
+  const [selectUser, setSelectUser] = useState({});
   const { data: allUsers } = useGetAllUserQuery(undefined);
   const [updateUser] = useUpdateUserMutation();
-  console.log(allUsers?.data);
 
   const filterUser = allUsers?.data?.filter(
     (user: any) => user?.isDeleted == false
   );
+
+  const handleUpdateUser = async (id: string) => {
+    setSelectUser(id);
+  };
 
   const handleDeleteUser = async (id: string) => {
     console.log(id);
@@ -47,6 +55,9 @@ const Users = () => {
                   Name
                 </th>
                 <th className="px-6 py-3 border-b-2 border-gray-700 text-left font-semibold uppercase tracking-wider">
+                  Role
+                </th>
+                <th className="px-6 py-3 border-b-2 border-gray-700 text-left font-semibold uppercase tracking-wider">
                   Email
                 </th>
                 <th className="px-6 py-3 border-b-2 border-gray-700 text-left font-semibold uppercase tracking-wider">
@@ -71,30 +82,36 @@ const Users = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-center md:text-left">
                     {user?.email}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap flex justify-center md:justify-start space-x-4">
-                    <button
-                      onClick={() => handleDeleteUser(user?._id)}
-                      className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-full text-sm transition duration-300"
-                    >
-                      Delete
-                    </button>
+                  <td className="px-6 py-4 whitespace-nowrap text-center md:text-left">
+                    {user?.role}
+                  </td>
+                  <td className=" py-4 items-center whitespace-nowrap flex justify-center md:justify-start space-x-4">
                     <div>
                       {user?.isBlocked ? (
                         <button
                           onClick={() => handleUnblockUser(user?._id)}
-                          className="px-3 py-1 bg-green-500 hover:bg-green-700 rounded-full text-sm transition duration-300"
+                          className="px-2 py-1 bg-green-500 hover:bg-green-700 rounded-full text-sm transition duration-300"
                         >
                           Unblock
                         </button>
                       ) : (
                         <button
                           onClick={() => handleBlockUser(user?._id)}
-                          className="px-3 py-1 bg-yellow-500 hover:bg-yellow-700 rounded-full text-sm transition duration-300"
+                          className="px-2 py-1 bg-yellow-500 hover:bg-yellow-700 rounded-full text-sm transition duration-300"
                         >
                           Block
                         </button>
                       )}
                     </div>
+                    <button
+                      onClick={() => handleDeleteUser(user?._id)}
+                      className="px-2 py-1 bg-red-500 hover:bg-red-700 rounded-full  transition duration-300"
+                    >
+                      <MdDelete />
+                    </button>
+                    <button onClick={() => handleUpdateUser(user)}>
+                      <UpdateUserModal user={selectUser} />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -141,6 +158,9 @@ const Users = () => {
                 </p>
                 <p className="text-gray-200">
                   <span className="font-semibold">Email:</span> {user?.email}
+                </p>
+                <p className="text-gray-200">
+                  <span className="font-semibold">Role:</span> {user?.role}
                 </p>
               </div>
             </div>

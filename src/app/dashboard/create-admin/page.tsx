@@ -12,9 +12,7 @@ const page = () => {
   const [resigter, { isLoading }] = useRegisterMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const finalData = { ...data, role: "admin" };
-    // console.log(finalData);
     const res = await resigter(finalData);
-    console.log(res);
   };
   return (
     <div className=" md:w-[800px] w-[400px] flex justify-center">

@@ -12,6 +12,16 @@ const recipeApi = baseApi.injectEndpoints({
       providesTags: ["recipe"],
     }),
 
+    getSingleRecipe: builder.query({
+      query: (id) => {
+        return {
+          url: `/recipe/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["recipe"],
+    }),
+
     addRecipe: builder.mutation({
       query: (data) => {
         console.log("data", data);
@@ -49,6 +59,7 @@ const recipeApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllRecipeQuery,
+  useGetSingleRecipeQuery,
   useAddRecipeMutation,
   useUpdateRecipeMutation,
   useDeleteRecipeMutation,

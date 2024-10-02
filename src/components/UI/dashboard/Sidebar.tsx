@@ -1,6 +1,9 @@
 "use client"
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { FaHome, FaUsers } from "react-icons/fa";
+import { MdAdminPanelSettings, MdSpaceDashboard, MdSubscriptions } from "react-icons/md";
+import { IoFastFood } from "react-icons/io5";
 
 const Sidebar = () => {
   const searchParams = useSearchParams();
@@ -34,7 +37,7 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden">dashboard</span>
+                <span className="material-icons md:hidden"><MdSpaceDashboard /></span>
                 <span className="hidden md:inline-block ml-2">Dashboard</span>
               </div>
             </Link>
@@ -50,7 +53,7 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden">people</span>
+                <span className="material-icons md:hidden"><FaUsers /></span>
                 <span className="hidden md:inline-block ml-2">Users</span>
               </div>
             </Link>
@@ -66,7 +69,7 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden">restaurant</span>
+                <span className="material-icons md:hidden"><IoFastFood /></span>
                 <span className="hidden md:inline-block ml-2">Recipes</span>
               </div>
             </Link>
@@ -82,7 +85,7 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden">restaurant</span>
+                <span className="material-icons md:hidden"><MdSubscriptions /></span>
                 <span className="hidden md:inline-block ml-2">Membership</span>
               </div>
             </Link>
@@ -98,7 +101,7 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden">restaurant</span>
+                <span className="material-icons md:hidden"><MdAdminPanelSettings /></span>
                 <span className="hidden md:inline-block ml-2">Create Admin</span>
               </div>
             </Link>
@@ -110,7 +113,7 @@ const Sidebar = () => {
           <li className="w-full mb-2">
             <Link href="/">
               <div className="block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl">
-                <span className="material-icons md:hidden">home</span>
+                <span className="material-icons md:hidden"><FaHome /></span>
                 <span className="hidden md:inline-block ml-2">Home</span>
               </div>
             </Link>
