@@ -39,12 +39,17 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   const filterUpvoteAnimation = getAllRatingAndUpvote?.data?.filter(
     (item: any) => item?.type == "upvote" && item?.userEmail == loggedUserEmail
   );
-  console.log("filterUpvoteAnimation", filterUpvoteAnimation);
 
   const filterDownvoteAnimation = getAllRatingAndUpvote?.data?.filter(
     (item: any) =>
       item?.type == "downvote" && item?.userEmail == loggedUserEmail
   );
+
+  const filtreRatingAnimation = getAllRatingAndUpvote?.data?.filter(
+    (item: any) => item?.type == "rating" && item?.userEmail == loggedUserEmail
+  );
+
+  console.log("ratin", filtreRatingAnimation);
 
   // const ra = filterDownvoteAnimation?.map((item: any) => item?.postId == recipe?._id)
   // console.log(ra);
@@ -209,7 +214,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-xl overflow-hidden shadow-2xl mb-6 transform transition-all duration-500 hover:scale-105 hover:shadow-neon">
+    <div className="max-w-md mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-xl overflow-hidden shadow-2xl mb-6 transform transition-all duration-500  hover:shadow-neon">
       {/* Recipe Image */}
       <div className="relative">
         <img
@@ -237,27 +242,31 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
               Rating: {recipe?.rating}
             </span>
             {/* Rating Section */}
-            <div className="flex items-center mb-4">
-              <span className="text-sm text-teal-400 tracking-widest mr-4">
-                Rate:
-              </span>
-              {Array(5)
-                .fill(0)
-                .map((_, index) => (
-                  <FaStar
-                    key={index}
-                    size={24}
-                    className={`cursor-pointer transition-all ${
-                      (hoverRating || userRating) > index
-                        ? "text-yellow-400"
-                        : "text-gray-500"
-                    }`}
-                    onClick={() => handleRating(index + 1, recipe?._id)}
-                    onMouseEnter={() => setUserRating(index + 1)}
-                    onMouseLeave={() => setUserRating(0)}
-                  />
-                ))}
-            </div>
+<div className="flex items-center mb-4">
+  <span className="text-sm text-teal-400 tracking-widest mr-4">
+    Rate:
+  </span>
+  {Array(5)
+    .fill(0)
+    .map((_, index) => (
+      <FaStar
+        key={index}
+        size={24}
+        className={`cursor-pointer transition-all ${
+          // Apply yellow color if the star index is less than the user's rating
+          index < (filtreRatingAnimation?.find(
+            (item: any) => item?.postId === recipe?._id
+          )?.rating || userRating) 
+            ? "text-yellow-400"
+            : "text-gray-500"
+        }`}
+        onClick={() => handleRating(index + 1, recipe?._id)} // Set the rating on click
+        onMouseEnter={() => setUserRating(index + 1)} // Show rating on hover
+        onMouseLeave={() => setUserRating(0)} // Reset on hover leave
+      />
+    ))}
+</div>
+
           </div>
           <span
             className={`text-sm font-bold tracking-wider ${
@@ -293,7 +302,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
                 : "from-gray-700 to-gray-900 text-gray-400"
             } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
           >
-            👍 {recipe?.downvote}
+            👎 {recipe?.downvote}
           </button>
 
           {/* Comment Modal */}
