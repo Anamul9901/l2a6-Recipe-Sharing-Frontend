@@ -12,7 +12,8 @@ const FXInput = ({
   type = "text",
   label,
   name,
-  defaultValue
+  defaultValue,
+  isDisabled
 }: IProps) => {
   const {
     register,
@@ -28,6 +29,7 @@ const FXInput = ({
       defaultValue={defaultValue}
       type={type}
       label={label}
+      isDisabled={isDisabled}
       isInvalid={!!errors[name]}
       errorMessage={errors[name] ? (errors[name].message as string) : ""}
     />

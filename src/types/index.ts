@@ -12,5 +12,5 @@ export interface IInput {
   label: string;
   name: string;
   isDisabled?: boolean;
-  defaultValue?: string;
+  defaultValue?: any;
 }
