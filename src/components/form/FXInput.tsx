@@ -31,7 +31,7 @@ const FXInput = ({
       label={label}
       isDisabled={isDisabled}
       isInvalid={!!errors[name]}
-      errorMessage={errors[name] ? (errors[name].message as string) : ""}
+      errorMessage={errors[name] ? (errors[name]?.message as string) : ""}
     />
   );
 };

@@ -39,9 +39,11 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     } mode`,
     onChange,
   });
+  
+const SwitchComponent = Component as React.FunctionComponent<any>;
 
   return (
-    <Component
+    <SwitchComponent
       {...getBaseProps({
         className: clsx(
           'px-px transition-opacity hover:opacity-80 cursor-pointer',
@@ -78,6 +80,6 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
           <MoonFilledIcon size={22} />
         )}
       </div>
-    </Component>
+    </SwitchComponent>
   );
 };

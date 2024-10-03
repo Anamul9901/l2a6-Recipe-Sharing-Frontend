@@ -1,13 +1,21 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { FaHome, FaUsers } from "react-icons/fa";
 import { MdAdminPanelSettings, MdSpaceDashboard, MdSubscriptions } from "react-icons/md";
 import { IoFastFood } from "react-icons/io5";
 
+// Loading component (you can customize this as needed)
+const Loading = () => (
+  <div className="flex justify-center items-center min-h-screen">
+    <span>Loading...</span>
+  </div>
+);
+
 const Sidebar = () => {
   const searchParams = useSearchParams();
-  const queryValue = searchParams.get('key');
+  const queryValue = searchParams?.get('key');
 
   return (
     <div className="min-h-screen fixed h-full flex bg-gray-900">
@@ -127,4 +135,11 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+// Wrap Sidebar with Suspense
+const SidebarWithSuspense = () => (
+  <Suspense fallback={<Loading />}>
+    <Sidebar />
+  </Suspense>
+);
+
+export default SidebarWithSuspense;

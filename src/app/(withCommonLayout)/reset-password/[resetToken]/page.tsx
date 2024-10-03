@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const ResetPassword = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const finalData = { token: resetToken, data };
     const res = await resetPassword(finalData).unwrap();
+    toast.success(res?.messaage)
     if (res?.success) {
       router?.push("/login");
     }
@@ -22,34 +24,46 @@ const ResetPassword = () => {
   return (
     <div>
       {isLoading && <Loading />}
-      <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
-        <h3 className="my-2 text-2xl font-bold">Reset Password</h3>
-        <div className="w-[35%]">
+      <div className="relative h-screen flex items-center justify-center">
+        {isLoading && <Loading />}
+
+        <div className="bg-default-100 shadow-lg rounded-lg w-full max-w-md p-8 mx-4">
+          <h3 className="text-3xl font-bold text-center text-default-700">
+            Reset Password
+          </h3>
+          <p className="text-center text-default-800 mb-6">
+            Enter your new password.
+          </p>
+
           <FXForm onSubmit={onSubmit}>
-            <div className="py-3">
+            <div className="space-y-4">
               <FXInput
                 name="password"
                 label="New Password"
-                type="text"
+                type="password"
                 size="sm"
                 required
               />
+              <Button
+                className="w-full rounded-md bg-gradient-to-r from-teal-400 to-purple-500 text-default-800 font-semibold py-2"
+                size="lg"
+                type="submit"
+              >
+                Change Password
+              </Button>
             </div>
-
-            <Button
-              className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-              size="md"
-              type="submit"
-            >
-              Change Password
-            </Button>
           </FXForm>
 
-          <div className="">
-            Don&lsquo;t have account ?{" "}
-            <Link href={"/login"} className="text-blue-600">
-              Login
-            </Link>
+          <div className="mt-4 text-center">
+            <p className="text-default-500">
+              Don’t have an account?{" "}
+              <Link href={"/register"} className="text-teal-500 font-semibold">
+                Register
+              </Link>
+            </p>
+            <p className="text-sm text-teal-500 mt-2">
+              <Link href={"/login"}>Back to Login</Link>
+            </p>
           </div>
         </div>
       </div>
