@@ -5,7 +5,17 @@ const recipeApi = baseApi.injectEndpoints({
     getAllRecipe: builder.query({
       query: () => {
         return {
-          url: "/recipe",
+          url: `/recipe`,
+          method: "GET",
+        };
+      },
+      providesTags: ["recipe"],
+    }),
+
+    getAllRecipeWithShort: builder.query({
+      query: (args) => {
+        return {
+          url: `/recipe/short?page=${args?.page}&limit=${args?.limit}`,
           method: "GET",
         };
       },
@@ -60,6 +70,7 @@ const recipeApi = baseApi.injectEndpoints({
 export const {
   useGetAllRecipeQuery,
   useGetSingleRecipeQuery,
+  useGetAllRecipeWithShortQuery,
   useAddRecipeMutation,
   useUpdateRecipeMutation,
   useDeleteRecipeMutation,

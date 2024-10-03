@@ -7,6 +7,7 @@ import {
 } from "@/src/redux/features/recipe/recipeApi";
 import { useAppSelector } from "@/src/redux/hooks";
 import { verifyToken } from "@/src/utils/verifyToken";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const DashRecipes = () => {
@@ -67,7 +68,8 @@ const DashRecipes = () => {
             className="bg-default-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
           >
             {/* Recipe Image */}
-            <img
+           <Link href={`/recipe/${recipe?._id}`}>
+           <img
               className="h-40 w-full object-cover rounded-t-lg"
               src={
                 recipe?.image ||
@@ -75,10 +77,12 @@ const DashRecipes = () => {
               }
               alt={recipe?.title}
             />
+           </Link>
 
             <div className="px-2">
-              {/* Recipe Title */}
-              <h2 className="text-xl font-semibold text-default-900">
+             <Link href={`/recipe/${recipe?._id}`}>
+               {/* Recipe Title */}
+               <h2 className="text-xl font-semibold text-default-900">
                 {recipe?.title}
               </h2>
 
@@ -100,6 +104,7 @@ const DashRecipes = () => {
               <p className="text-xs text-default-500 mt-2">
                 Pulisher: {recipe?.publishUser}
               </p>
+             </Link>
 
               <div className="flex justify-end p-2 gap-1">
                 {recipe?.idPublish ? (
