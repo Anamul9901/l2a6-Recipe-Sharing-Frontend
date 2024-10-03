@@ -7,11 +7,26 @@ import UpdateUserModal from "@/src/components/modals/UpdateUserModal";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import { useAppSelector } from "@/src/redux/hooks";
+import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
+import { verifyToken } from "@/src/utils/verifyToken";
+import { useRouter } from "next/navigation";
 
 const Users = () => {
   const [selectUser, setSelectUser] = useState({});
   const { data: allUsers } = useGetAllUserQuery(undefined);
   const [updateUser] = useUpdateUserMutation();
+  
+  const router = useRouter();
+  const user = useAppSelector(selectCurrentUser);
+  let currenttUser;
+  if (user?.token) {
+    currenttUser = verifyToken(user?.token);
+  }
+  const currenttUserRole = (currenttUser as any)?.role;
+  if (currenttUserRole != "admin") {
+    router?.push("/");
+  }
 
   const filterUser = allUsers?.data?.filter(
     (user: any) => user?.isDeleted == false
@@ -139,9 +154,7 @@ const Users = () => {
               className="border-b border-gray-700 p-4 mb-4 rounded-lg shadow-lg bg-gray-700"
             >
               <div className="flex justify-between">
-                <span className="font-semibold text-purple-500">
-                  {idx + 1}
-                </span>
+                <span className="font-semibold text-purple-500">{idx + 1}</span>
                 <div className="space-x-2">
                   {user?.isBlocked ? (
                     <button

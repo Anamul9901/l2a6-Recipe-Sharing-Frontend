@@ -110,10 +110,11 @@ const HomePage = () => {
             className="border px-3 py-2 rounded-md w-full md:w-48"
           >
             <option value="" disabled>
-              Sort by
+              Sort by Upvoted
             </option>
             <option value="most">Most Upvoted</option>
             <option value="least">Least Upvoted</option>
+            <option value="">No short</option>
           </select>
         </div>
       </div>

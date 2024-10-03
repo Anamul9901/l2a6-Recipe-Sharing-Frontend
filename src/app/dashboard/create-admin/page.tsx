@@ -3,14 +3,29 @@ import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import Loading from "@/src/components/UI/loading";
 import { useRegisterMutation } from "@/src/redux/features/auth/authApi";
+import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
+import { useAppSelector } from "@/src/redux/hooks";
+import { verifyToken } from "@/src/utils/verifyToken";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
 const page = () => {
   const [resigter, { isLoading, error }] = useRegisterMutation();
+
+  const router = useRouter();
+  const user = useAppSelector(selectCurrentUser);
+  let currenttUser;
+  if (user?.token) {
+    currenttUser = verifyToken(user?.token);
+  }
+  const currenttUserRole = (currenttUser as any)?.role;
+  if (currenttUserRole != "admin") {
+    router?.push("/");
+  }
 
   useEffect(() => {
     if ((error as any)?.status == 400) {

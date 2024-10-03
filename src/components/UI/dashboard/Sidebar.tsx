@@ -3,8 +3,16 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { FaHome, FaUsers } from "react-icons/fa";
-import { MdAdminPanelSettings, MdSpaceDashboard, MdSubscriptions } from "react-icons/md";
+import {
+  MdAdminPanelSettings,
+  MdSpaceDashboard,
+  MdSubscriptions,
+} from "react-icons/md";
 import { IoFastFood } from "react-icons/io5";
+import { useAppSelector } from "@/src/redux/hooks";
+import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
+import { verifyToken } from "@/src/utils/verifyToken";
+import React from "react";
 
 // Loading component (you can customize this as needed)
 const Loading = () => (
@@ -15,7 +23,14 @@ const Loading = () => (
 
 const Sidebar = () => {
   const searchParams = useSearchParams();
-  const queryValue = searchParams?.get('key');
+  const queryValue = searchParams?.get("key");
+
+  const user = useAppSelector(selectCurrentUser);
+  let currenttUser;
+  if (user?.token) {
+    currenttUser = verifyToken(user?.token);
+  }
+  const currenttUserRole = (currenttUser as any)?.role;
 
   return (
     <div className="min-h-screen fixed h-full flex bg-gray-900">
@@ -45,27 +60,15 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden"><MdSpaceDashboard /></span>
+                <span className="material-icons md:hidden">
+                  <MdSpaceDashboard />
+                </span>
                 <span className="hidden md:inline-block ml-2">Dashboard</span>
               </div>
             </Link>
           </li>
 
           {/* Users */}
-          <li className="w-full mb-2">
-            <Link href="/dashboard/users?key=users">
-              <div
-                className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
-                  queryValue === "users"
-                    ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
-                    : ""
-                }`}
-              >
-                <span className="material-icons md:hidden"><FaUsers /></span>
-                <span className="hidden md:inline-block ml-2">Users</span>
-              </div>
-            </Link>
-          </li>
 
           {/* Recipes */}
           <li className="w-full mb-2">
@@ -77,7 +80,9 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden"><IoFastFood /></span>
+                <span className="material-icons md:hidden">
+                  <IoFastFood />
+                </span>
                 <span className="hidden md:inline-block ml-2">Recipes</span>
               </div>
             </Link>
@@ -93,27 +98,53 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="material-icons md:hidden"><MdSubscriptions /></span>
+                <span className="material-icons md:hidden">
+                  <MdSubscriptions />
+                </span>
                 <span className="hidden md:inline-block ml-2">Membership</span>
               </div>
             </Link>
           </li>
 
-          {/* Create admin */}
-          <li className="w-full mb-2">
-            <Link href="/dashboard/create-admin?key=create-admin">
-              <div
-                className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
-                  queryValue === "create-admin"
-                    ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
-                    : ""
-                }`}
-              >
-                <span className="material-icons md:hidden"><MdAdminPanelSettings /></span>
-                <span className="hidden md:inline-block ml-2">Create Admin</span>
-              </div>
-            </Link>
-          </li>
+          {currenttUserRole == "admin" && (
+            <>
+              <li className="w-full mb-2">
+                <Link href="/dashboard/create-admin?key=create-admin">
+                  <div
+                    className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
+                      queryValue === "create-admin"
+                        ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
+                        : ""
+                    }`}
+                  >
+                    <span className="material-icons md:hidden">
+                      <MdAdminPanelSettings />
+                    </span>
+                    <span className="hidden md:inline-block ml-2">
+                      Create Admin
+                    </span>
+                  </div>
+                </Link>
+              </li>
+
+              <li className="w-full mb-2">
+                <Link href="/dashboard/users?key=users">
+                  <div
+                    className={`block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl ${
+                      queryValue === "users"
+                        ? "bg-purple-700 shadow-xl text-[#ff4a4afd] font-extrabold"
+                        : ""
+                    }`}
+                  >
+                    <span className="material-icons md:hidden">
+                      <FaUsers />
+                    </span>
+                    <span className="hidden md:inline-block ml-2">Users</span>
+                  </div>
+                </Link>
+              </li>
+            </>
+          )}
 
           <hr className="border-purple-500 w-full mb-4 opacity-40" />
 
@@ -121,7 +152,9 @@ const Sidebar = () => {
           <li className="w-full mb-2">
             <Link href="/">
               <div className="block px-2 py-4 text-white text-center md:text-left rounded-lg transition-all duration-300 hover:bg-purple-700 hover:shadow-xl">
-                <span className="material-icons md:hidden"><FaHome /></span>
+                <span className="material-icons md:hidden">
+                  <FaHome />
+                </span>
                 <span className="hidden md:inline-block ml-2">Home</span>
               </div>
             </Link>
