@@ -28,7 +28,7 @@ const ChangePasswordModal = () => {
       <FXModal
         title="Update Your Password"
         buttonText="Change Password"
-        buttonClassName="flex-1 bg-gray-700"
+        buttonClassName="bg-blue-600 text-white px-4 md:px-6 py-2 rounded-full shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-700"
       >
         <FXForm onSubmit={onSubmit}>
           <div className="py-1">
