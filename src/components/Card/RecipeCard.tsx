@@ -215,7 +215,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
       {/* Recipe Image */}
       <div className="relative">
         <img
-          className="w-[500px] h-[300px]  object-cover"
+          className="md:w-[500px] h-[300px]  object-cover"
           src={
             recipe?.image ||
             "https://i.ibb.co.com/kBNtTmC/No-Image-Available.jpg"
@@ -226,7 +226,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
       </div>
 
       {/* Recipe Details */}
-      <div className="px-6 pt-2">
+      <div className="px-4 pt-2">
         <div className="flex justify-start gap-2 pb-2">
         <Link href={`/profile/${recipe?.publishUserId}`}>
           <Avatar

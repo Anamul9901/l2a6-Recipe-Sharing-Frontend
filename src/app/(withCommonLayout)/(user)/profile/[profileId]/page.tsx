@@ -1,6 +1,6 @@
 "use client";
 import RecipeCard from "@/src/components/Card/RecipeCard";
-import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
+import RecipeSkeletion from "@/src/components/Card/RecipeSkeletion";
 import CreateRecipeModal from "@/src/components/modals/CreateRecipeModal";
 import UpdateProfileModal from "@/src/components/modals/UpdateProfileModal";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
@@ -135,17 +135,18 @@ const ProfilePage = () => {
     <div className="bg-default-100 min-h-screen">
       {/* Profile Banner */}
       <div className="relative bg-blue-600 h-60">
-        <div className="absolute bottom-0 left-4 flex items-center space-x-4 w-full">
+        <div className="absolute bottom-3 left-4 flex items-center space-x-4 w-full">
           {/* Profile Picture */}
-          <Image
+          <img 
             className="w-28 h-28 rounded-full border-4 border-white"
-            src="https://i.ibb.co.com/z89cgQr/profile.webp"
+            src={user?.profileImg || 'https://i.ibb.co.com/z89cgQr/profile.webp'}
             alt="Profile Picture"
             height={500}
             width={500}
           />
           <div className="text-white w-full">
-            <h2 className="text-2xl font-bold">{user?.name}</h2>
+            <h2 className="text-2xl font-bold">{user?.name} <span className={`text-sm text-yellow-500`}>{user?.premium ? "Premium" : "Free"}</span></h2>
+            <h2 className="text-sm">{user?.bio}</h2>
             <div className="flex justify-between items-center">
               <p className="text-sm">
                 {user?.follower} followers | {user?.following} following
@@ -174,9 +175,6 @@ const ProfilePage = () => {
                     <div className="pb-1">
                       <UpdateProfileModal />
                     </div>
-                    <div className="pb-1">
-                      <ChangePasswordModal />
-                    </div>
                   </div>
                 )}
               </div>
@@ -186,46 +184,13 @@ const ProfilePage = () => {
       </div>
 
       {/* Main Section */}
-      <div className="container mx-auto px-4 mt-16">
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+      <div className="container mx-auto md:px-4 mt-6">
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 justify-center">
           {/* Left Sidebar */}
-          <div className="w-full md:w-3/12">
-            <div className="bg-default-50 p-4 rounded-lg shadow-md">
-              <h3 className="font-semibold text-lg mb-2">About</h3>
-              <p className="text-sm">Bio: {user?.bio}</p>
-              <p className="text-sm">Role: {user?.role}</p>
-              <p className="text-sm">Following: {user?.following}</p>
-              <p className="text-sm">
-                Premium Status: {user?.premium ? "Premium User" : "Free User"}
-              </p>
-            </div>
-
-            <div className="bg-default-50 p-4 rounded-lg shadow-md mt-4">
-              <h3 className="font-semibold text-lg mb-2">Friends</h3>
-              <div className="grid grid-cols-3 gap-2">
-                {/* Friend images can be replaced with actual data */}
-                <img
-                  className="w-full h-20 rounded-lg"
-                  src="/friend1.jpg"
-                  alt="Friend 1"
-                />
-                <img
-                  className="w-full h-20 rounded-lg"
-                  src="/friend2.jpg"
-                  alt="Friend 2"
-                />
-                <img
-                  className="w-full h-20 rounded-lg"
-                  src="/friend3.jpg"
-                  alt="Friend 3"
-                />
-              </div>
-            </div>
-          </div>
 
           {/* Main Content (Posts) */}
           <div className="w-full md:w-10/12">
-            <div className="bg-gradient-to-r from-default-50 to-default-300 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center">
+            <div className="bg-gradient-to-r from-default-50 to-default-300 mx-2 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center">
               <h3 className="font-semibold text-xl text-default-800">
                 What's on your mind?
               </h3>
@@ -234,8 +199,8 @@ const ProfilePage = () => {
               </button>
             </div>
 
-            <div className="bg-default-50 p-4 rounded-lg shadow-md mt-4">
-              <h3 className="font-semibold text-lg mb-2">Recent Posts</h3>
+            <div className="bg-default-50 md:p-4 rounded-lg shadow-md mt-4">
+              <h3 className="font-semibold text-lg mb-2 text-center pt-2">Recent Posts</h3>
 
               {/* Example of Posts */}
               <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
@@ -245,7 +210,11 @@ const ProfilePage = () => {
                       <RecipeCard recipe={recipe} />
                     ))
                   ) : (
-                    <div className="text-center text-sm">No post available</div>
+                    <div className="text-center text-sm">
+                       {[...Array(4)].map(() => (
+                    <RecipeSkeletion />
+                  ))}
+                    </div>
                   )}
                 </div>
               </div>

@@ -49,9 +49,6 @@ const NavberDropdown = () => {
         >
           Dashboard
         </DropdownItem>
-        <DropdownItem onClick={() => handleNavigation("/profile/create-post")}>
-          Create Post
-        </DropdownItem>
         <DropdownItem
           onClick={() => handleLogOut()}
           className="text-danger"

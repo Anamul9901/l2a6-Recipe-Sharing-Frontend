@@ -1,4 +1,5 @@
 "use client";
+import RecipeDashSkele from "../../../components/Card/RecipeDashSkele";
 import CreateRecipeModal from "@/src/components/modals/CreateRecipeModal";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import {
@@ -15,7 +16,7 @@ import Swal from "sweetalert2";
 
 const DashRecipes = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const { data: allRecipe } = useGetAllRecipeQuery(undefined);
+  const { data: allRecipe, isLoading } = useGetAllRecipeQuery(undefined);
   const [deletRecipe] = useDeleteRecipeMutation();
   const [updateRecipe] = useUpdateRecipeMutation();
   const user = useAppSelector(selectCurrentUser);
@@ -79,7 +80,7 @@ const DashRecipes = () => {
           <h1>Your Recipe</h1>
         )}
       </div>
-      {!showRecipeLogically?.length && (
+      {!showRecipeLogically?.length && !isLoading && (
         <div className="text-center">
           <h1 className="">You Have No recepe!</h1>
           <h1>Create a recipe</h1>
@@ -88,6 +89,13 @@ const DashRecipes = () => {
           </button>
         </div>
       )}
+        {isLoading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 px-4 w-full">
+            {[...Array(12)].map(() => (
+              <RecipeDashSkele />
+            ))}
+          </div>
+        )}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2   px-4">
         {showRecipeLogically?.map((recipe: any) => (
           <div

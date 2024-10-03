@@ -6,6 +6,7 @@ import { useGetAllRecipeQuery } from "@/src/redux/features/recipe/recipeApi";
 import { useGetMyDataQuery } from "@/src/redux/features/user/userApi";
 import { useEffect, useState } from "react";
 import Fuse from "fuse.js";
+import RecipeSkeletion from "@/src/components/Card/RecipeSkeletion";
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -118,9 +119,9 @@ const HomePage = () => {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto flex p-4">
+      <div className="max-w-7xl mx-auto flex justify-center md:p-4">
         {/* Sidebar (Static) */}
-        <aside className="w-3/12 pr-4 hidden md:block">
+        {/* <aside className="w-3/12 pr-4 hidden md:block">
           <div className="fixed lg:w-[230px] md:w-[150px]">
             <div className="bg-gradient-to-br h-[80vh] from-default-50 to-default-300 p-6 rounded-xl shadow-xl text-default-800 static">
               <h3 className="font-semibold text-xl mb-6 tracking-wider">
@@ -148,11 +149,11 @@ const HomePage = () => {
               </ul>
             </div>
           </div>
-        </aside>
+        </aside> */}
 
         {/* Main Content */}
         <main className="w-full md:w-9/12">
-          <div className="bg-gradient-to-r from-default-50 to-default-300 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center">
+          <div className="bg-gradient-to-r from-default-50 to-default-300 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center mx-2">
             <h3 className="font-semibold text-xl text-default-800">
               What's on your mind?
             </h3>
@@ -162,16 +163,20 @@ const HomePage = () => {
           </div>
 
           {/* Example of Posts */}
-          <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6 min-h-[80vh]">
+          <div className="bg-default-50 md:p-4 p-2 rounded-lg shadow-lg mt-6 min-h-[80vh]">
             <div className="grid grid-cols-1 gap-4 ">
               {sortedRecipes &&
                 sortedRecipes.map((recipe: any) => (
                   <RecipeCard key={recipe.id} recipe={recipe} />
                 ))}
 
-                {
-                  !sortedRecipes?.length && <div className="text-center flex justify-center items-center min-h-[80vh]">No recepe...</div>
-                }
+              {!sortedRecipes?.length && (
+                <div className="text-center items-center min-h-[80vh]">
+                  {[...Array(4)].map(() => (
+                    <RecipeSkeletion />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </main>

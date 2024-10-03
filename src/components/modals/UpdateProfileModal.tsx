@@ -25,7 +25,7 @@ const UpdateProfileModal = () => {
       {isLoading && <Loading />}
       <FXModal
         title="Update Your Profile"
-        buttonText="Edit"
+        buttonText="Edit profile"
         buttonClassName="bg-default-200 text-default-700 hover:text-default-200 px-4 md:px-6 py-2 rounded-full shadow-lg transition-transform transform hover:scale-105 hover:bg-default-700"
       >
         <FXForm onSubmit={onSubmit}>
