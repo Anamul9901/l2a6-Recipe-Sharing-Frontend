@@ -216,7 +216,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
       {/* Recipe Image */}
       <div className="relative">
         <img
-          className="w-full h-full object-cover"
+          className="w-[500px] h-[300px]  object-cover"
           src={
             recipe?.image ||
             "https://i.ibb.co.com/kBNtTmC/No-Image-Available.jpg"
@@ -231,9 +231,15 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
           {recipe?.title}
         </h2>
-        <Link href={`/recipe/${recipe?._id}`} className=" font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
-          If you want to create this...
+        <Link
+          href={`/recipe/${recipe?._id}`}
+          className=" font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide"
+        >
+          Instructions: {recipe?.instructions?.slice(0,25)}...
         </Link>
+        <h2 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
+          Cooking Time: {recipe?.cookingTime} m
+        </h2>
 
         {/* Rating and Premium Status */}
         <div className="flex items-center justify-between">

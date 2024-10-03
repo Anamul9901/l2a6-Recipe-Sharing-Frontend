@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@nextui-org/button";
 import FXForm from "../form/FXForm";
 import FXInput from "../form/FXInput";
@@ -9,15 +9,19 @@ import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
 import { useAddRecipeMutation } from "@/src/redux/features/recipe/recipeApi";
 import Loading from "../UI/loading";
+import { useGetMyDataQuery } from "@/src/redux/features/user/userApi";
+import FXTextarea from "../form/FXTextArea";
 
 const CreateRecipeModal = () => {
   const user = useAppSelector(selectCurrentUser);
-  let verifyUser: any
+  const { data: currentUser } = useGetMyDataQuery(undefined);
+  const userIsPremeum = currentUser?.data[0]?.premium;
+  let verifyUser: any;
   if (user?.token) {
-     verifyUser = verifyToken(user?.token as string);
-    }
-    const publishUser = verifyUser?.email;
-    const publishUserId = verifyUser?.userId;
+    verifyUser = verifyToken(user?.token as string);
+  }
+  const publishUser = verifyUser?.email;
+  const publishUserId = verifyUser?.userId;
   const [addRecipe, { isLoading }] = useAddRecipeMutation();
 
   const onSubmit = async (data: any) => {
@@ -34,11 +38,7 @@ const CreateRecipeModal = () => {
     { key: true, label: "Premium" },
   ];
   return (
-    <FXModal
-      title="Create Recipe"
-      buttonText="Post"
-      buttonClassName="flex-1"
-    >
+    <FXModal title="Create Recipe" buttonText="Post" buttonClassName="flex-1">
       {isLoading && <Loading />}
       <FXForm onSubmit={onSubmit}>
         <div className="py-1">
@@ -48,13 +48,35 @@ const CreateRecipeModal = () => {
           <FXInput label="Image URL" name="image" required></FXInput>
         </div>
         <div className="py-1">
-          <FXSelect
-            label="Premium or Not"
-            name="isPremium"
-            options={selectOpdiont}
-          ></FXSelect>
+          <FXInput
+            label="Cooking Time (minute)"
+            name="cookingTime"
+            type="number"
+            required
+          ></FXInput>
         </div>
-        <Button type="submit">Submit</Button>
+
+        {verifyUser && (verifyUser?.role == "admin" || userIsPremeum) && (
+          <div className="py-1">
+            <FXSelect
+              label="Premium or Not"
+              name="isPremium"
+              options={selectOpdiont}
+            ></FXSelect>
+          </div>
+        )}
+        <div className="py-1">
+          <FXTextarea
+            label="Instructions"
+            name="instructions"
+            required
+          ></FXTextarea>
+        </div>
+        <div className="py-2">
+          <Button type="submit" className="w-full">
+            POST
+          </Button>
+        </div>
       </FXForm>
     </FXModal>
   );

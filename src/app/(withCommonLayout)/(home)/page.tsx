@@ -20,11 +20,11 @@ const HomePage = () => {
 
   // Filter recipes based on user type
   const filterForUnPremiumPerson = allRecipe?.data?.filter(
-    (recipe) => recipe?.isPremium === false && recipe?.idPublish === true
+    (recipe: any) => recipe?.isPremium === false && recipe?.idPublish === true
   );
 
   const filterPremiumPerson = allRecipe?.data?.filter(
-    (recipe) => recipe?.idPublish === true
+    (recipe: any) => recipe?.idPublish === true
   );
 
   let showRecipeDepentOnUser = filterForUnPremiumPerson;
@@ -39,20 +39,21 @@ const HomePage = () => {
   });
 
   const filteredRecipes = searchTerm
-    ? fuse?.search(searchTerm)?.map(result => result?.item)
+    ? fuse?.search(searchTerm)?.map((result) => result?.item)
     : showRecipeDepentOnUser;
 
   // Apply upvote filters
-  const upvoteFilteredRecipes = filteredRecipes?.filter((item) => {
+  const upvoteFilteredRecipes = filteredRecipes?.filter((item: any) => {
     const isUpvoteMatch =
-      (!minUpvoteFilter || parseInt(item?.upvote) >= parseInt(minUpvoteFilter)) &&
-      (!maxUpvoteFilter || parseInt(item?.upvote) <= parseInt(maxUpvoteFilter));
+      (!minUpvoteFilter ||
+        parseInt(item?.cookingTime) >= parseInt(minUpvoteFilter)) &&
+      (!maxUpvoteFilter || parseInt(item?.cookingTime) <= parseInt(maxUpvoteFilter));
 
     return !item?.isDeleted && isUpvoteMatch;
   });
 
   // Sort the filtered recipes based on selected option
-  const sortedRecipes = upvoteFilteredRecipes?.sort((a, b) => {
+  const sortedRecipes = upvoteFilteredRecipes?.sort((a: any, b: any) => {
     if (sortOption === "most") {
       return b?.upvote - a?.upvote; // Most upvotes first
     } else if (sortOption === "least") {
@@ -65,7 +66,7 @@ const HomePage = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  
+
   if (!isMounted) {
     return null;
   }
@@ -85,14 +86,14 @@ const HomePage = () => {
           <div className="flex">
             <input
               type="number"
-              placeholder="Min upvote"
+              placeholder="Min time"
               value={minUpvoteFilter}
               onChange={(e) => setminUpvoteFilter(e.target.value)}
               className="border flex-1 w-24 px-1 rounded-l-md"
             />
             <input
               type="number"
-              placeholder="Max upvote"
+              placeholder="Max time"
               value={maxUpvoteFilter}
               onChange={(e) => setmaxUpvoteFilter(e.target.value)}
               className="border flex-1 w-24 px-1 rounded-r-md"
@@ -104,6 +105,8 @@ const HomePage = () => {
             onChange={(e) => setSortOption(e.target.value)}
             className="border px-2 py-1 rounded-md"
           >
+            <option value="" disabled>Upvoted short</option>
+            <option value="">No short</option>
             <option value="most">Most Upvoted</option>
             <option value="least">Least Upvoted</option>
           </select>
@@ -116,14 +119,28 @@ const HomePage = () => {
         <aside className="w-3/12 pr-4 hidden md:block">
           <div className="fixed lg:w-[230px] md:w-[150px]">
             <div className="bg-gradient-to-br h-[80vh] from-default-50 to-default-300 p-6 rounded-xl shadow-xl text-default-800 static">
-              <h3 className="font-semibold text-xl mb-6 tracking-wider">Menu</h3>
+              <h3 className="font-semibold text-xl mb-6 tracking-wider">
+                Menu
+              </h3>
               <ul className="space-y-4">
-                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">Home</li>
-                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">Friends</li>
-                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">Messages</li>
-                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">Notifications</li>
-                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">Profile</li>
-                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">Logout</li>
+                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">
+                  Home
+                </li>
+                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">
+                  Friends
+                </li>
+                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">
+                  Messages
+                </li>
+                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">
+                  Notifications
+                </li>
+                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">
+                  Profile
+                </li>
+                <li className="hover:bg-gray-600 p-3 rounded-md transition-all duration-300">
+                  Logout
+                </li>
               </ul>
             </div>
           </div>
@@ -132,7 +149,9 @@ const HomePage = () => {
         {/* Main Content */}
         <main className="w-full md:w-9/12">
           <div className="bg-gradient-to-r from-default-50 to-default-300 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center">
-            <h3 className="font-semibold text-xl text-default-800">What's on your mind?</h3>
+            <h3 className="font-semibold text-xl text-default-800">
+              What's on your mind?
+            </h3>
             <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-indigo-500 transition-all duration-300">
               <CreateRecipeModal />
             </button>
@@ -141,9 +160,10 @@ const HomePage = () => {
           {/* Example of Posts */}
           <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
             <div className="grid grid-cols-1 gap-4">
-              {sortedRecipes && sortedRecipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
+              {sortedRecipes &&
+                sortedRecipes.map((recipe: any) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} />
+                ))}
             </div>
           </div>
         </main>
