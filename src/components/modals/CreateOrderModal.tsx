@@ -7,6 +7,7 @@ import FXModal from "./FXModal";
 import { useCreateOrderMutation } from "@/src/redux/features/order/order";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useGetMyDataQuery } from "@/src/redux/features/user/userApi";
+import { Spinner } from "@nextui-org/spinner";
 
 const CreateOrderModal = ({
   totalPrice,
@@ -24,7 +25,6 @@ const CreateOrderModal = ({
       user: { name: user?.name, email: user?.email, id: user?._id },
       totalPrice,
     };
-    console.log(finalData);
     const res = await createOrder(finalData).unwrap();
     if (res.success) {
       window.location.href = res.data.payment_url;
@@ -74,7 +74,7 @@ const CreateOrderModal = ({
           </div>
           <div className="flex justify-center pt-2 w-full pb-2">
             <Button className="w-full" type="submit">
-              Submit
+              {isLoading ? <Spinner size="sm" /> : "Submit"}
             </Button>
           </div>
         </FXForm>

@@ -20,9 +20,11 @@ import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
 import EditCommentModal from "./EditCommentModal";
 import { useState } from "react";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
 
 const CommentModal = ({ id, comments }: { id: string; comments: any }) => {
-  const [commentId, setCommentId] = useState('')
+  const [commentId, setCommentId] = useState("");
   const user = useAppSelector(selectCurrentUser);
 
   let verifyUser: any;
@@ -44,15 +46,20 @@ const CommentModal = ({ id, comments }: { id: string; comments: any }) => {
       commentUserName: currentUser?.name,
     };
     const res = await addComment(finalData).unwrap();
+    if (res?.data) {
+      toast.success(res?.messaage);
+    }
   };
 
   const hndleEditComment = (id: string) => {
-    console.log(id);
-    setCommentId(id)
+    setCommentId(id);
   };
 
   const hndleDeleteComment = async (id: string) => {
     const res = await deleteComment(id).unwrap();
+    if (res?.data) {
+      toast.success(res?.messaage);
+    }
   };
   return (
     <div className="relative  p-6">
@@ -88,11 +95,8 @@ const CommentModal = ({ id, comments }: { id: string; comments: any }) => {
                   </p>
                 </div>
                 {verifyUser && verifyUser?.userId == comment?.commentUserId && (
-                  <div className=" flex-1 justify-end text-end">
-                    <button
-                      onClick={() => hndleEditComment(comment?._id)}
-                      className=""
-                    >
+                  <div className=" flex-1  justify-end text-end">
+                    <button onClick={() => hndleEditComment(comment?._id)}>
                       <EditCommentModal id={commentId} />
                     </button>
                     <button

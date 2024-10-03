@@ -14,6 +14,7 @@ import CommentModal from "../modals/CommentModal";
 import { useGetAllCommentQuery } from "@/src/redux/features/comment/commentApi";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
+import { Avatar } from "@nextui-org/avatar";
 
 const RecipeCard = ({ recipe }: { recipe: any }) => {
   const [recipeId, setRecipeId] = useState("");
@@ -49,8 +50,6 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
     (item: any) => item?.type == "rating" && item?.userEmail == loggedUserEmail
   );
 
-  // const ra = filterDownvoteAnimation?.map((item: any) => item?.postId == recipe?._id)
-  // console.log(ra);
 
   //* upvote downvote and rating show END
 
@@ -228,6 +227,20 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
 
       {/* Recipe Details */}
       <div className="px-6 pt-2">
+        <div className="flex justify-start gap-2 pb-2">
+        <Link href={`/profile/${recipe?.publishUserId}`}>
+          <Avatar
+            src={recipe?.publishUserImage}
+            className="w-12 h-12 rounded-full border-2 border-teal-400 shadow-lg"
+          />
+        </Link>
+        <Link
+          href={`/profile/${recipe?.publishUserId}`}
+          className="text-sm font-bold text-teal-400 pt-2 hover:text-blue-400 transition-all duration-300"
+        >
+          {recipe?.publishUserName}
+        </Link>
+        </div>
         <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
           {recipe?.title}
         </h2>
@@ -235,7 +248,8 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
           href={`/recipe/${recipe?._id}`}
           className=" font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide"
         >
-          Instructions: {recipe?.instructions?.slice(0,25)}...
+          Instructions:{" "}
+          {recipe?.instructions?.slice(0, 25) || "See more details"}...
         </Link>
         <h2 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
           Cooking Time: {recipe?.cookingTime} m

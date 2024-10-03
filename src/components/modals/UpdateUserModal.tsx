@@ -5,14 +5,13 @@ import FXInput from "../form/FXInput";
 import FXModal from "./FXModal";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import {
-  useGetSingleUserQuery,
   useUpdateUserMutation,
 } from "@/src/redux/features/user/userApi";
 import FXSelect from "../form/FXSelect";
 import Loading from "../UI/loading";
+import { toast } from "sonner";
 
 const UpdateUserModal = ({ user }: { user: any }) => {
-//   console.log("user id", user);
   const [updateUser, { isLoading }] = useUpdateUserMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -20,9 +19,10 @@ const UpdateUserModal = ({ user }: { user: any }) => {
         data.role = user?.role
     }
       const finalData = {id:user?._id, data}
-      console.log(finalData);
-    const res = await updateUser(finalData);
-    console.log(res);
+    const res = await updateUser(finalData).unwrap();
+    if(res?.data){
+      toast.success(res?.messaage)
+    }
   };
   return (
     <div>

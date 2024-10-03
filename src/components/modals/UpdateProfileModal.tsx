@@ -7,6 +7,7 @@ import {
   useUpdateUserMutation,
 } from "@/src/redux/features/user/userApi";
 import Loading from "../UI/loading";
+import { toast } from "sonner";
 
 const UpdateProfileModal = () => {
   const { data: user } = useGetMyDataQuery(undefined);
@@ -14,7 +15,10 @@ const UpdateProfileModal = () => {
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const onSubmit = async (data: any) => {
     const finalData = { id: currentUser?._id, data };
-    const res = await updateUser(finalData);
+    const res = await updateUser(finalData).unwrap();
+    if(res?.data){
+      toast.success(res?.messaage)
+    }
   };
   return (
     <div>
@@ -22,7 +26,7 @@ const UpdateProfileModal = () => {
       <FXModal
         title="Update Your Profile"
         buttonText="Edit"
-        buttonClassName="flex-1 bg-gray-700"
+        buttonClassName="bg-default-200 text-default-700 hover:text-default-200 px-4 md:px-6 py-2 rounded-full shadow-lg transition-transform transform hover:scale-105 hover:bg-default-700"
       >
         <FXForm onSubmit={onSubmit}>
           <div className="py-1">

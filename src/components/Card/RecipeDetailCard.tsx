@@ -235,7 +235,7 @@ const RecipeDetailCard = ({ recipe }: { recipe: any }) => {
       href={`/recipe/${recipe?._id}`}
       className="inline-block text-lg font-semibold text-teal-400 bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 hover:underline"
     >
-      View Full Recipe
+      {recipe?.instructions}
     </Link>
 
     {/* Rating and Premium Status */}

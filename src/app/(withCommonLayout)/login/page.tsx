@@ -29,11 +29,12 @@ const Login = () => {
     if (errorShow && (error as any)?.data) {
       toast.error((error as any)?.data?.message);
     }
-  }, [errorShow, error]); 
+  }, [errorShow, error]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const res = await loginUser(data).unwrap();
     if (res?.data) {
+      toast.success(`${res?.messaage}`);
       const { email, name, _id, profileImg } = res?.data?.data;
       const finalUserData = { email, name, _id, profileImg };
       dispatch(setUser({ user: finalUserData, token: res?.data?.token }));

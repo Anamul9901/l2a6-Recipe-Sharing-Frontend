@@ -26,8 +26,8 @@ const Sidebar = () => {
           <Link href="/dashboard?key=dashboard">
             <div className="flex justify-center mb-8 hover:scale-105 transition-all duration-300">
               <img
-                className="md:w-2/3 w-12 rounded-full border border-purple-500 shadow-lg"
-                src="https://i.ibb.co/LxLzCSH/Picsart-24-08-29-12-34-16-998.png"
+                className="md:w-2/6 w-12 rounded-full border border-purple-500 shadow-lg"
+                src="https://i.ibb.co.com/61WySQq/pngwing-com-3.png"
                 alt="Logo"
               />
             </div>

@@ -47,7 +47,8 @@ const HomePage = () => {
     const isUpvoteMatch =
       (!minUpvoteFilter ||
         parseInt(item?.cookingTime) >= parseInt(minUpvoteFilter)) &&
-      (!maxUpvoteFilter || parseInt(item?.cookingTime) <= parseInt(maxUpvoteFilter));
+      (!maxUpvoteFilter ||
+        parseInt(item?.cookingTime) <= parseInt(maxUpvoteFilter));
 
     return !item?.isDeleted && isUpvoteMatch;
   });
@@ -74,39 +75,42 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-default-100">
       {/* Search and Filters */}
-      <div className="flex justify-end pt-2">
-        <div className="flex justify-end gap-2 pb-3">
+      <div className="flex flex-col md:flex-row justify-end pt-4 mx-4">
+        <div className="flex flex-col md:flex-row md:gap-2 pb-3 w-full md:w-auto">
           <input
             type="text"
             placeholder="Search by name or location"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border px-2 py-1 rounded-md"
+            className="border px-3 py-2 rounded-md w-full md:w-60 mb-2 md:mb-0"
           />
-          <div className="flex">
+
+          <div className="flex gap-2 mb-2 md:mb-0">
             <input
               type="number"
               placeholder="Min time"
               value={minUpvoteFilter}
               onChange={(e) => setminUpvoteFilter(e.target.value)}
-              className="border flex-1 w-24 px-1 rounded-l-md"
+              className="border w-32 flex-1 px-3 py-2 rounded-md"
             />
             <input
               type="number"
               placeholder="Max time"
               value={maxUpvoteFilter}
               onChange={(e) => setmaxUpvoteFilter(e.target.value)}
-              className="border flex-1 w-24 px-1 rounded-r-md"
+              className="border w-32 flex-1 px-3 py-2 rounded-md"
             />
           </div>
+
           {/* Sorting Options */}
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
-            className="border px-2 py-1 rounded-md"
+            className="border px-3 py-2 rounded-md w-full md:w-48"
           >
-            <option value="" disabled>Upvoted short</option>
-            <option value="">No short</option>
+            <option value="" disabled>
+              Sort by
+            </option>
             <option value="most">Most Upvoted</option>
             <option value="least">Least Upvoted</option>
           </select>
@@ -152,18 +156,22 @@ const HomePage = () => {
             <h3 className="font-semibold text-xl text-default-800">
               What's on your mind?
             </h3>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-indigo-500 transition-all duration-300">
+            <button className="">
               <CreateRecipeModal />
             </button>
           </div>
 
           {/* Example of Posts */}
-          <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
-            <div className="grid grid-cols-1 gap-4">
+          <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6 min-h-[80vh]">
+            <div className="grid grid-cols-1 gap-4 ">
               {sortedRecipes &&
                 sortedRecipes.map((recipe: any) => (
                   <RecipeCard key={recipe.id} recipe={recipe} />
                 ))}
+
+                {
+                  !sortedRecipes?.length && <div className="text-center flex justify-center items-center min-h-[80vh]">No recepe...</div>
+                }
             </div>
           </div>
         </main>

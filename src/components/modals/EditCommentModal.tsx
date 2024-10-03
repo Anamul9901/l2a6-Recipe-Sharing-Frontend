@@ -8,7 +8,7 @@ import {
   useGetSingleCommentQuery,
   useUpdateCommentMutation,
 } from "@/src/redux/features/comment/commentApi";
-import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const EditCommentModal = ({ id }: { id: string }) => {
   const { data: getSingleComment } = useGetSingleCommentQuery(id);
@@ -17,7 +17,10 @@ const EditCommentModal = ({ id }: { id: string }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const finlData = { id, data: { ...data } };
-    const res = await updateComment(finlData);
+    const res = await updateComment(finlData).unwrap();
+    if(res?.data){
+      toast?.success((res)?.messaage)
+    }
   };
   return (
     <div>
@@ -25,7 +28,7 @@ const EditCommentModal = ({ id }: { id: string }) => {
       <FXModal
         title="Update Your Profile"
         buttonText="edit"
-        buttonClassName="px-2 py-1 bg-green-500 hover:bg-green-700 rounded-full text-md transition duration-300 mr-2"
+        buttonClassName="px-2 py- bg-green-500 hover:bg-green-700 rounded-full text-md transition duration-300 mr-2"
       >
         <FXForm onSubmit={onSubmit}>
           <div className="py-1">
@@ -37,8 +40,8 @@ const EditCommentModal = ({ id }: { id: string }) => {
             ></FXInput>
           </div>
           <div className="flex justify-center pt-2 w-full pb-2">
-            <Button className="" type="submit">
-              Submit
+            <Button className="w-full" type="submit">
+              Update
             </Button>
           </div>
         </FXForm>

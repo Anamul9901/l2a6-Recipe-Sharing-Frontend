@@ -47,7 +47,6 @@ const ProfilePage = () => {
     (item: any) => item?.userId == id && item?.followerEmail == myUserEmail
   );
 
-
   // console.log(allFollower);
 
   // const handleUpdateFollow = async () => {
@@ -140,7 +139,6 @@ const ProfilePage = () => {
           {/* Profile Picture */}
           <Image
             className="w-28 h-28 rounded-full border-4 border-white"
-            // src={user?.profileImg}
             src="https://i.ibb.co.com/z89cgQr/profile.webp"
             alt="Profile Picture"
             height={500}
@@ -231,7 +229,7 @@ const ProfilePage = () => {
               <h3 className="font-semibold text-xl text-default-800">
                 What's on your mind?
               </h3>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-indigo-500 transition-all duration-300">
+              <button>
                 <CreateRecipeModal />
               </button>
             </div>
@@ -242,10 +240,13 @@ const ProfilePage = () => {
               {/* Example of Posts */}
               <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
                 <div className="grid grid-cols-1 gap-4">
-                  {filterRecipe?.length ?
+                  {filterRecipe?.length ? (
                     filterRecipe?.map((recipe: any) => (
                       <RecipeCard recipe={recipe} />
-                    )): <div className="text-center text-sm">No post available</div>}
+                    ))
+                  ) : (
+                    <div className="text-center text-sm">No post available</div>
+                  )}
                 </div>
               </div>
             </div>

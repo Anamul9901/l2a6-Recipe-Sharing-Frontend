@@ -11,11 +11,15 @@ import { useAddRecipeMutation } from "@/src/redux/features/recipe/recipeApi";
 import Loading from "../UI/loading";
 import { useGetMyDataQuery } from "@/src/redux/features/user/userApi";
 import FXTextarea from "../form/FXTextArea";
+import { toast } from "sonner";
 
 const CreateRecipeModal = () => {
   const user = useAppSelector(selectCurrentUser);
   const { data: currentUser } = useGetMyDataQuery(undefined);
   const userIsPremeum = currentUser?.data[0]?.premium;
+  const myUserData = currentUser?.data[0];
+  const publishUserImage = currentUser?.data[0]?.profileImg;
+  const publishUserName = currentUser?.data[0]?.name;
   let verifyUser: any;
   if (user?.token) {
     verifyUser = verifyToken(user?.token as string);
@@ -30,15 +34,28 @@ const CreateRecipeModal = () => {
     } else {
       data.isPremium = false;
     }
-    const finalData = { ...data, publishUser, publishUserId };
+    const finalData = {
+      ...data,
+      publishUser,
+      publishUserId,
+      publishUserName,
+      publishUserImage,
+    };
     const res = await addRecipe(finalData).unwrap();
+    if (res?.data) {
+      toast.success(res?.messaage);
+    }
   };
   const selectOpdiont = [
     { key: false, label: "Not Premium" },
     { key: true, label: "Premium" },
   ];
   return (
-    <FXModal title="Create Recipe" buttonText="Post" buttonClassName="flex-1">
+    <FXModal
+      title="Create Recipe"
+      buttonText="Post"
+      buttonClassName="bg-blue-500 text-white px-4 py-1 rounded-lg shadow-lg hover:bg-indigo-500 transition-all duration-300"
+    >
       {isLoading && <Loading />}
       <FXForm onSubmit={onSubmit}>
         <div className="py-1">

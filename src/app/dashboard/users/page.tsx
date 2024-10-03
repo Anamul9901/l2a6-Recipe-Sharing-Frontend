@@ -3,10 +3,10 @@ import {
   useGetAllUserQuery,
   useUpdateUserMutation,
 } from "@/src/redux/features/user/userApi";
-import { MdDelete } from "react-icons/md";
-import { FiEdit3 } from "react-icons/fi";
 import UpdateUserModal from "@/src/components/modals/UpdateUserModal";
 import { useState } from "react";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
 
 const Users = () => {
   const [selectUser, setSelectUser] = useState({});
@@ -22,19 +22,31 @@ const Users = () => {
   };
 
   const handleDeleteUser = async (id: string) => {
-    console.log(id);
     const data = { id, data: { isDeleted: true } };
-    const res = await updateUser(data).unwrap();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await updateUser(data).unwrap();
+        if (res?.data) {
+          toast.success("User Delete Successfully");
+        }
+      }
+    });
   };
 
   const handleBlockUser = async (id: string) => {
-    console.log(id);
     const data = { id, data: { isBlocked: true } };
     const res = await updateUser(data).unwrap();
   };
 
   const handleUnblockUser = async (id: string) => {
-    console.log(id);
     const data = { id, data: { isBlocked: false } };
     const res = await updateUser(data).unwrap();
   };
@@ -107,7 +119,7 @@ const Users = () => {
                       onClick={() => handleDeleteUser(user?._id)}
                       className="px-2 py-1 bg-red-500 hover:bg-red-700 rounded-full  transition duration-300"
                     >
-                      <MdDelete />
+                      Delete
                     </button>
                     <button onClick={() => handleUpdateUser(user)}>
                       <UpdateUserModal user={selectUser} />
@@ -128,13 +140,9 @@ const Users = () => {
             >
               <div className="flex justify-between">
                 <span className="font-semibold text-purple-500">
-                  No. {idx + 1}
+                  {idx + 1}
                 </span>
                 <div className="space-x-2">
-                  <button className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-full text-sm transition duration-300">
-                    Delete
-                  </button>
-
                   {user?.isBlocked ? (
                     <button
                       onClick={() => handleUnblockUser(user?._id)}
@@ -150,6 +158,12 @@ const Users = () => {
                       Block
                     </button>
                   )}
+                  <button className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-full text-sm transition duration-300">
+                    Delete
+                  </button>
+                  <button onClick={() => handleUpdateUser(user)}>
+                    <UpdateUserModal user={selectUser} />
+                  </button>
                 </div>
               </div>
               <div className="mt-2">
