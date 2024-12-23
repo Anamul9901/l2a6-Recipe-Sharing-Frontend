@@ -3,10 +3,10 @@
 The Recipe Sharing Community is a full-stack web application designed to connect cooking enthusiasts. It allows users to share, discover, and organize recipes while fostering a vibrant culinary community.
 
 ## Live URL
-[Recipe Sharing Community]([https://your-live-url.com](https://l2-a6-recipe-sharing-client.vercel.app/))
+[Recipe Sharing Community](https://l2-a6-recipe-sharing-client.vercel.app/)
 
 ## Backend Repository
-[Backend Repository Link]([https://github.com/your-backend-repository](https://github.com/Anamul9901/l2a6-Recipe-Sharing-Backend))
+[Backend Repository Link](https://github.com/Anamul9901/l2a6-Recipe-Sharing-Backend)
 
 ---
 
