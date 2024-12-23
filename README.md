@@ -1,53 +1,136 @@
-# Next.js & NextUI Template
+# Recipe Sharing Community
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+The Recipe Sharing Community is a full-stack web application designed to connect cooking enthusiasts. It allows users to share, discover, and organize recipes while fostering a vibrant culinary community.
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+## Live URL
+[Recipe Sharing Community](https://your-live-url.com)
+
+## Backend Repository
+[Backend Repository Link](https://github.com/your-backend-repository)
+
+---
+
+## Features
+
+### 1. **User Features**
+- **Recipe Submission:** Users can create and update recipes with detailed ingredient lists and images.
+- **Ingredient Checklist:** Interactive checklist for managing cooking ingredients.
+- **Cooking Timer:** Built-in timer for tracking cooking durations.
+- **Social Features:** Commenting, rating, and upvoting/downvoting recipes.
+- **Profile Management:** Update profile details, follow/unfollow users, and view personal recipe submissions.
+- **Premium Subscription:** Access exclusive content through a paid subscription.
+
+### 2. **Admin Features**
+- **Recipe Management:** Publish, unpublish, and delete recipes.
+- **User Management:** Block/unblock users and manage accounts.
+- **Admin Accounts:** Add and manage admin users.
+
+### 3. **Search and Filters**
+- **Advanced Search:** Search recipes by keywords, ingredients, cooking time, and tags (e.g., vegetarian, gluten-free).
+- **Sorting:** Filter recipes by ratings, popularity, and preparation time.
+
+### 4. **Recipe Feed**
+- Infinite scroll for seamless browsing.
+- Display recipes with images, ratings, and basic details.
+
+### 5. **Payment Integration**
+- **Subscription Payments:** AAMARPAY/Stripe integration for secure payments.
+- **Membership Features:** Premium users can access exclusive recipes and advanced filters.
+
+---
 
 ## Technologies Used
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+- **Frontend:** React.js, Redux Toolkit, Ant Design
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Authentication:** JWT-based secure login system
+- **Payment Gateway:** AAMARPAY/Stripe
 
-## How to Use
+---
 
-### Use the template with create-next-app
+## Prerequisites
 
-To create a new project based on this template using `create-next-app`, run the following command:
+- **Node.js:** v20.11.1 or higher
+- **npm:** Package Manager
 
+---
+
+## Getting Started
+
+### 1. Clone the repository
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
+git clone https://github.com/your-repo/recipe-sharing-community.git
 ```
 
-### Install dependencies
+### 2. Navigate to the project directory
+```bash
+cd recipe-sharing-community
+```
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
-
+### 3. Install dependencies
 ```bash
 npm install
 ```
 
-### Run the development server
+### 4. Set up environment variables
+Create a `.env` file in the root directory with the following variables:
+```env
+PORT=5000
+MONGO_URI=your-mongodb-uri
+JWT_SECRET=your-jwt-secret
+STRIPE_SECRET=your-stripe-secret
+AAMARPAY_MERCHANT_KEY=your-aamarpay-merchant-key
+```
 
+### 5. Run the application
+Start the development server:
 ```bash
 npm run dev
 ```
+Access the application at [http://localhost:5000](http://localhost:5000).
 
-### Setup pnpm (optional)
+---
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+## Folder Structure
 
-```bash
-public-hoist-pattern[]=*@nextui-org/*
-```
+- **`/frontend`**: React application for the user interface.
+- **`/backend`**: Express server for APIs and business logic.
+- **`/models`**: MongoDB models for users, recipes, and comments.
+- **`/routes`**: API endpoints for authentication, recipes, and user management.
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+---
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
+
+---
+
+## Future Enhancements
+- Social media integration for sharing recipes.
+- Real-time chat for culinary discussions.
+- AI-based recipe recommendations based on user preferences.
+
+---
 
 ## License
+This project is licensed under the MIT License.
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+---
+
+## Contact
+For any inquiries or support, please contact [your-email@example.com](mailto:your-email@example.com).
