@@ -3,10 +3,10 @@
 The Recipe Sharing Community is a full-stack web application designed to connect cooking enthusiasts. It allows users to share, discover, and organize recipes while fostering a vibrant culinary community.
 
 ## Live URL
-[Recipe Sharing Community](https://your-live-url.com)
+[Recipe Sharing Community]([https://your-live-url.com](https://l2-a6-recipe-sharing-client.vercel.app/))
 
 ## Backend Repository
-[Backend Repository Link](https://github.com/your-backend-repository)
+[Backend Repository Link]([https://github.com/your-backend-repository](https://github.com/Anamul9901/l2a6-Recipe-Sharing-Backend))
 
 ---
 
@@ -45,7 +45,7 @@ The Recipe Sharing Community is a full-stack web application designed to connect
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 - **Authentication:** JWT-based secure login system
-- **Payment Gateway:** AAMARPAY/Stripe
+- **Payment Gateway:** AAMARPAY
 
 ---
 
@@ -60,27 +60,17 @@ The Recipe Sharing Community is a full-stack web application designed to connect
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-repo/recipe-sharing-community.git
+git clone https://github.com/Anamul9901/l2a6-Recipe-Sharing-Frontend
 ```
 
 ### 2. Navigate to the project directory
 ```bash
-cd recipe-sharing-community
+cd l2a6-Recipe-Sharing-Frontend
 ```
 
 ### 3. Install dependencies
 ```bash
 npm install
-```
-
-### 4. Set up environment variables
-Create a `.env` file in the root directory with the following variables:
-```env
-PORT=5000
-MONGO_URI=your-mongodb-uri
-JWT_SECRET=your-jwt-secret
-STRIPE_SECRET=your-stripe-secret
-AAMARPAY_MERCHANT_KEY=your-aamarpay-merchant-key
 ```
 
 ### 5. Run the application
@@ -101,25 +91,6 @@ Access the application at [http://localhost:5000](http://localhost:5000).
 
 ---
 
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add new feature"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature-name
-   ```
-5. Open a pull request.
-
----
-
 ## Future Enhancements
 - Social media integration for sharing recipes.
 - Real-time chat for culinary discussions.
@@ -127,10 +98,7 @@ Access the application at [http://localhost:5000](http://localhost:5000).
 
 ---
 
-## License
-This project is licensed under the MIT License.
-
 ---
 
 ## Contact
-For any inquiries or support, please contact [your-email@example.com](mailto:your-email@example.com).
+For any inquiries or support, please contact [anamulhaque9901@gmail.com](mailto:anamulhaque9901@gmail.com).
