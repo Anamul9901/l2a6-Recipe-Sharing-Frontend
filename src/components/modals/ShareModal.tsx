@@ -14,7 +14,6 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 const ShareModal = (urlData: any) => {
   const [copied, setCopied] = useState(false);
   const shareUrl = urlData?.urlData;
-  console.log("shareUrl", shareUrl);
 ;
   return (
     <div className="relative p-6">

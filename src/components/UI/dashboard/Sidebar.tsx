@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/src/redux/hooks";
 import { logout, selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import { verifyToken } from "@/src/utils/verifyToken";
 import React from "react";
+import { RiProfileLine } from "react-icons/ri";
 
 // Loading component (you can customize this as needed)
 const Loading = () => (
@@ -86,7 +87,7 @@ const Sidebar = () => {
                 }`}
               >
                 <span className="material-icons md:hidden">
-                  <MdSpaceDashboard />
+                <RiProfileLine />
                 </span>
                 <span className="hidden md:inline-block ml-2">profile</span>
               </div>
