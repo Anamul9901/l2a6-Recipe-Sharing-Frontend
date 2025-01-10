@@ -15,6 +15,8 @@ import { useGetAllCommentQuery } from "@/src/redux/features/comment/commentApi";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 import { Avatar } from "@nextui-org/avatar";
+import ShareModal from "../modals/ShareModal";
+import { FacebookIcon, FacebookShareCount } from "react-share";
 
 const RecipeCard = ({ recipe }: { recipe: any }) => {
   const [recipeId, setRecipeId] = useState("");
@@ -49,7 +51,6 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   const filtreRatingAnimation = getAllRatingAndUpvote?.data?.filter(
     (item: any) => item?.type == "rating" && item?.userEmail == loggedUserEmail
   );
-
 
   //* upvote downvote and rating show END
 
@@ -228,18 +229,18 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
       {/* Recipe Details */}
       <div className="px-4 pt-2">
         <div className="flex justify-start gap-2 pb-2">
-        <Link href={`/profile/${recipe?.publishUserId}`}>
-          <Avatar
-            src={recipe?.publishUserImage}
-            className="w-12 h-12 rounded-full border-2 border-teal-400 shadow-lg"
-          />
-        </Link>
-        <Link
-          href={`/profile/${recipe?.publishUserId}`}
-          className="text-sm font-bold text-teal-400 pt-2 hover:text-blue-400 transition-all duration-300"
-        >
-          {recipe?.publishUserName}
-        </Link>
+          <Link href={`/profile/${recipe?.publishUserId}`}>
+            <Avatar
+              src={recipe?.publishUserImage}
+              className="w-12 h-12 rounded-full border-2 border-teal-400 shadow-lg"
+            />
+          </Link>
+          <Link
+            href={`/profile/${recipe?.publishUserId}`}
+            className="text-sm font-bold text-teal-400 pt-2 hover:text-blue-400 transition-all duration-300"
+          >
+            {recipe?.publishUserName}
+          </Link>
         </div>
         <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
           {recipe?.title}
@@ -329,11 +330,13 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
           </div>
 
           {/* Comment Modal */}
-          <div
-            onClick={() => setRecipeId(recipe?._id)}
-            className="text-teal-400 hover:text-purple-500 cursor-pointer transition-all duration-500 transform hover:scale-110 glow-neon"
-          >
-            <CommentModal id={recipeId} comments={filterComment} />
+          <div className="flex justify-center items-center w-[200px]">
+            <div onClick={() => setRecipeId(recipe?._id)}>
+              <CommentModal id={recipeId} comments={filterComment} />
+            </div>
+            <div onClick={() => setRecipeId(recipe?._id)}>
+              <ShareModal urlData={`https://coockup.netlify.app/recipe/${recipe?._id}`} />
+            </div>
           </div>
         </div>
       </div>
