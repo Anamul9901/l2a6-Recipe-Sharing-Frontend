@@ -1,100 +1,162 @@
 "use client";
-import ChangePasswordModal from "@/src/components/modals/ChangePasswordModal";
-import { useGetMyDataQuery } from "@/src/redux/features/user/userApi";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Bar, Pie } from "react-chartjs-2"; // Chart.js
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+import "chart.js/auto";
+
+// Register chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const Dashboard = () => {
-  const { data: user } = useGetMyDataQuery(undefined);
-  const [isMounted, setIsMounted] = useState(false);
-  const currentUser = user?.data[0];
-  console.log(currentUser);
+  const [overviewData, setOverviewData] = useState({
+    totalUsers: 0,
+    totalSales: 0,
+    pendingOrders: 0,
+    completedOrders: 0,
+  });
 
-  // For hydration error handle
+  const [chartData, setChartData] = useState({
+    barChart: {
+      labels: ["January", "February", "March", "April"],
+      datasets: [
+        {
+          label: "Sales",
+          data: [300, 500, 100, 400],
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+        },
+      ],
+    },
+    pieChart: {
+      labels: ["Completed", "Pending", "Cancelled"],
+      datasets: [
+        {
+          data: [60, 30, 10],
+          backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+        },
+      ],
+    },
+  });
+
+  // Simulating fetching data
   useEffect(() => {
-    setIsMounted(true);
+    // Simulating dynamic data fetch
+    setOverviewData({
+      totalUsers: 1200,
+      totalSales: 50000,
+      pendingOrders: 20,
+      completedOrders: 300,
+    });
   }, []);
 
-  if (!isMounted) {
-    return null;
-  }
   return (
-    <div className="min-h-screen flex justify-center items-center p-4">
-      <div className="max-w-lg w-full bg-default-100 shadow-2xl rounded-lg transform transition-transform hover:scale-105 p-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-default-900 mb-4">
-          User Dashboard
-        </h1>
-
-        {/* Profile Section */}
-        <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mb-6">
-          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow-lg">
-            <img
-              src={
-                currentUser?.profileImg || "https://i.ibb.co/z89cgQr/profile.webp"
-              }
-              alt=""
-              className="w-full h-full object-cover"
-            />
+    <div className="flex justify-center items-center w-full">
+      <div className="p-4 space-y-6 ">
+        {/* Overview Section */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1: Total Users */}
+          <div className="bg-default-200 p-4 rounded-lg shadow-md flex flex-col items-center">
+            <h3 className="text-lg font-semibold">Total Users</h3>
+            <p className="text-xl">{overviewData.totalUsers}</p>
           </div>
-          <div className="text-center md:text-left">
-            <h2 className="text-xl md:text-3xl font-bold text-default-800">
-              {currentUser?.name}
-            </h2>
-            <p className="text-default-600">{currentUser?.email}</p>
-            <p className="text-default-600">
-              {currentUser?.bio || "No bio available"}
-            </p>
+
+          {/* Card 2: Total Sales */}
+          <div className="bg-default-200 p-4 rounded-lg shadow-md flex flex-col items-center">
+            <h3 className="text-lg font-semibold">Total Sales</h3>
+            <p className="text-xl">${overviewData.totalSales}</p>
+          </div>
+
+          {/* Card 3: Pending Orders */}
+          <div className="bg-default-200 p-4 rounded-lg shadow-md flex flex-col items-center">
+            <h3 className="text-lg font-semibold">Pending Orders</h3>
+            <p className="text-xl">{overviewData.pendingOrders}</p>
+          </div>
+
+          {/* Card 4: Completed Orders */}
+          <div className="bg-default-200 p-4 rounded-lg shadow-md flex flex-col items-center">
+            <h3 className="text-lg font-semibold">Completed Orders</h3>
+            <p className="text-xl">{overviewData.completedOrders}</p>
           </div>
         </div>
 
-        {/* Statistics Section */}
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 mb-6">
-          <div className="text-center p-4 bg-default-600 rounded-lg shadow hover:bg-default-800 transition duration-200">
-            <h3 className="text-xl md:text-2xl font-semibold text-default-100">
-              {currentUser?.follower}
+        {/* Chart Section */}
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* Bar Chart */}
+          <div className="bg-default-200 p-6 rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold mb-4">
+              Sales Data (Bar Chart)
             </h3>
-            <p className="text-default-100">Followers</p>
+            <Bar data={chartData.barChart} />
           </div>
-          <div className="text-center p-4 bg-default-600 rounded-lg shadow hover:bg-default-800 transition duration-200">
-            <h3 className="text-xl md:text-2xl font-semibold text-default-100">
-              {currentUser?.following}
+
+          {/* Pie Chart */}
+          <div className="bg-default-200 p-6 rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold mb-4">
+              Order Status (Pie Chart)
             </h3>
-            <p className="text-default-100">Following</p>
-          </div>
-          <div className="text-center p-4 bg-default-600 rounded-lg shadow hover:bg-default-800 transition duration-200">
-            <h3 className="text-xl md:text-2xl font-semibold text-default-100">
-              {currentUser?.premium ? "Yes" : "No"}
-            </h3>
-            <p className="text-default-100">Premium Status</p>
+            <Pie data={chartData.pieChart} />
           </div>
         </div>
 
-        {/* Actions Section */}
-        <div className="flex justify-center mb-6">
-          <button className="">
-            <ChangePasswordModal />
-          </button>
-        </div>
-
-        {/* Account Details */}
-        <div>
-          <h3 className="text-lg md:text-xl font-semibold text-default-700 mb-4">
-            Account Details
-          </h3>
-          <div className="bg-default-600 text-default-50 p-4 rounded-lg shadow">
-            <p>
-              <strong>Role:</strong> {currentUser?.role}
-            </p>
-            <p>
-              <strong>Blocked:</strong> {currentUser?.isBlocked ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Deleted:</strong> {currentUser?.isDeleted ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Payment:</strong>{" "}
-              {currentUser?.payment ? `$${currentUser?.payment}` : "No Payment"}
-            </p>
-          </div>
+        {/* Table Section */}
+        <div className="bg-default-200 p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
+          <table className="min-w-full table-auto">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Order ID</th>
+                <th className="border px-4 py-2">Customer</th>
+                <th className="border px-4 py-2">Amount</th>
+                <th className="border px-4 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* Dynamic Table Rows */}
+              {[
+                {
+                  id: 1,
+                  customer: "John Doe",
+                  amount: "$120",
+                  status: "Completed",
+                },
+                {
+                  id: 2,
+                  customer: "Jane Smith",
+                  amount: "$250",
+                  status: "Pending",
+                },
+                {
+                  id: 3,
+                  customer: "Michael Brown",
+                  amount: "$80",
+                  status: "Completed",
+                },
+              ].map((order) => (
+                <tr key={order.id}>
+                  <td className="border px-4 py-2">{order.id}</td>
+                  <td className="border px-4 py-2">{order.customer}</td>
+                  <td className="border px-4 py-2">{order.amount}</td>
+                  <td className="border px-4 py-2">{order.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

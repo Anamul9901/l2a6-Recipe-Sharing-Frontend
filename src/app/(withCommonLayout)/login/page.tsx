@@ -14,16 +14,17 @@ import { toast } from "sonner";
 
 const Login = () => {
   const [errorShow, setErrorShow] = useState(false);
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [loginUser, { isLoading, error }] = useLoginMutation();
 
   useEffect(() => {
-    // Check for error and update state
+   
     if (error) {
-      setErrorShow(true); // Trigger the error state change
+      setErrorShow(true);
     }
-  }, [error]); // Only update if the error changes
+  }, [error]); 
 
   useEffect(() => {
     if (errorShow && (error as any)?.data) {

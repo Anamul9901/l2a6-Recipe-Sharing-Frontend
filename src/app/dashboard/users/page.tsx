@@ -67,13 +67,13 @@ const Users = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex justify-center pt-10 px-4">
-      <div className="w-full max-w-6xl">
+    <div className="min-h-screen w-full text-default-800 flex justify-center pt-10 px-4">
+      <div className="w-full">
         {/* Futuristic Table Container for desktop and tablet */}
-        <div className="overflow-x-auto shadow-2xl bg-gray-800 rounded-lg p-6 hidden md:block">
+        <div className="overflow-x-auto shadow-2xl bg-default-300 rounded-lg p-6 hidden md:block">
           <table className="min-w-full table-auto text-sm">
             {/* Head */}
-            <thead className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+            <thead className="bg-gradient-to-r from-default-500 to-default-300 text-default-800">
               <tr>
                 <th className="px-6 py-3 border-b-2 border-gray-700 text-left font-semibold uppercase tracking-wider">
                   No.
@@ -98,7 +98,7 @@ const Users = () => {
               {filterUser?.map((user: any, idx: number) => (
                 <tr
                   key={user?._id}
-                  className="border-b border-gray-700 hover:bg-gray-700 transition-all duration-300"
+                  className="border-b border-gray-700 hover:bg-default-400 transition-all duration-300"
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-center md:text-left">
                     {idx + 1}

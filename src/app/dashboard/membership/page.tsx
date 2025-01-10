@@ -32,13 +32,13 @@ const Membership = () => {
     : "N/A";
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-gray-900 via-black to-gray-900 p-8">
+    <div className="flex flex-col items-center min-h-screen p-8">
       <h1 className="text-4xl font-bold text-teal-400 mb-10">
         Memberships
       </h1>
 
       {/* User's membership and payment information */}
-      <div className="mb-8 text-center text-white">
+      <div className="mb-8 text-center text-default-900">
         <h1 className="text-xl">
           Your total payment: <span className="text-teal-400">{user?.payment ?? "0"} Tk</span>
         </h1>

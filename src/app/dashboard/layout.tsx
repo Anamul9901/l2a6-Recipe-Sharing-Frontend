@@ -1,17 +1,20 @@
 import Sidebar from "@/src/components/UI/dashboard/Sidebar";
 import { ReactNode } from "react";
 
-const layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex mx-auto max-w-7xl w-full">
-      <div className="md:w-[300px] w-[80px]">
+    <div className="flex min-h-screen bg-default-100">
+      {/* Sidebar */}
+      <div className="w-64 bg-white shadow-md h-screen sticky top-0">
         <Sidebar />
       </div>
-      <div className="flex justify-center md:pl-[100px]">
-      {children}
+      
+      {/* Main Content */}
+      <div className="flex-grow bg-default-50 p-6">
+        <div className="max-w-7xl mx-auto">{children}</div>
       </div>
     </div>
   );
 };
 
-export default layout;
+export default Layout;
