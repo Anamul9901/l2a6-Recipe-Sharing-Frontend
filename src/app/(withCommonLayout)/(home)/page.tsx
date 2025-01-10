@@ -166,24 +166,24 @@ const HomePage = () => {
       <div className="sticky top-6 bg-default-100 p-6 rounded-lg shadow-lg hover:bg-default-200 hover:cursor-pointer transition-all duration-50">
         <h3 className="font-bold text-xl mb-6 text-default-700">Menu</h3>
         <ul className="space-y-4">
-          <div className="hover:bg-blue-100 cursor-pointer p-3 rounded-md transition-all duration-300">
+          <div className="hover:bg-default-400 cursor-pointer p-3 rounded-md transition-all duration-300">
             <Link href="/">Home</Link>
           </div>
-          <li className="hover:bg-blue-100 cursor-pointer p-3 rounded-md transition-all duration-300">
+          <li className="hover:bg-default-400 cursor-pointer p-3 rounded-md transition-all duration-300">
             Friends
           </li>
-          <li className="hover:bg-blue-100 cursor-pointer p-3 rounded-md transition-all duration-300">
+          <li className="hover:bg-default-400 cursor-pointer p-3 rounded-md transition-all duration-300">
             Messages
           </li>
-          <li className="hover:bg-blue-100 cursor-pointer p-3 rounded-md transition-all duration-300">
+          <li className="hover:bg-default-400 cursor-pointer p-3 rounded-md transition-all duration-300">
             Notifications
           </li>
-          <div className="hover:bg-blue-100 cursor-pointer p-3 rounded-md transition-all duration-300">
+          <div className="hover:bg-default-400 cursor-pointer p-3 rounded-md transition-all duration-300">
             <Link href={`/profile/${user2?._id}`}>Profile</Link>
           </div>
           <li
             onClick={() => handleLogOut()}
-            className="hover:bg-blue-100 cursor-pointer p-3 rounded-md transition-all duration-300"
+            className="hover:bg-default-400 cursor-pointer p-3 rounded-md transition-all duration-300"
           >
             Logout
           </li>
