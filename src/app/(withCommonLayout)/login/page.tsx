@@ -32,12 +32,17 @@ const Login = () => {
     }
   }, [errorShow, error]);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const res = await loginUser(data).unwrap();
+  const handleCredentialSet = (email: string, password: string) => {
+    setCredentials({ email, password });
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const res = await loginUser(credentials).unwrap();
     if (res?.data) {
       toast.success(`${res?.messaage}`);
-      const { email, name, _id, profileImg } = res?.data?.data;
-      const finalUserData = { email, name, _id, profileImg };
+      const { email, name, id, role } = res?.data?.data;
+      const finalUserData = { email, name, id, role };
       dispatch(setUser({ user: finalUserData, token: res?.data?.token }));
       router?.push("/");
     }
@@ -55,7 +60,26 @@ const Login = () => {
           Welcome back! Let’s get started.
         </p>
 
-        <FXForm onSubmit={onSubmit}>
+        <div className="pb-4">
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={() =>
+                handleCredentialSet("anamul1@gmail.com", "anamul1")
+              }
+              className="bg-default-300 text-sm rounded-lg px-1 hover:cursor-pointer"
+            >
+              User credential
+            </button>
+            <button
+              onClick={() => handleCredentialSet("admin1@gmail.com", "admin1")}
+              className="bg-default-300 text-sm rounded-lg px-1 hover:cursor-pointer"
+            >
+              Admin credential
+            </button>
+          </div>
+        </div>
+
+        {/* <FXForm onSubmit={onSubmit}>
           <div className="space-y-4">
             <FXInput name="email" label="Email" type="email" size="sm" />
             <FXInput
@@ -72,7 +96,65 @@ const Login = () => {
               Login
             </Button>
           </div>
-        </FXForm>
+        </FXForm> */}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-default-800 font-medium mb-1"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={credentials.email}
+              onChange={(e) =>
+                setCredentials({ ...credentials, email: e.target.value })
+              }
+              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-teal-400 focus:outline-none"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-default-800 font-medium mb-1"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={credentials.password}
+              onChange={(e) =>
+                setCredentials({ ...credentials, password: e.target.value })
+              }
+              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-teal-400 focus:outline-none"
+              required
+            />
+          </div>
+          <Button
+            className="w-full rounded-md bg-gradient-to-r from-teal-400 to-purple-500 text-default-800 font-semibold py-2"
+            size="lg"
+            type="submit"
+          >
+            Login
+          </Button>
+        </form>
+
+        {/* <div>
+          <GoogleLogin
+            clientId={ClientID}
+            buttonText="Login"
+            onSuccess={onGoogleLoginSuccess}
+            onFailure={onGoogleLoginFailure}
+            cookiePolicy={"single_host_origin"}
+          />
+        </div>*/}
 
         <div className="mt-4 text-center">
           <p className="text-default-500">
