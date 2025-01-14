@@ -55,7 +55,7 @@ const CreateRecipeModal = () => {
     <FXModal
       title="Create Recipe"
       buttonText="Post"
-      buttonClassName="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-indigo-500 transition-all duration-300"
+      buttonClassName="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300"
     >
       {isLoading && <Loading />}
       <FXForm onSubmit={onSubmit}>
