@@ -104,7 +104,7 @@ const Login = () => {
             onChange={(e) =>
               setCredentials({ ...credentials, email: e.target.value })
             }
-            className="w-full px-4 py-2 border bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
+            className="w-full text-black px-4 py-2 border bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
             required
           />
         </div>
@@ -123,7 +123,7 @@ const Login = () => {
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
-            className="w-full px-4 py-2 border bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
+            className="w-full px-4 py-2 border text-black bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
             required
           />
         </div>

@@ -118,7 +118,7 @@ const HomePage = () => {
       {/* Main Content */}
       <div className="flex flex-grow max-w-full">
         {/* Sidebar */}
-        <aside className="w-1/4 bg-default-100 p-6 hidden lg:block sticky top-0 h-screen overflow-y-auto">
+        <aside className="w-1/4 bg-default-100 pt-20 pl-10 p-6 hidden lg:block sticky top-0 h-screen overflow-y-auto">
           <h3 className="font-bold text-xl mb-6 text-default-700">Menu</h3>
           <ul className="space-y-4">
             <li>
@@ -185,7 +185,7 @@ const HomePage = () => {
         </main>
 
         {/* Sponsor Section */}
-        <aside className="w-1/4 bg-default-100 p-6 hidden lg:block sticky top-0 h-screen overflow-y-auto">
+        <aside className="w-1/4 pt-20 pr-10 bg-default-100 p-6 hidden lg:block sticky top-0 h-screen overflow-y-auto">
           <h3 className="font-bold text-xl mb-4 text-default-700">Sponsor</h3>
           <div className="space-y-4">
             {sponsorData?.map((sponsor: any) => (

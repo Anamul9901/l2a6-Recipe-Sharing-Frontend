@@ -213,7 +213,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gradient-to-b from-default-50 via-default-100 to-black rounded-md overflow-hidden shadow-2xl transform transition-all duration-500  hover:shadow-neon">
+    <div className="max-w-md mx-auto rounded-md overflow-hidden shadow-2xl transform transition-all duration-500  hover:shadow-neon">
       {/* Recipe Image */}
       <div className="relative">
         <Image

@@ -73,7 +73,7 @@ const Register = () => {
             >
               Name
             </label>
-            <FXInput name="name" label="Name" size="sm" required />
+            <FXInput name="name" label="Name"  size="sm" required />
           </div>
           <div className="pb-3">
             <label

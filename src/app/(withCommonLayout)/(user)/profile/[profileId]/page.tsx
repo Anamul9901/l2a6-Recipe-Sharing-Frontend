@@ -18,7 +18,7 @@ import {
 import { useAppSelector } from "@/src/redux/hooks";
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const ProfilePage = () => {
@@ -36,7 +36,11 @@ const ProfilePage = () => {
   const [deleteFollow, {}] = useDeleteFollowerMutation();
   const { data: currentUserData } = useGetMyDataQuery(undefined);
   const currentUserFollowing = currentUserData?.data[0]?.following;
-  const { data: allRecipe } = useGetAllRecipeQuery(undefined);
+  const { data: allRecipe, isLoading } = useGetAllRecipeQuery(undefined);
+  const router = useRouter();
+  if (!myData) {
+    router.push("/login");
+  }
 
   const filterRecipe = allRecipe?.data?.filter(
     (recipe: any) => recipe?.publishUserId == id
@@ -137,15 +141,22 @@ const ProfilePage = () => {
       <div className="relative bg-blue-600 h-60">
         <div className="absolute bottom-3 left-4 flex items-center space-x-4 w-full">
           {/* Profile Picture */}
-          <img 
+          <img
             className="w-28 h-28 rounded-full border-4 border-white"
-            src={user?.profileImg || 'https://i.ibb.co.com/z89cgQr/profile.webp'}
+            src={
+              user?.profileImg || "https://i.ibb.co.com/z89cgQr/profile.webp"
+            }
             alt="Profile Picture"
             height={500}
             width={500}
           />
           <div className="text-white w-full">
-            <h2 className="text-2xl font-bold">{user?.name} <span className={`text-sm text-yellow-500`}>{user?.premium ? "Premium" : "Free"}</span></h2>
+            <h2 className="text-2xl font-bold">
+              {user?.name}{" "}
+              <span className={`text-sm text-yellow-500`}>
+                {user?.premium ? "Premium" : "Free"}
+              </span>
+            </h2>
             <h2 className="text-sm">{user?.bio}</h2>
             <div className="flex justify-between items-center">
               <p className="text-sm">
@@ -200,21 +211,26 @@ const ProfilePage = () => {
             </div>
 
             <div className="bg-default-50 md:p-4 rounded-lg shadow-md mt-4">
-              <h3 className="font-semibold text-lg mb-2 text-center pt-2">Recent Posts</h3>
+              <h3 className="font-semibold text-lg mb-2 text-center pt-2">
+                Recent Posts
+              </h3>
 
               {/* Example of Posts */}
               <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
                 <div className="grid grid-cols-1 gap-4">
-                  {filterRecipe?.length ? (
+                  {filterRecipe?.length &&
                     filterRecipe?.map((recipe: any) => (
                       <RecipeCard recipe={recipe} />
-                    ))
-                  ) : (
-                    <div className="text-center text-sm">
-                       {[...Array(4)].map(() => (
-                    <RecipeSkeletion />
-                  ))}
+                    ))}
+                  {isLoading && (
+                    <div className="text-center items-center">
+                      {[...Array(4)].map((_, index) => (
+                        <RecipeSkeletion key={index} />
+                      ))}
                     </div>
+                  )}
+                  {!filterRecipe?.length && (
+                    <div className="text-center items-center">No Recipt</div>
                   )}
                 </div>
               </div>
