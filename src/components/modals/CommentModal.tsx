@@ -68,7 +68,7 @@ const CommentModal = ({ id, comments }: { id: string; comments: any }) => {
       <FXModal
         title=""
         buttonText="Comment"
-        buttonClassName="bg-gradient-to-r from-blue-500 to-teal-400 hover:from-teal-400 hover:to-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-xl transition-all duration-500 transform hover:scale-105"
+        buttonClassName="px-4 py-1 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r from-gray-700 to-gray-900 text-gray-400 hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105"
       >
         <div className="space-y-6">
           <h1 className="text-3xl font-extrabold text-white mb-4">

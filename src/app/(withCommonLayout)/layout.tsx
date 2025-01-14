@@ -3,11 +3,12 @@ import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="relative flex flex-col h-screen">
-      <Navbar />
-      <main className="container mx-auto max-w-7xl md:px-4 px-2 flex-grow">
+    <div className=" flex flex-col h-screen">
+      <div></div>
+      <div className="w-full mx-auto flex-grow">
+        <Navbar />
         {children}
-      </main>
+      </div>
     </div>
   );
 };

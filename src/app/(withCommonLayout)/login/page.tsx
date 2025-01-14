@@ -49,126 +49,109 @@ const Login = () => {
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center">
-      {isLoading && <Loading />}
-
-      <div className="bg-default-100 shadow-lg rounded-lg w-full max-w-md p-8 mx-4">
-        <h3 className="text-3xl font-bold text-center text-default-700">
-          Login to CookUp
-        </h3>
-        <p className="text-center text-default-800 mb-6">
-          Welcome back! Let’s get started.
-        </p>
-
-        <div className="pb-4">
-          <div className="flex items-center justify-center gap-4">
-            <button
-              onClick={() =>
-                handleCredentialSet("anamul1@gmail.com", "anamul1")
-              }
-              className="bg-default-300 text-sm rounded-lg px-1 hover:cursor-pointer"
-            >
-              User credential
-            </button>
-            <button
-              onClick={() => handleCredentialSet("admin1@gmail.com", "admin1")}
-              className="bg-default-300 text-sm rounded-lg px-1 hover:cursor-pointer"
-            >
-              Admin credential
-            </button>
-          </div>
-        </div>
-
-        {/* <FXForm onSubmit={onSubmit}>
-          <div className="space-y-4">
-            <FXInput name="email" label="Email" type="email" size="sm" />
-            <FXInput
-              name="password"
-              label="Password"
-              type="password"
-              size="sm"
-            />
-            <Button
-              className="w-full rounded-md bg-gradient-to-r from-teal-400 to-purple-500 text-default-800 font-semibold py-2"
-              size="lg"
-              type="submit"
-            >
-              Login
-            </Button>
-          </div>
-        </FXForm> */}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-default-800 font-medium mb-1"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={credentials.email}
-              onChange={(e) =>
-                setCredentials({ ...credentials, email: e.target.value })
-              }
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-teal-400 focus:outline-none"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-default-800 font-medium mb-1"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              value={credentials.password}
-              onChange={(e) =>
-                setCredentials({ ...credentials, password: e.target.value })
-              }
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-teal-400 focus:outline-none"
-              required
-            />
-          </div>
-          <Button
-            className="w-full rounded-md bg-gradient-to-r from-teal-400 to-purple-500 text-default-800 font-semibold py-2"
-            size="lg"
-            type="submit"
-          >
-            Login
-          </Button>
-        </form>
-
-        {/* <div>
-          <GoogleLogin
-            clientId={ClientID}
-            buttonText="Login"
-            onSuccess={onGoogleLoginSuccess}
-            onFailure={onGoogleLoginFailure}
-            cookiePolicy={"single_host_origin"}
+    <div className="relative h-screen flex items-center justify-center bg-default-100">
+    {isLoading && <Loading />}
+  
+    {/* Background Image */}
+    <div
+      className="absolute inset-0 bg-cover bg-center z-0"
+      style={{
+        backgroundImage: "url('https://i.ibb.co.com/94T8W8T/computer-security-with-login-password-padlock.jpg')", // Replace with your image
+        filter: "blur(8px)",
+      }}
+    ></div>
+  
+    <div className="relative bg-white shadow-xl rounded-2xl w-full max-w-lg p-8 mx-4 z-10">
+      {/* Lottie Animation */}
+      <div className="flex justify-center mb-6">
+        <img
+          src="https://i.ibb.co.com/94T8W8T/computer-security-with-login-password-padlock.jpg" // Replace with an actual Lottie animation or GIF
+          alt="Chef Animation"
+          className="w-24 h-24"
+        />
+      </div>
+  
+      <h3 className="text-4xl font-bold text-center text-gray-800">Welcome to CookUp</h3>
+      <p className="text-center text-gray-600 mb-6">
+        Ready to discover amazing recipes? Let’s get started.
+      </p>
+  
+      <div className="pb-4 flex justify-center gap-4">
+        <button
+          onClick={() => handleCredentialSet("anamul1@gmail.com", "anamul1")}
+          className="bg-teal-200 text-sm text-teal-800 rounded-full px-4 py-2 hover:bg-teal-300 hover:scale-105 transition-transform"
+        >
+          User Credential
+        </button>
+        <button
+          onClick={() => handleCredentialSet("admin1@gmail.com", "admin1")}
+          className="bg-teal-200 text-sm text-teal-800 rounded-full px-4 py-2 hover:bg-teal-300 hover:scale-105 transition-transform"
+        >
+          Admin Credential
+        </button>
+      </div>
+  
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value={credentials.email}
+            onChange={(e) =>
+              setCredentials({ ...credentials, email: e.target.value })
+            }
+            className="w-full px-4 py-2 border bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
+            required
           />
-        </div>*/}
-
-        <div className="mt-4 text-center">
-          <p className="text-default-500">
-            Don’t have an account?{" "}
-            <Link href={"/register"} className="text-teal-500 font-semibold">
-              Register
-            </Link>
-          </p>
-          <p className="text-sm text-teal-500 mt-2">
-            <Link href={"/forget-password"}>Forgot password?</Link>
-          </p>
         </div>
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-gray-700 font-medium mb-1"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            value={credentials.password}
+            onChange={(e) =>
+              setCredentials({ ...credentials, password: e.target.value })
+            }
+            className="w-full px-4 py-2 border bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-gradient-to-r from-teal-400 to-purple-500 text-white font-semibold py-3 hover:shadow-lg hover:scale-105 transition-transform"
+        >
+          Login
+        </button>
+      </form>
+  
+      <div className="mt-6 text-center">
+        <p className="text-gray-500">
+          Don’t have an account?{" "}
+          <Link href={"/register"} className="text-teal-500 font-semibold hover:underline">
+            Register
+          </Link>
+        </p>
+        <p className="text-sm text-teal-500 mt-2">
+          <Link href={"/forget-password"} className="hover:underline">
+            Forgot password?
+          </Link>
+        </p>
       </div>
     </div>
+  </div>
+  
+  
   );
 };
 

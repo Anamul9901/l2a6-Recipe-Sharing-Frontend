@@ -17,6 +17,7 @@ import Link from "next/link";
 import { Avatar } from "@nextui-org/avatar";
 import ShareModal from "../modals/ShareModal";
 import { FacebookIcon, FacebookShareCount } from "react-share";
+import Image from "next/image";
 
 const RecipeCard = ({ recipe }: { recipe: any }) => {
   const [recipeId, setRecipeId] = useState("");
@@ -212,18 +213,19 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500  hover:shadow-neon">
+    <div className="max-w-md mx-auto bg-gradient-to-b from-default-50 via-default-100 to-black rounded-md overflow-hidden shadow-2xl transform transition-all duration-500  hover:shadow-neon">
       {/* Recipe Image */}
       <div className="relative">
-        <img
+        <Image
           className="md:w-[500px] h-[300px]  object-cover"
           src={
             recipe?.image ||
             "https://i.ibb.co.com/kBNtTmC/No-Image-Available.jpg"
           }
           alt={recipe?.title}
+          height={200}
+          width={500}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black opacity-50"></div>
       </div>
 
       {/* Recipe Details */}
@@ -242,17 +244,17 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
             {recipe?.publishUserName}
           </Link>
         </div>
-        <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
+        <h2 className="text-3xl font-extrabold text-default-800">
           {recipe?.title}
         </h2>
         <Link
           href={`/recipe/${recipe?._id}`}
-          className=" font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide"
+          className=" font-extrabold text-default-700"
         >
           Instructions:{" "}
           {recipe?.instructions?.slice(0, 25) || "See more details"}...
         </Link>
-        <h2 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-purple-500 tracking-wide">
+        <h2 className="text-default-500">
           Cooking Time: {recipe?.cookingTime} m
         </h2>
 
@@ -260,12 +262,12 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         <div className="flex items-center justify-between">
           {/* Rating */}
           <div className="">
-            <span className="text-sm text-teal-400 tracking-widest glow">
+            <span className="text-sm text-default-800">
               Avg. Rating: {recipe?.rating}
             </span>
             {/* Rating Section */}
             <div className="flex items-center mb-1">
-              <span className="text-sm text-teal-400 tracking-widest mr-4">
+              <span className="text-sm text-default-800">
                 My Rate:
               </span>
               {Array(5)
@@ -273,7 +275,7 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
                 .map((_, index) => (
                   <FaStar
                     key={index}
-                    size={24}
+                    size={20}
                     className={`cursor-pointer transition-all ${
                       // Apply yellow color if the star index is less than the user's rating
                       index <
@@ -300,30 +302,30 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
         </div>
 
         {/* Upvote / Downvote Buttons */}
-        <div className="flex items-center justify-between">
-          <div className="flex justify-center gap-2 items-center">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
             <button
               onClick={() => handleUpvote(recipe?._id)}
-              className={`px-4 py-2 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r ${
+              className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                 filterUpvoteAnimation?.some(
                   (item: any) => item?.postId === recipe?._id
                 )
-                  ? "from-teal-400 to-purple-500 text-white"
-                  : "from-gray-700 to-gray-900 text-gray-400"
-              } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-500"
+              } hover:bg-blue-400`}
             >
               👍 {recipe?.upvote}
             </button>
 
             <button
               onClick={() => handleDownVote(recipe?._id)}
-              className={`px-4 py-2 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r ${
+              className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                 filterDownvoteAnimation?.some(
                   (item: any) => item?.postId === recipe?._id
                 )
-                  ? "from-teal-400 to-purple-500 text-white"
-                  : "from-gray-700 to-gray-900 text-gray-400"
-              } hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105`}
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-500"
+              } hover:bg-blue-400`}
             >
               👎 {recipe?.downvote}
             </button>
@@ -335,7 +337,9 @@ const RecipeCard = ({ recipe }: { recipe: any }) => {
               <CommentModal id={recipeId} comments={filterComment} />
             </div>
             <div onClick={() => setRecipeId(recipe?._id)}>
-              <ShareModal urlData={`https://coockup.netlify.app/recipe/${recipe?._id}`} />
+              <ShareModal
+                urlData={`https://coockup.netlify.app/recipe/${recipe?._id}`}
+              />
             </div>
           </div>
         </div>
