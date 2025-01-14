@@ -33,17 +33,17 @@ const Membership = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-8">
-      <h1 className="text-4xl font-bold text-teal-400 mb-10">
+      <h1 className="text-4xl font-bold text-blue-400 mb-10">
         Memberships
       </h1>
 
       {/* User's membership and payment information */}
       <div className="mb-8 text-center text-default-900">
         <h1 className="text-xl">
-          Your total payment: <span className="text-teal-400">{user?.payment ?? "0"} Tk</span>
+          Your total payment: <span className="text-blue-400">{user?.payment ?? "0"} Tk</span>
         </h1>
         <h1 className="text-xl">
-          Your membership valid until: <span className="text-teal-400">{formattedPremiumLastDate}</span>
+          Your membership valid until: <span className="text-blue-400">{formattedPremiumLastDate}</span>
         </h1>
       </div>
 
@@ -52,16 +52,16 @@ const Membership = () => {
         {memberships.map((membership, index) => (
           <div
             key={index}
-            className="membership-card bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-teal-400 transition-shadow duration-300 transform hover:scale-105"
+            className="membership-card bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-blue-400 transition-shadow duration-300 transform hover:scale-105"
           >
             <h2 className="text-2xl font-semibold text-white mb-4">
               {membership.label} Membership
             </h2>
-            <p className="text-teal-400 text-xl font-medium">
+            <p className="text-blue-400 text-xl font-medium">
               Price: {membership.price} Tk
             </p>
             <div className="flex justify-end">
-              <button className="mt-4 bg-teal-500 text-white py-2 px-6 rounded-full font-semibold tracking-wider shadow-lg hover:bg-teal-600 hover:shadow-teal-400 transition duration-300 transform hover:scale-105">
+              <button className="mt-4 bg-blue-500 text-white py-2 px-6 rounded-full font-semibold tracking-wider shadow-lg hover:bg-blue-600 hover:shadow-blue-400 transition duration-300 transform hover:scale-105">
                 <CreateOrderModal
                   totalPrice={membership?.price}
                   totalMonth={membership?.totalMonth}

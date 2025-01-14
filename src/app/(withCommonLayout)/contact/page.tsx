@@ -2,7 +2,7 @@ import React from "react";
 
 const ContactUs = () => {
   return (
-    <div className="bg-default-background text-default-foreground min-h-screen">
+    <div className="bg-default-100 text-default-foreground min-h-screen">
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Header */}
         <div className="text-center mb-12">
@@ -17,7 +17,7 @@ const ContactUs = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="backdrop-blur-md bg-opacity-10 bg-default-card p-10 rounded-3xl shadow-xl mx-auto max-w-4xl">
+        <div className="backdrop-blur-md bg-opacity-10 bg-default-400 p-10 rounded-3xl shadow-xl mx-auto max-w-4xl">
           <form className="space-y-6">
             {/* Name */}
             <div>

@@ -55,7 +55,7 @@ const page = () => {
         <FXInput name="password" label="Password" type="password" size="sm" required />
         
         <Button
-          className="w-full rounded-md bg-gradient-to-r from-teal-400 to-purple-500 text-default-800 font-semibold py-2"
+          className="w-full rounded-md bg-gradient-to-r from-blue-300 to-blue-700 text-default-800 font-semibold py-2"
           size="lg"
           type="submit"
         >

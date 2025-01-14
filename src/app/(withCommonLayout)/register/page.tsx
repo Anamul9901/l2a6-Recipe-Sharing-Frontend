@@ -108,7 +108,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-gradient-to-r from-teal-400 to-purple-500 text-white font-semibold py-3 hover:shadow-lg hover:scale-105 transition-transform"
+            className="w-full rounded-lg bg-gradient-to-r from-blue-300 to-blue-700 text-white font-semibold py-3 hover:shadow-lg hover:scale-105 transition-transform"
           >
             Register
           </button>
@@ -119,12 +119,12 @@ const Register = () => {
             Already have an account?{" "}
             <Link
               href={"/login"}
-              className="text-teal-500 font-semibold hover:underline"
+              className="text-blue-500 font-semibold hover:underline"
             >
               Login
             </Link>
           </p>
-          <p className="text-sm text-teal-500 mt-2">
+          <p className="text-sm text-blue-500 mt-2">
             <Link href={"/forget-password"} className="hover:underline">
               Forgot password?
             </Link>

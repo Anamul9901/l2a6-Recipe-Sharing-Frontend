@@ -79,13 +79,13 @@ const Login = () => {
       <div className="pb-4 flex justify-center gap-4">
         <button
           onClick={() => handleCredentialSet("anamul1@gmail.com", "anamul1")}
-          className="bg-teal-200 text-sm text-teal-800 rounded-full px-4 py-2 hover:bg-teal-300 hover:scale-105 transition-transform"
+          className="bg-blue-200 text-sm text-blue-800 rounded-full px-4 py-2 hover:bg-blue-300 hover:scale-105 transition-transform"
         >
           User Credential
         </button>
         <button
           onClick={() => handleCredentialSet("admin1@gmail.com", "admin1")}
-          className="bg-teal-200 text-sm text-teal-800 rounded-full px-4 py-2 hover:bg-teal-300 hover:scale-105 transition-transform"
+          className="bg-blue-200 text-sm text-blue-800 rounded-full px-4 py-2 hover:bg-blue-300 hover:scale-105 transition-transform"
         >
           Admin Credential
         </button>
@@ -104,7 +104,7 @@ const Login = () => {
             onChange={(e) =>
               setCredentials({ ...credentials, email: e.target.value })
             }
-            className="w-full text-black px-4 py-2 border bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
+            className="w-full text-black px-4 py-2 border bg-white rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
             required
           />
         </div>
@@ -123,13 +123,13 @@ const Login = () => {
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
-            className="w-full px-4 py-2 border text-black bg-white rounded-lg focus:ring-2 focus:ring-teal-400 focus:outline-none"
+            className="w-full px-4 py-2 border text-black bg-white rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
             required
           />
         </div>
         <button
           type="submit"
-          className="w-full rounded-lg bg-gradient-to-r from-teal-400 to-purple-500 text-white font-semibold py-3 hover:shadow-lg hover:scale-105 transition-transform"
+          className="w-full rounded-lg bg-gradient-to-r from-blue-300 to-blue-700 text-white font-semibold py-3 hover:shadow-lg hover:scale-105 transition-transform"
         >
           Login
         </button>
@@ -138,11 +138,11 @@ const Login = () => {
       <div className="mt-6 text-center">
         <p className="text-gray-500">
           Don’t have an account?{" "}
-          <Link href={"/register"} className="text-teal-500 font-semibold hover:underline">
+          <Link href={"/register"} className="text-blue-500 font-semibold hover:underline">
             Register
           </Link>
         </p>
-        <p className="text-sm text-teal-500 mt-2">
+        <p className="text-sm text-blue-500 mt-2">
           <Link href={"/forget-password"} className="hover:underline">
             Forgot password?
           </Link>

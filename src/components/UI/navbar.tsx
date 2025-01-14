@@ -20,8 +20,27 @@ import NavberDropdown from "./navberDropdown";
 import { useAppSelector } from "@/src/redux/hooks";
 import { selectCurrentUser } from "@/src/redux/features/auth/authSlice";
 import { useEffect, useState } from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { RiContactsBookUploadLine } from "react-icons/ri";
+import { MdContacts } from "react-icons/md";
 
 export const Navbar = () => {
+  
+  const navItems= [
+    {
+      label: <AiOutlineHome/>,
+      href: '/',
+    },
+    {
+      label: <RiContactsBookUploadLine />,
+      href: '/about',
+    },
+    {
+      label: <MdContacts />,
+      href: '/contact',
+    },
+  ]
+
   const [isMounted, setIsMounted] = useState(false);
   const user = useAppSelector(selectCurrentUser);
 
@@ -32,6 +51,8 @@ export const Navbar = () => {
   if (!isMounted) {
     return null;
   }
+
+  
   return (
     <NextUINavbar maxWidth="xl" position="sticky" className="bg-default-200">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -41,8 +62,8 @@ export const Navbar = () => {
             <p className="font-bold text-xl text-inherit">CoockUp</p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
+        <ul className="hidden lg:flex gap-10 justify-start ml-12">
+          {navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
@@ -52,7 +73,9 @@ export const Navbar = () => {
                 color="foreground"
                 href={item.href}
               >
+                <div className="flex justify-start items-center gap-1 text-2xl">
                 {item.label}
+                </div>
               </NextLink>
             </NavbarItem>
           ))}

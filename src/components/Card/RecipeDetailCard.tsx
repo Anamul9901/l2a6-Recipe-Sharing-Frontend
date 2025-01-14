@@ -217,21 +217,20 @@ const RecipeDetailCard = ({ recipe }: { recipe: any }) => {
   return (
     <div className="max-w-full bg-default-100 md:w-[1300px] h-auto md:h-[500px]  flex flex-col md:flex-row mx-auto rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:shadow-neon">
       {/* Recipe Image */}
-      <div className="relative w-full md:w-1/2 h-[300px] md:h-full">
+      <div className="relative w-full md:w-1/2 h-[300px] md:h-full overflow-hidden">
         <Image
           className="w-full h-full object-cover"
-          height={300}
-          width={300}
           src={
             recipe?.image || "https://i.ibb.co/kBNtTmC/No-Image-Available.jpg"
           }
-          alt={recipe?.title}
+          alt={recipe?.title || "Recipe Image"}
+          layout="fill"
+          objectFit="cover"
         />
-        <div className="absolute inset-0 bg-default-200"></div>
       </div>
 
       {/* Recipe Details */}
-      <div className="px-4 md:pt-10 pt-2 items-center md:mx-auto">
+      <div className="px-4 md:pt-10 pt-2 space-y-2 items-center md:mx-auto">
         <div className="flex justify-start gap-2 pb-2">
           <Link href={`/profile/${recipe?.publishUserId}`}>
             <Avatar
@@ -332,7 +331,7 @@ const RecipeDetailCard = ({ recipe }: { recipe: any }) => {
           </div>
 
           {/* Comment Modal */}
-          <div className="flex justify-center items-center w-[200px]">
+          <div className="flex justify-center items-center pl-4 w-[200px]">
             <div onClick={() => setRecipeId(recipe?._id)}>
               <CommentModal id={recipeId} comments={filterComment} />
             </div>
