@@ -16,7 +16,6 @@ const NavberDropdown = () => {
   const router = useRouter();
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
-
   const handleLogOut = () => {
     dispatch(logout());
   };

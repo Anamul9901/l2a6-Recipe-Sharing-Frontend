@@ -12,7 +12,7 @@ const SingleRecipe = () => {
 
   return (
     <div className="h-[90vh]">
-      <div className="flex h-full justify-center items-center">
+      <div className="flex h-full justify-center px-4 items-center">
         <RecipeDetailCard recipe={recipeData} />
       </div>
     </div>

@@ -41,17 +41,15 @@ const ProfilePage = () => {
   if (!myData) {
     router.push("/login");
   }
-
+console.log('all recipt', allRecipe)
   const filterRecipe = allRecipe?.data?.filter(
     (recipe: any) => recipe?.publishUserId == id
   );
-  // console.log("all recipe", filterRecipe);
 
   const findFollowe = allFollower?.data?.find(
     (item: any) => item?.userId == id && item?.followerEmail == myUserEmail
   );
 
-  // console.log(allFollower);
 
   // const handleUpdateFollow = async () => {
   //   const followerData = { userId: id, followerEmail: myUserEmail };
