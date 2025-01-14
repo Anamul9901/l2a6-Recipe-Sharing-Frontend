@@ -90,7 +90,7 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem>
-          {user?.user ? <NavberDropdown /> : <Link href="/login">Login</Link>}
+          {user?.user ? <NavberDropdown /> : <Link href="/login" className="font-bold">Login</Link>}
         </NavbarItem>
       </NavbarContent>
 

@@ -23,6 +23,7 @@ const FXInput = ({
   return (
     <Input
       {...register(name)}
+      className="text-black"
       variant={variant}
       size={size}
       required={required}
