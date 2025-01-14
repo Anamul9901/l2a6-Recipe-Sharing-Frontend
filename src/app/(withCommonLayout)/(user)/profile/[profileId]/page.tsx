@@ -41,7 +41,7 @@ const ProfilePage = () => {
   if (!myData) {
     router.push("/login");
   }
-console.log('all recipt', allRecipe)
+  console.log("all recipt", allRecipe);
   const filterRecipe = allRecipe?.data?.filter(
     (recipe: any) => recipe?.publishUserId == id
   );
@@ -49,7 +49,6 @@ console.log('all recipt', allRecipe)
   const findFollowe = allFollower?.data?.find(
     (item: any) => item?.userId == id && item?.followerEmail == myUserEmail
   );
-
 
   // const handleUpdateFollow = async () => {
   //   const followerData = { userId: id, followerEmail: myUserEmail };
@@ -134,109 +133,110 @@ console.log('all recipt', allRecipe)
   }
 
   return (
-    <div className="bg-default-100 min-h-screen">
-      {/* Profile Banner */}
-      <div className="relative bg-blue-600 h-60">
-        <div className="absolute bottom-3 left-4 flex items-center space-x-4 w-full">
+    <div className="min-h-screen bg-default-100">
+    {/* Profile Banner */}
+    <div className="relative bg-gradient-to-r from-blue-600 to-blue-400 h-60">
+      {/* Profile Info Container */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+        <div className="max-w-7xl w-full mx-auto px-6 flex items-center space-x-6">
           {/* Profile Picture */}
           <img
-            className="w-28 h-28 rounded-full border-4 border-white"
-            src={
-              user?.profileImg || "https://i.ibb.co.com/z89cgQr/profile.webp"
-            }
+            className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
+            src={user?.profileImg || "https://i.ibb.co.com/z89cgQr/profile.webp"}
             alt="Profile Picture"
             height={500}
             width={500}
           />
           <div className="text-white w-full">
-            <h2 className="text-2xl font-bold">
+            {/* User Name and Premium Status */}
+            <h2 className="text-4xl font-extrabold tracking-wide">
               {user?.name}{" "}
-              <span className={`text-sm text-yellow-500`}>
+              <span className="text-lg text-yellow-400 ml-2">
                 {user?.premium ? "Premium" : "Free"}
               </span>
             </h2>
-            <h2 className="text-sm">{user?.bio}</h2>
-            <div className="flex justify-between items-center">
-              <p className="text-sm">
-                {user?.follower} followers | {user?.following} following
+  
+            {/* User Bio */}
+            <h3 className="text-lg font-medium italic text-gray-200">
+              {user?.bio}
+            </h3>
+  
+            {/* Additional Info */}
+            <div className="flex flex-wrap mt-4 space-y-1 md:space-y-0">
+              <p className="w-full md:w-auto md:pr-4">
+                👥 Followers: {user?.follower}
               </p>
-              <div className="flex pr-6 md:pr-20 gap-2">
-                {id != myUserId ? (
-                  <div>
-                    {findFollowe ? (
-                      <Button
-                        onClick={handleUpdateUnfollow}
-                        className="btn btn-sm"
-                      >
-                        Unfollow
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={handleUpdateFollow}
-                        className="btn btn-sm"
-                      >
-                        Follow
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  <div className="md:flex gap-2 text-center">
-                    <div className="pb-1">
-                      <UpdateProfileModal />
-                    </div>
-                  </div>
-                )}
-              </div>
+              <p className="w-full md:w-auto">
+                👥 Following: {user?.following}
+              </p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Section */}
-      <div className="container mx-auto md:px-4 mt-6">
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 justify-center">
-          {/* Left Sidebar */}
-
-          {/* Main Content (Posts) */}
-          <div className="w-full md:w-10/12">
-            <div className="bg-gradient-to-r from-default-50 to-default-300 mx-2 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center">
-              <h3 className="font-semibold text-xl text-default-800">
-                What's on your mind?
-              </h3>
-              <button>
-                <CreateRecipeModal />
-              </button>
-            </div>
-
-            <div className="bg-default-50 md:p-4 rounded-lg shadow-md mt-4">
-              <h3 className="font-semibold text-lg mb-2 text-center pt-2">
-                Recent Posts
-              </h3>
-
-              {/* Example of Posts */}
-              <div className="bg-default-50 p-4 rounded-lg shadow-lg mt-6">
-                <div className="grid grid-cols-1 gap-4">
-                  {filterRecipe?.length &&
-                    filterRecipe?.map((recipe: any) => (
-                      <RecipeCard recipe={recipe} />
-                    ))}
-                  {isLoading && (
-                    <div className="text-center items-center">
-                      {[...Array(4)].map((_, index) => (
-                        <RecipeSkeletion key={index} />
-                      ))}
-                    </div>
-                  )}
-                  {!filterRecipe?.length && (
-                    <div className="text-center items-center">No Recipt</div>
+  
+            {/* Action Buttons */}
+            <div className="flex items-center mt-4 space-x-3">
+              {id !== myUserId ? (
+                <div>
+                  {findFollowe ? (
+                    <Button
+                      onClick={handleUpdateUnfollow}
+                      className="bg-default-500 hover:bg-default-600 text-white py-1.5 px-6 rounded-md font-semibold shadow-md"
+                    >
+                      Unfollow
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleUpdateFollow}
+                      className="bg-blue-800 hover:bg-blue-900 text-white py-1.5 px-6 rounded-md font-semibold shadow-md"
+                    >
+                      Follow
+                    </Button>
                   )}
                 </div>
-              </div>
+              ) : (
+                <div className="flex gap-2">
+                  <UpdateProfileModal />
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
     </div>
+  
+    {/* Recent Posts Section */}
+    <div className="max-w-7xl mx-auto py-10">
+      <div className="bg-gradient-to-r from-default-50 to-default-300 mx-2 px-6 py-4 rounded-lg shadow-xl flex justify-between items-center">
+        <h3 className="font-semibold text-xl text-default-800">
+          What's on your mind?
+        </h3>
+        <CreateRecipeModal />
+      </div>
+  
+      {/* Posts */}
+      <div className="grid grid-cols-1 gap-4 mt-6 bg-default-50 p-6 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-lg mb-4 text-center">
+          Recent Posts
+        </h3>
+  
+        {/* Post Cards */}
+        <div className="grid grid-cols-1 gap-6">
+          {filterRecipe?.length > 0 ? (
+            filterRecipe.map((recipe: any) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))
+          ) : isLoading ? (
+            <div className="text-center">
+              {[...Array(4)].map((_, index) => (
+                <RecipeSkeletion key={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center">No Recipes</div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+  
   );
 };
 

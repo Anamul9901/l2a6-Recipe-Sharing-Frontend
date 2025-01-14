@@ -236,12 +236,12 @@ const RecipeDetailCard = ({ recipe }: { recipe: any }) => {
           <Link href={`/profile/${recipe?.publishUserId}`}>
             <Avatar
               src={recipe?.publishUserImage}
-              className="w-12 h-12 rounded-full border-2 border-teal-400 shadow-lg"
+              className="w-12 h-12 rounded-full border-2 border-blue-400 shadow-lg"
             />
           </Link>
           <Link
             href={`/profile/${recipe?.publishUserId}`}
-            className="text-sm font-bold text-teal-400 pt-2 hover:text-blue-400 transition-all duration-300"
+            className="text-sm font-bold text-blue-400 pt-2 hover:text-blue-400 transition-all duration-300"
           >
             {recipe?.publishUserName}
           </Link>

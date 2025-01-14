@@ -34,23 +34,26 @@ const HomePage = () => {
   const sponsorData = [
     {
       id: 1,
-      name: "TechVision",
+      name: "Anamul Haque",
       imageUrl: "https://picsum.photos/300/200?1",
-      websiteUrl: "techvision.com",
+      title: 'Portfolio website',
+      websiteUrl: "anamulportfolio.netlify.app",
       description: "Innovating the future of technology.",
     },
     {
       id: 2,
-      name: "GreenEarth",
+      name: "AnSa-Mart",
+      title: 'E-commerce website',
       imageUrl: "https://picsum.photos/300/200?2",
-      websiteUrl: "greenearth.org",
+      websiteUrl: "l2-a9-frontend.netlify.app",
       description: "Promoting sustainable living for a better tomorrow.",
     },
     {
       id: 3,
-      name: "EduLearn",
+      name: "DVS",
+      title: 'Polling and Voting System',
       imageUrl: "https://picsum.photos/300/200?3",
-      websiteUrl: "edulearn.io",
+      websiteUrl: "electronic-voting-system-beta.vercel.app/",
       description: "Empowering learners with knowledge and tools.",
     },
   ];
@@ -218,7 +221,7 @@ const HomePage = () => {
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-500 mt-1 underline"
                     >
-                      {sponsor.websiteUrl}
+                      {sponsor.title}
                     </a>
                   </div>
                 </div>

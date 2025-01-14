@@ -20,7 +20,7 @@ const ShareModal = (urlData: any) => {
       <FXModal
         title="Share Post"
         buttonText="➥"
-        buttonClassName="px-4 py-1 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r from-gray-700 to-gray-900 text-gray-400 hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105"
+        buttonClassName="px-4 py-1 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r from-blue-700 to-blue-900 text-gray-300 hover:from-blue-500 hover:to-blue-700 focus:outline-none shadow-neon transform hover:scale-105"
       >
         <div className="flex flex-col items-center gap-4 pt-2 w-full pb-2">
           {/* Share Buttons */}

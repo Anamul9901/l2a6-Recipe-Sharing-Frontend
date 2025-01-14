@@ -68,7 +68,7 @@ const CommentModal = ({ id, comments }: { id: string; comments: any }) => {
       <FXModal
         title=""
         buttonText="Comment"
-        buttonClassName="px-4 py-1 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r from-gray-700 to-gray-900 text-gray-400 hover:from-blue-500 hover:to-purple-600 focus:outline-none shadow-neon transform hover:scale-105"
+        buttonClassName="px-4 py-1 rounded-full transition-all duration-500 tracking-wider bg-gradient-to-r from-blue-700 to-blue-900 text-gray-300 hover:from-blue-500 hover:to-blue-700 focus:outline-none shadow-neon transform hover:scale-105"
       >
         <div className="space-y-6">
           <h1 className="text-3xl font-extrabold text-white mb-4">
@@ -80,13 +80,13 @@ const CommentModal = ({ id, comments }: { id: string; comments: any }) => {
                 <Link href={`/profile/${comment?.commentUserId}`}>
                   <Avatar
                     src={comment?.commentUserImage}
-                    className="w-12 h-12 rounded-full border-2 border-teal-400 shadow-lg"
+                    className="w-12 h-12 rounded-full border-2 border-blue-400 shadow-lg"
                   />
                 </Link>
                 <div className="flex flex-col">
                   <Link
                     href={`/profile/${comment?.commentUserId}`}
-                    className="text-sm font-bold text-teal-400 hover:text-blue-400 transition-all duration-300"
+                    className="text-sm font-bold text-blue-400 hover:text-blue-400 transition-all duration-300"
                   >
                     {comment?.commentUserName}
                   </Link>
@@ -118,7 +118,7 @@ const CommentModal = ({ id, comments }: { id: string; comments: any }) => {
           </div>
           <div className="flex justify-center pt-4 w-full">
             <Button
-              className="bg-gradient-to-r from-blue-500 to-teal-400 hover:from-teal-400 hover:to-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-xl transition-all duration-500 transform hover:scale-105"
+              className="bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-xl transition-all duration-500 transform hover:scale-105"
               type="submit"
             >
               Comment
