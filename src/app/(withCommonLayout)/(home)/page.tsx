@@ -130,7 +130,7 @@ const HomePage = () => {
                 placeholder="Search by name or location"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="border px-2 py-2 rounded-md w-full"
+                className="border-default-300 border px-2 py-2 rounded-md w-full"
               />
             </div>
             <div className="flex justify-between items-center w-full space-x-2">
@@ -140,14 +140,14 @@ const HomePage = () => {
                   placeholder="Min Time"
                   value={minUpvoteFilter}
                   onChange={(e) => setminUpvoteFilter(e.target.value)}
-                  className="border flex-1 w-24 px-1 py-2 rounded-md"
+                  className="border-default-300 border flex-1 w-24 px-1 py-2 rounded-md"
                 />
                 <input
                   type="number"
                   placeholder="Max Time"
                   value={maxUpvoteFilter}
                   onChange={(e) => setmaxUpvoteFilter(e.target.value)}
-                  className="border flex-1 w-24 px-1 py-2 rounded-md"
+                  className="border-default-300 border flex-1 w-24 px-1 py-2 rounded-md"
                 />
               </div>
               <div>
@@ -155,7 +155,7 @@ const HomePage = () => {
                 <select
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value)}
-                  className="border px-2 py-2 rounded-md"
+                  className="border-default-300 border px-2 py-2 rounded-md"
                 >
                   <option value="">Search Upvoted</option>
                   <option value="most">Most Upvoted</option>
