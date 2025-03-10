@@ -36,14 +36,14 @@ const HomePage = () => {
       id: 1,
       name: "Anamul Haque",
       imageUrl: "https://picsum.photos/300/200?1",
-      title: 'Portfolio website',
+      title: "Portfolio website",
       websiteUrl: "anamulportfolio.netlify.app",
       description: "Innovating the future of technology.",
     },
     {
       id: 2,
       name: "AnSa-Mart",
-      title: 'E-commerce website',
+      title: "E-commerce website",
       imageUrl: "https://picsum.photos/300/200?2",
       websiteUrl: "l2-a9-frontend.netlify.app",
       description: "Promoting sustainable living for a better tomorrow.",
@@ -51,7 +51,7 @@ const HomePage = () => {
     {
       id: 3,
       name: "DVS",
-      title: 'Polling and Voting System',
+      title: "Polling and Voting System",
       imageUrl: "https://picsum.photos/300/200?3",
       websiteUrl: "electronic-voting-system-beta.vercel.app/",
       description: "Empowering learners with knowledge and tools.",
@@ -79,7 +79,7 @@ const HomePage = () => {
   });
 
   const filteredRecipes = searchTerm
-    ? fuse?.search(searchTerm)?.map((result) => result?.item)
+    ? fuse?.search(searchTerm)?.map((result: any) => result?.item)
     : showRecipeDepentOnUser;
 
   // Apply upvote filters
@@ -121,7 +121,53 @@ const HomePage = () => {
       {/* Main Content */}
       <div className="flex flex-grow max-w-full">
         {/* Sidebar */}
-        <aside className="w-1/4 bg-default-100 pt-20 pl-10 p-6 hidden lg:block sticky top-0 h-screen overflow-y-auto">
+        <aside className="w-1/4 bg-default-100 pt-18 pl-10 p-6 hidden lg:block sticky top-0 h-screen overflow-y-auto">
+          {/* Search and Filters */}
+          <div className=" pt-2 hidden xl:block pb-4 space-y-2">
+            <div className="">
+              <input
+                type="text"
+                placeholder="Search by name or location"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="border px-2 py-2 rounded-md w-full"
+              />
+            </div>
+            <div className="flex justify-between items-center w-full space-x-2">
+              <div className="w-full flex justify-between items-center gap-2">
+                <input
+                  type="number"
+                  placeholder="Min Time"
+                  value={minUpvoteFilter}
+                  onChange={(e) => setminUpvoteFilter(e.target.value)}
+                  className="border flex-1 w-24 px-1 py-2 rounded-md"
+                />
+                <input
+                  type="number"
+                  placeholder="Max Time"
+                  value={maxUpvoteFilter}
+                  onChange={(e) => setmaxUpvoteFilter(e.target.value)}
+                  className="border flex-1 w-24 px-1 py-2 rounded-md"
+                />
+              </div>
+              <div>
+                {/* Sorting Options */}
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
+                  className="border px-2 py-2 rounded-md"
+                >
+                  <option value="">Search Upvoted</option>
+                  <option value="most">Most Upvoted</option>
+                  <option value="least">Least Upvoted</option>
+                </select>
+              </div>
+              {/* <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-500 transition-all shadow-md">
+               Search
+             </button> */}
+            </div>
+          </div>
+
           <h3 className="font-bold text-xl mb-6 text-default-700">Menu</h3>
           <ul className="space-y-4">
             <li>
